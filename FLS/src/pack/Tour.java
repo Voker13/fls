@@ -6,7 +6,7 @@ public class Tour {
     
     private int duration = 0;
     private int maxDuration = 480;
-    ArrayList<Location> tourStops = new ArrayList<>();
+    private ArrayList<Location> tourStops = new ArrayList<>();
     
     public Tour() {
 	tourStops.add(Main.depot);
