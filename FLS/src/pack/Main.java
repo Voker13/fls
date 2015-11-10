@@ -23,7 +23,7 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-400.xml");
+	File xml = new File("Instance-4.xml");
 	Instance instance = (Instance) unmarshaller.unmarshal(xml);
 	
 	long startTime = System.currentTimeMillis();
