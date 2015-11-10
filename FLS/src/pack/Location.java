@@ -18,6 +18,9 @@ public class Location {
 	this.duration = Duration;
 	this.lat = Lat;
 	this.Long = Long;
+	while(Long > 20) {
+	    Long /= 10;
+	}
 	this.name = Name;
     }
     
@@ -41,6 +44,9 @@ public class Location {
 
     @XmlAttribute(name="Long")
     public float getLong() {
+	while (Long > 20) {
+	    Long /= 10;
+	}
 	return Long;
     }
 

@@ -22,6 +22,7 @@ public class Main {
     static float minLong = 1000;
     static float maxLong = 0;
     static Location depot;
+    static Location lastLocation = null;
 
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
@@ -90,7 +91,8 @@ public class Main {
 	meterPerSecond = kilometerPerHour / 3.6F;
 
 	while (!locations.isEmpty()) {
-	    allTours.add(findWorkDay());
+	    //allTours.add(findWorkDay());
+	    allTours.add(findWorkDayCircle());
 	}
 	
 	int durationOverall = 0;
@@ -101,12 +103,27 @@ public class Main {
 	System.out.println(allTours.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverall + " Minuten");
 	long endTime = System.currentTimeMillis();
 	System.out.println("Elapsed Time: " + (endTime - startTime) + "ms");
+	GraphFrame gf = new GraphFrame();
+	gf.repaint();
     }
 
     private static Tour findWorkDay() {
 	Tour tour = new Tour();
 	while (tour.addNextStop()) {
 
+	}
+	System.out.println(tour.getDuration() + " " + tour.getTourStops());
+	return tour;
+    }
+    
+    /*
+     * The solution needs even longer than findWorkDay() 
+     * 
+     */
+    private static Tour findWorkDayCircle() {
+	Tour tour = new Tour();
+	while (tour.addNextStopCircle()) {
+	    
 	}
 	System.out.println(tour.getDuration() + " " + tour.getTourStops());
 	return tour;
