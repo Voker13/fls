@@ -23,7 +23,7 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-4.xml");
+	File xml = new File("Instance-400.xml");
 	Instance instance = (Instance) unmarshaller.unmarshal(xml);
 	
 	long startTime = System.currentTimeMillis();
@@ -55,6 +55,7 @@ public class Main {
 		distanceAir += getDistance(locations.get(0), locations.get(i)) * groundAirQuotient;
 	    }
 	}
+	System.out.println(distanceAir + " " + distanceGround);
 
 	int time = 0;
 	for (int i = 0; i < locations.size(); i++) {
