@@ -48,13 +48,13 @@ public class Main {
 		distanceGround += getEdge(0, i).distance / 1000;
 		distanceAir += getDistance(depot, locations.get(i));
 	    }
-	    if (locations.get(i).lat < minLat) {
-		minLat = locations.get(i).lat;
+	    if (locations.get(i).getLat() < minLat) {
+		minLat = locations.get(i).getLat();
 	    }
-	    if (locations.get(i).lat > maxLat) {
-		maxLat = locations.get(i).lat;
+	    if (locations.get(i).getLat() > maxLat) {
+		maxLat = locations.get(i).getLat();
 	    }
-	    float LLong = locations.get(i).Long;
+	    float LLong = locations.get(i).getLong();
 		while(LLong > 20) {
 		    LLong /= 10;
 		}
