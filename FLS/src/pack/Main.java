@@ -17,6 +17,10 @@ public class Main {
     static double groundAirQuotient;
     static double kilometerPerHour;
     static double meterPerSecond;
+    static float minLat = 1000;
+    static float maxLat = 0;
+    static float minLong = 1000;
+    static float maxLong = 0;
     static Location depot;
 
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
@@ -42,17 +46,35 @@ public class Main {
 	for (int i = 0; i < locations.size(); i++) {
 	    if (!(i == 0)) {
 		distanceGround += getEdge(0, i).distance / 1000;
-		distanceAir += getDistance(locations.get(0), locations.get(i));
+		distanceAir += getDistance(depot, locations.get(i));
+	    }
+	    if (locations.get(i).lat < minLat) {
+		minLat = locations.get(i).lat;
+	    }
+	    if (locations.get(i).lat > maxLat) {
+		maxLat = locations.get(i).lat;
+	    }
+	    float LLong = locations.get(i).Long;
+		while(LLong > 20) {
+		    LLong /= 10;
+		}
+	    if (LLong < minLong) {
+		minLong = LLong;
+	    }
+	    if (LLong > maxLong) {
+		maxLong = LLong;
 	    }
 	}
 	groundAirQuotient = (float) distanceGround / distanceAir;
 
+	System.out.println(maxLat-minLat + " " + (maxLong-minLong));
+	
 	distanceAir = 0;
 	distanceGround = 0;
 	for (int i = 0; i < locations.size(); i++) {
 	    if (!(i == 0)) {
 		distanceGround += getEdge(0, i).distance / 1000;
-		distanceAir += getDistance(locations.get(0), locations.get(i)) * groundAirQuotient;
+		distanceAir += getDistance(depot, locations.get(i)) * groundAirQuotient;
 	    }
 	}
 	System.out.println(distanceAir + " " + distanceGround);
