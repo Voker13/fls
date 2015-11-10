@@ -5,10 +5,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Location {
 
-    int duration;
-    float lat;
-    float Long;
-    String name;
+    private int duration;
+    private float lat;
+    private float Long;
+    private String name;
 
     public Location(){
 	

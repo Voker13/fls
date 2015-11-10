@@ -86,7 +86,7 @@ public class Main {
 	while (tour.addNextStop()) {
 
 	}
-	System.out.println(tour.duration + " " + tour.getTourStops());
+	System.out.println(tour.getDuration() + " " + tour.getTourStops());
 	return tour;
     }
 
@@ -98,6 +98,7 @@ public class Main {
 		returnLocation = locations.get(i);
 	    }
 	}
+	
 	long endTime = System.currentTimeMillis();
 	System.out.println("Elapsed Time for finding closest Place: " + (endTime - startTime) + "ms");
 	return returnLocation;
