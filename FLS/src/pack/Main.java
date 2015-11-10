@@ -54,23 +54,20 @@ public class Main {
 	    if (locations.get(i).lat > maxLat) {
 		maxLat = locations.get(i).lat;
 	    }
-	    if (locations.get(i).Long < minLong) {
-		minLong = locations.get(i).Long;
+	    float LLong = locations.get(i).Long;
+		while(LLong > 20) {
+		    LLong /= 10;
+		}
+	    if (LLong < minLong) {
+		minLong = LLong;
 	    }
-	    if (locations.get(i).Long > maxLong) {
-		maxLong = locations.get(i).Long;
+	    if (LLong > maxLong) {
+		maxLong = LLong;
 	    }
 	}
 	groundAirQuotient = (float) distanceGround / distanceAir;
 
-	while(minLong > 20) {
-	    minLong /= 10;
-	}
-	while(maxLong > 20) {
-	    maxLong /= 10;
-	}
-	
-	System.out.println(minLat + " " + maxLat + " " + minLong + " " + maxLong);
+	System.out.println(maxLat-minLat + " " + (maxLong-minLong));
 	
 	distanceAir = 0;
 	distanceGround = 0;
