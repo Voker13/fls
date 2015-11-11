@@ -137,7 +137,7 @@ public class Main {
 				returnLocation = locations.get(i);
 			}
 		}
-
+   
 		long endTime = System.currentTimeMillis();
 		System.out.println("Elapsed Time for finding closest Place: " + (endTime - startTime) + "ms");
 		return returnLocation;
@@ -178,6 +178,18 @@ public class Main {
 		return -1;
 	}
 	
+	public static void orderLocarions() {
+		Tour angleTour = new Tour();
+		Location maxAngleLocation = locations.get(0);
+		for (Location location : locations) {
+			double angle = location.getAngle();
+			if (maxAngleLocation.getAngle() < angle) {
+				maxAngleLocation = location;
+			}
+		}
+		
+	}
+	
 	public static void generateAngleToLocation() {
 		double x0 = depot.getLong();
 		double y0 = depot.getLat();
@@ -188,7 +200,9 @@ public class Main {
 		}
 	}
 	public static double betrag(double x) {
-		x = Math.sqrt(x*x);
+		if (x<=0) {
+			x*=(-1);
+		}
 		return x;
 	}
 }

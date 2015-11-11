@@ -57,8 +57,9 @@ public class Tour {
 	 */
 
 	public boolean addNextStop() {
-		return Main.locations.isEmpty() ? false
-				: addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.locations));
+		return Main.locations.isEmpty() ? false : 
+			addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.locations));
+			
 	}
 
 	public boolean addNextStopCircle() {
