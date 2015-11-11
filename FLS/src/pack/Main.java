@@ -12,6 +12,8 @@ public class Main {
 
     static int timePerWorkday = 480;
     static ArrayList<Location> locations;
+    static ArrayList<Location> locCopy;
+    static Instance instance;
     static ArrayList<Edge> edges;
     static ArrayList<Tour> allTours;
     static double groundAirQuotient;
@@ -24,18 +26,20 @@ public class Main {
     static Location depot;
     static Location lastLocation = null;
 
+    @SuppressWarnings("unchecked")
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
 	File xml = new File("Instance-400.xml");
-	Instance instance = (Instance) unmarshaller.unmarshal(xml);
+	instance = (Instance) unmarshaller.unmarshal(xml);
 	
 	long startTime = System.currentTimeMillis();
 
 	depot = instance.getLocations().get(0);
 
 	locations = (ArrayList<Location>) instance.getLocations();
+	locCopy = (ArrayList<Location>) locations.clone();
 	locations.remove(0);
 
 	edges = (ArrayList<Edge>) instance.getEdges();
@@ -107,6 +111,7 @@ public class Main {
 	gf.repaint();
     }
 
+    @SuppressWarnings("unused")
     private static Tour findWorkDay() {
 	Tour tour = new Tour();
 	while (tour.addNextStop()) {
