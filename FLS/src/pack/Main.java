@@ -177,4 +177,18 @@ public class Main {
 		}
 		return -1;
 	}
+	
+	public void generateAngleToLocation() {
+		double x0 = locations.get(0).getLong();
+		double y0 = locations.get(0).getLat();
+		for (Location location : locations) {
+			double dx = betrag(x0 - location.getLong());
+			double dy = betrag(y0 - location.getLat());
+			location.setAngle(Math.tanh(dx/dy));
+		}
+	}
+	public double betrag(double x) {
+		x = Math.sqrt(x*x);
+		return x;
+	}
 }

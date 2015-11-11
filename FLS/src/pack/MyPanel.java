@@ -12,7 +12,7 @@ public class MyPanel extends JPanel {
     public MyPanel() {
 	this.setBackground(Color.WHITE);
 	this.setLayout(null);
-	this.setBounds(0, 0, 1000, 1000);
+	this.setBounds(0, 0, 500, 500);
 	this.setVisible(true);
     }
     

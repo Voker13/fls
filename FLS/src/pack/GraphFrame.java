@@ -5,8 +5,8 @@ import javax.swing.JFrame;
 public class GraphFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private int width = 1016;
-    private int height = 1040;
+    private int width = 500;
+    private int height = 500;
     
     public GraphFrame() {
 	this.setLayout(null);

@@ -9,8 +9,9 @@ public class Location {
     private float lat;
     private float Long;
     private String name;
+    private double angle;
 
-    public Location(){
+	public Location(){
 	
     }
     
@@ -62,6 +63,14 @@ public class Location {
     public void setName(String name) {
 	this.name = name;
     }
+    
+    public double getAngle() {
+		return angle;
+	}
+
+	public void setAngle(double angle) {
+		this.angle = angle;
+	}
     
     public String toString() {
 	return "Name: " + name + "\nLat: " + lat + "\nLong: " + Long + "\nDuration: " + duration + "\n";
