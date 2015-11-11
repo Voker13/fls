@@ -61,8 +61,8 @@ public class MyPanel extends JPanel {
 	    System.out.println("paintComponent called()");
 	    for (Tour tour : Main.allTours) {
 		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    g.drawLine(20+(int) ((tour.getTourStops().get(i).getLat() - Main.minLat) * (frameWidth-230)/((Main.maxLat-Main.minLat))),20+ (int) ((tour.getTourStops().get(i).getLong() - Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)),20+ (int) ((tour.getTourStops()
-			    .get(i + 1).getLat() - Main.minLat) * (frameWidth-230)/((Main.maxLat-Main.minLat))),20+ (int) ((tour.getTourStops().get(i + 1).getLong() - Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)));
+		    g.drawLine(20+(int) ((tour.getTourStops().get(i).getLat() - Main.minLat) * (frameWidth-250)/((Main.maxLat-Main.minLat))),20+ (int) ((tour.getTourStops().get(i).getLong() - Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)),20+ (int) ((tour.getTourStops()
+			    .get(i + 1).getLat() - Main.minLat) * (frameWidth-250)/((Main.maxLat-Main.minLat))),20+ (int) ((tour.getTourStops().get(i + 1).getLong() - Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)));
 		}
 	    }
 	}
@@ -70,12 +70,12 @@ public class MyPanel extends JPanel {
 	    g.setColor(Color.BLACK);
 	    System.out.println("paintComponent called()");
 	    for (Location location : Main.locCopy) {
-		g.fillOval(20+(int) ((location.getLat()-Main.minLat) * (frameWidth-230)/((Main.maxLat-Main.minLat))),18+ (int) ((location.getLong()-Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)), 4, 4);
-		g.drawOval(20+(int) ((location.getLat()-Main.minLat) * (frameWidth-230)/((Main.maxLat-Main.minLat))),18+ (int) ((location.getLong()-Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)), 4, 4);
+		g.fillOval(20+(int) ((location.getLat()-Main.minLat) * (frameWidth-250)/((Main.maxLat-Main.minLat))),18+ (int) ((location.getLong()-Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)), 4, 4);
+		g.drawOval(20+(int) ((location.getLat()-Main.minLat) * (frameWidth-250)/((Main.maxLat-Main.minLat))),18+ (int) ((location.getLong()-Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)), 4, 4);
 	    }
 	    g.setColor(Color.RED);
-	    g.fillOval(20+(int) ((Main.depot.getLat()-Main.minLat) * (frameWidth-230)/((Main.maxLat-Main.minLat))),18+ (int) ((Main.depot.getLong()-Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)), 4, 4);
-	    g.drawOval(20+(int) ((Main.depot.getLat()-Main.minLat) * (frameWidth-230)/((Main.maxLat-Main.minLat))),18+ (int) ((Main.depot.getLong()-Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)), 4, 4);
+	    g.fillOval(20+(int) ((Main.depot.getLat()-Main.minLat) * (frameWidth-250)/((Main.maxLat-Main.minLat))),18+ (int) ((Main.depot.getLong()-Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)), 4, 4);
+	    g.drawOval(20+(int) ((Main.depot.getLat()-Main.minLat) * (frameWidth-250)/((Main.maxLat-Main.minLat))),18+ (int) ((Main.depot.getLong()-Main.minLong) * (frameHeight-40)/(Main.maxLong-Main.minLong)), 4, 4);
 	}
     }
 
