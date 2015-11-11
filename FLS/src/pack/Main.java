@@ -179,8 +179,8 @@ public class Main {
 	}
 	
 	public void generateAngleToLocation() {
-		double x0 = locations.get(0).getLong();
-		double y0 = locations.get(0).getLat();
+		double x0 = depot.getLong();
+		double y0 = depot.getLat();
 		for (Location location : locations) {
 			double dx = betrag(x0 - location.getLong());
 			double dy = betrag(y0 - location.getLat());
