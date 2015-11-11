@@ -13,7 +13,7 @@ public class Location {
 	private double angle;
 
 	public Location() {
-		Main.generateAngleToLocation();
+		
 	}
 
 	public Location(int Duration, float Lat, float Long, String Name) {
