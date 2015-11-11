@@ -178,7 +178,7 @@ public class Main {
 		return -1;
 	}
 	
-	public void generateAngleToLocation() {
+	public static void generateAngleToLocation() {
 		double x0 = depot.getLong();
 		double y0 = depot.getLat();
 		for (Location location : locations) {
@@ -187,7 +187,7 @@ public class Main {
 			location.setAngle(Math.tanh(dx/dy));
 		}
 	}
-	public double betrag(double x) {
+	public static double betrag(double x) {
 		x = Math.sqrt(x*x);
 		return x;
 	}
