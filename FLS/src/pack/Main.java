@@ -31,7 +31,7 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-80.xml");
+	File xml = new File("Instance-400.xml");
 	
 	//load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
@@ -53,7 +53,7 @@ public class Main {
 
 	allTours = new ArrayList<Tour>();
 
-	//Calculate Quotient
+	//Calculate Quotient and get Min-/max Long and Lat
 	int distanceAir = 0;
 	int distanceGround = 0;
 	for (int i = 0; i < locations.size(); i++) {
@@ -81,15 +81,15 @@ public class Main {
 	groundAirQuotient = (float) distanceGround / distanceAir;
 
 	//Control to see how much the Quotient fails
-	distanceAir = 0;
+	int distanceGroundCalculated = 0;
 	distanceGround = 0;
 	for (int i = 0; i < locations.size(); i++) {
 	    if (!(i == 0)) {
 		distanceGround += getEdge(0, i).distance / 1000;
-		distanceAir += getDistance(depot, locations.get(i)) * groundAirQuotient;
+		distanceGroundCalculated += getDistance(depot, locations.get(i)) * groundAirQuotient;
 	    }
 	}
-	System.out.println(distanceAir + " " + distanceGround);
+	System.out.println(distanceGroundCalculated + " " + distanceGround);
 
 	//Calculate avarage speed
 	int time = 0;
