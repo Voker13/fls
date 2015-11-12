@@ -32,20 +32,28 @@ public class Main {
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
 	File xml = new File("Instance-80.xml");
+	
+	//load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
 	
+	//take current system time / start time
 	long startTime = System.currentTimeMillis();
 
+	//save depot as special Locaion
 	depot = instance.getLocations().get(0);
 
+	//clone Array to have a cop for drawing
 	locations = (ArrayList<Location>) instance.getLocations();
 	locCopy = (ArrayList<Location>) locations.clone();
+	//remove depot from Locations
 	locations.remove(0);
 
+	//get all Edges
 	edges = (ArrayList<Edge>) instance.getEdges();
 
 	allTours = new ArrayList<Tour>();
 
+	//Calculate Quotient
 	int distanceAir = 0;
 	int distanceGround = 0;
 	for (int i = 0; i < locations.size(); i++) {
@@ -72,8 +80,7 @@ public class Main {
 	}
 	groundAirQuotient = (float) distanceGround / distanceAir;
 
-	System.out.println(maxLat-minLat + " " + (maxLong-minLong));
-	
+	//Control to see how much the Quotient fails
 	distanceAir = 0;
 	distanceGround = 0;
 	for (int i = 0; i < locations.size(); i++) {
@@ -84,6 +91,7 @@ public class Main {
 	}
 	System.out.println(distanceAir + " " + distanceGround);
 
+	//Calculate avarage speed
 	int time = 0;
 	for (int i = 0; i < locations.size(); i++) {
 	    if (!(i == 0)) {
@@ -94,16 +102,19 @@ public class Main {
 	kilometerPerHour = (distanceGround * 60) / (time);
 	meterPerSecond = kilometerPerHour / 3.6F;
 
+	//Here is the Strategy, Tours are built until locations is empty
 	while (!locations.isEmpty()) {
 	    //allTours.add(findWorkDay());
 	    allTours.add(findWorkDayCircle());
 	}
 	
+	//Counts time for all Tours
 	int durationOverall = 0;
 	for (Tour tour : allTours) {
 	    durationOverall += tour.getDuration();
 	}
 
+	//Some Debug info, like time and Graph
 	System.out.println(allTours.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverall + " Minuten");
 	long endTime = System.currentTimeMillis();
 	System.out.println("Elapsed Time: " + (endTime - startTime) + "ms");
