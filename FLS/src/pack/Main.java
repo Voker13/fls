@@ -10,21 +10,21 @@ import javax.xml.bind.Unmarshaller;
 
 public class Main {
 
-    static int timePerWorkday = 480;
-    static ArrayList<Location> locations;
-    static ArrayList<Location> locCopy;
-    static Instance instance;
-    static ArrayList<Edge> edges;
-    static ArrayList<Tour> allTours;
-    static double groundAirQuotient;
-    static double kilometerPerHour;
-    static double meterPerSecond;
-    static float minLat = 1000;
-    static float maxLat = 0;
-    static float minLong = 1000;
-    static float maxLong = 0;
-    static Location depot;
-    static Location lastLocation = null;
+    private static int timePerWorkday = 480;
+    private static ArrayList<Location> locations;
+    private static ArrayList<Location> locCopy;
+    private static Instance instance;
+    private static ArrayList<Edge> edges;
+    private static ArrayList<Tour> allTours;
+    private static double groundAirQuotient;
+    private static double kilometerPerHour;
+    private static double meterPerSecond;
+    private static float minLat = 1000;
+    private static float maxLat = 0;
+    private static float minLong = 1000;
+    private static float maxLong = 0;
+    private static Location depot;
+    private static Location lastLocation = null;
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
@@ -211,4 +211,127 @@ public class Main {
 		}
 		return x;
 	}
+
+	public static int getTimePerWorkday() {
+	    return timePerWorkday;
+	}
+
+	public static void setTimePerWorkday(int timePerWorkday) {
+	    Main.timePerWorkday = timePerWorkday;
+	}
+
+	public static ArrayList<Location> getLocations() {
+	    return locations;
+	}
+
+	public static void setLocations(ArrayList<Location> locations) {
+	    Main.locations = locations;
+	}
+
+	public static ArrayList<Location> getLocCopy() {
+	    return locCopy;
+	}
+
+	public static void setLocCopy(ArrayList<Location> locCopy) {
+	    Main.locCopy = locCopy;
+	}
+
+	public static Instance getInstance() {
+	    return instance;
+	}
+
+	public static void setInstance(Instance instance) {
+	    Main.instance = instance;
+	}
+
+	public static ArrayList<Edge> getEdges() {
+	    return edges;
+	}
+
+	public static void setEdges(ArrayList<Edge> edges) {
+	    Main.edges = edges;
+	}
+
+	public static ArrayList<Tour> getAllTours() {
+	    return allTours;
+	}
+
+	public static void setAllTours(ArrayList<Tour> allTours) {
+	    Main.allTours = allTours;
+	}
+
+	public static double getGroundAirQuotient() {
+	    return groundAirQuotient;
+	}
+
+	public static void setGroundAirQuotient(double groundAirQuotient) {
+	    Main.groundAirQuotient = groundAirQuotient;
+	}
+
+	public static double getKilometerPerHour() {
+	    return kilometerPerHour;
+	}
+
+	public static void setKilometerPerHour(double kilometerPerHour) {
+	    Main.kilometerPerHour = kilometerPerHour;
+	}
+
+	public static double getMeterPerSecond() {
+	    return meterPerSecond;
+	}
+
+	public static void setMeterPerSecond(double meterPerSecond) {
+	    Main.meterPerSecond = meterPerSecond;
+	}
+
+	public static float getMinLat() {
+	    return minLat;
+	}
+
+	public static void setMinLat(float minLat) {
+	    Main.minLat = minLat;
+	}
+
+	public static float getMaxLat() {
+	    return maxLat;
+	}
+
+	public static void setMaxLat(float maxLat) {
+	    Main.maxLat = maxLat;
+	}
+
+	public static float getMinLong() {
+	    return minLong;
+	}
+
+	public static void setMinLong(float minLong) {
+	    Main.minLong = minLong;
+	}
+
+	public static float getMaxLong() {
+	    return maxLong;
+	}
+
+	public static void setMaxLong(float maxLong) {
+	    Main.maxLong = maxLong;
+	}
+
+	public static Location getDepot() {
+	    return depot;
+	}
+
+	public static void setDepot(Location depot) {
+	    Main.depot = depot;
+	}
+
+	public static Location getLastLocation() {
+	    return lastLocation;
+	}
+
+	public static void setLastLocation(Location lastLocation) {
+	    Main.lastLocation = lastLocation;
+	}
+	
+	
+	
 }
