@@ -46,10 +46,11 @@ public class Main {
 	//clone Array to have a cop for drawing
 	locations = (ArrayList<Location>) instance.getLocations();
 	locCopy = (ArrayList<Location>) locations.clone();
-	locCopy2 = (ArrayList<Location>) locations.clone();
 	//remove depot from Locations
 	locations.remove(0);
-
+	
+	generateAngleToLocation();
+	
 	//get all Edges
 	edges = (ArrayList<Edge>) instance.getEdges();
 
@@ -223,9 +224,9 @@ public class Main {
 	
 	public static void orderLocarions() {
 		Tour angleTour = new Tour();
-		Location maxAngleLocation = locCopy2.get(0);
-		double maxAngle = locCopy2.get(0).getAngle();
-		for (Location location : locCopy2) {
+		Location maxAngleLocation = locations.get(0);
+		double maxAngle = locations.get(0).getAngle();
+		for (Location location : locations) {
 			double angle = location.getAngle();
 			if (maxAngle < angle) {
 				maxAngleLocation = location;
@@ -238,10 +239,26 @@ public class Main {
 	public static void generateAngleToLocation() {
 		double x0 = depot.getLong();
 		double y0 = depot.getLat();
-		for (Location location : locCopy2) {
-			double dx = betrag(x0 - location.getLong());
-			double dy = betrag(y0 - location.getLat());
-			location.setAngle(Math.tanh(dx/dy));
+		for (Location location : locations) {
+			double dx = x0 - location.getLong();
+			double dy = y0 - location.getLat();
+			if (dx>=0 && dy>=0) {
+				location.setAngle(Math.toDegrees(Math.atan(dy/dx)));
+			}
+			else if (dx<0 && dy>=0) {
+				dx = betrag(dx);
+				location.setAngle(Math.toDegrees(Math.atan(dy/dx))+90);
+			}
+			else if (dx<0 && dy<0) { 
+				dx = betrag(dx);
+				dy = betrag(dy);
+				location.setAngle(Math.toDegrees(Math.atan(dy/dx))+180); 
+			}
+			else if (dx>=0 && dy<0) {
+				dy = betrag(dy);
+				location.setAngle(Math.toDegrees(Math.atan(dy/dx))+270);
+			}
+			System.out.println(location.getAngle());
 		}
 	}
 	
