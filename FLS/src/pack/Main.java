@@ -181,10 +181,12 @@ public class Main {
 	public static void orderLocarions() {
 		Tour angleTour = new Tour();
 		Location maxAngleLocation = locations.get(0);
+		double maxAngle = locations.get(0).getAngle();
 		for (Location location : locations) {
 			double angle = location.getAngle();
-			if (maxAngleLocation.getAngle() < angle) {
+			if (maxAngle < angle) {
 				maxAngleLocation = location;
+				maxAngle = angle;
 			}
 		}
 		
@@ -199,6 +201,12 @@ public class Main {
 			location.setAngle(Math.tanh(dx/dy));
 		}
 	}
+	
+	public static double isBigger(double x, double y){
+		if (x<y) { return y; }
+		else { return x; }
+	}
+	
 	public static double betrag(double x) {
 		if (x<=0) {
 			x*=(-1);
