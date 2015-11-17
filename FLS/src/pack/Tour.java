@@ -55,6 +55,31 @@ public class Tour {
 	 * 
 	 * @return
 	 */
+	
+	public boolean addNextStopPizza() {
+		if (Main.getLastLocation() == null) {
+			if (Main.getLocations().isEmpty()) {
+				return false;
+			} else {
+				return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations()));
+			}
+		} 
+		else if (tourStops.size() == 1) {
+			if (Main.getLocations().isEmpty()) {
+				return false;
+			} else {
+				return addStop(Main.findClosestLocation(tourStops.get(tourStops.size()), Main.getLocations()));
+			}
+		}
+		else {
+			if (Main.getLocations().isEmpty()) {
+				return false;
+			} else {
+				return addStop(Main.findClosestLocationAllongTheAngle(tourStops.get(tourStops.size() - 1), Main.getLocations()));
+			}
+		}
+	}
+	
 
 	public boolean addNextStop() {
 		return Main.getLocations().isEmpty() ? false : 

@@ -13,6 +13,7 @@ public class Main {
     private static int timePerWorkday = 480;
     private static ArrayList<Location> locations;
     private static ArrayList<Location> locCopy;
+    private static ArrayList<Location> locCopy2;
     private static Instance instance;
     private static ArrayList<Edge> edges;
     private static ArrayList<Tour> allTours;
@@ -45,6 +46,7 @@ public class Main {
 	//clone Array to have a cop for drawing
 	locations = (ArrayList<Location>) instance.getLocations();
 	locCopy = (ArrayList<Location>) locations.clone();
+	locCopy2 = (ArrayList<Location>) locations.clone();
 	//remove depot from Locations
 	locations.remove(0);
 
@@ -133,6 +135,20 @@ public class Main {
     }
     
     /*
+     * PizzaTactic
+     * 
+     */
+    
+    private static Tour findWorkDayPizza() {
+    	Tour tour = new Tour();
+    	while (tour.addNextStop()) {
+
+    	}
+    	System.out.println(tour.getDuration() + " " + tour.getTourStops());
+    	return tour;
+        }
+    
+    /*
      * The solution needs even longer than findWorkDay() 
      * 
      */
@@ -194,12 +210,22 @@ public class Main {
 	return -1;
     }
     
+    /**
+     * 
+     *  
+     * 
+     */
+    
+    public static Location findClosestLocationAllongTheAngle(Location location, ArrayList<Location> locations) {
+    	
+    	return locations.get(0); // noch falsch // platzhalter 
+    }
 	
 	public static void orderLocarions() {
 		Tour angleTour = new Tour();
-		Location maxAngleLocation = locations.get(0);
-		double maxAngle = locations.get(0).getAngle();
-		for (Location location : locations) {
+		Location maxAngleLocation = locCopy2.get(0);
+		double maxAngle = locCopy2.get(0).getAngle();
+		for (Location location : locCopy2) {
 			double angle = location.getAngle();
 			if (maxAngle < angle) {
 				maxAngleLocation = location;
@@ -212,7 +238,7 @@ public class Main {
 	public static void generateAngleToLocation() {
 		double x0 = depot.getLong();
 		double y0 = depot.getLat();
-		for (Location location : locations) {
+		for (Location location : locCopy2) {
 			double dx = betrag(x0 - location.getLong());
 			double dy = betrag(y0 - location.getLat());
 			location.setAngle(Math.tanh(dx/dy));
