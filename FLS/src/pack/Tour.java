@@ -9,7 +9,7 @@ public class Tour {
 	private ArrayList<Location> tourStops = new ArrayList<>();
 
 	public Tour() {
-		tourStops.add(Main.depot);
+		tourStops.add(Main.getDepot());
 	}
 
 	public int getDuration() {
@@ -37,13 +37,13 @@ public class Tour {
 	}
 
 	public boolean addStop(Location location) {
-		if (duration + (Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.groundAirQuotient
-				/ Main.meterPerSecond) / 60 + location.getDuration() < maxDuration) {
+		if (duration + (Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient()
+				/ Main.getMeterPerSecond()) / 60 + location.getDuration() < maxDuration) {
 			duration += (Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F
-					* Main.groundAirQuotient / Main.meterPerSecond) / 60 + location.getDuration();
+					* Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration();
 			tourStops.add(location);
-			Main.locations.remove(Main.getIndex(location));
-			Main.lastLocation = location;
+			Main.getLocations().remove(Main.getIndex(location));
+			Main.setLastLocation(location);
 			return true;
 		}
 		return false;
@@ -57,31 +57,31 @@ public class Tour {
 	 */
 
 	public boolean addNextStop() {
-		return Main.locations.isEmpty() ? false : 
-			addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.locations));
+		return Main.getLocations().isEmpty() ? false : 
+			addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations()));
 			
 	}
 
 	public boolean addNextStopCircle() {
-		if (Main.lastLocation == null) {
-			if (Main.locations.isEmpty()) {
+		if (Main.getLastLocation() == null) {
+			if (Main.getLocations().isEmpty()) {
 				return false;
 			} else {
-				return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.locations));
+				return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations()));
 			}
 		} else {
 			if (tourStops.size() == 1) {
-				if (Main.locations.isEmpty()) {
+				if (Main.getLocations().isEmpty()) {
 					return false;
 				} else {
-					return addStop(Main.findClosestLocation(Main.findClosestLocation(Main.lastLocation, Main.locations),
-							Main.locations));
+					return addStop(Main.findClosestLocation(Main.findClosestLocation(Main.getLastLocation(), Main.getLocations()),
+							Main.getLocations()));
 				}
 			} else {
-				if (Main.locations.isEmpty()) {
+				if (Main.getLocations().isEmpty()) {
 					return false;
 				} else {
-					return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.locations));
+					return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations()));
 				}
 			}
 		}
