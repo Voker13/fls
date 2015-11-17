@@ -57,26 +57,19 @@ public class Tour {
 	 */
 	
 	public boolean addNextStopPizza() {
-		if (Main.getLastLocation() == null) {
-			if (Main.getLocations().isEmpty()) {
-				return false;
-			} else {
-				return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations()));
-			}
-		} 
-		else if (tourStops.size() == 1) {
-			if (Main.getLocations().isEmpty()) {
-				return false;
-			} else {
-				return addStop(Main.findClosestLocation(tourStops.get(tourStops.size()), Main.getLocations()));
+		if (!Main.getLocations().isEmpty()) {
+			if (tourStops.size() == 0) {
+					return addStop(Main.findClosestLocation(Main.getDepot(), Main.getLocations()));
+			} 
+//			else if (tourStops.size() == 1) {
+//				return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations()));
+//			}
+			else {
+				return addStop(Main.getLocationWithClosestAngle(tourStops.get(tourStops.size()), Main.getLocations()));
 			}
 		}
 		else {
-			if (Main.getLocations().isEmpty()) {
-				return false;
-			} else {
-				return addStop(Main.findClosestLocationAllongTheAngle(tourStops.get(tourStops.size() - 1), Main.getLocations()));
-			}
+			return false;
 		}
 	}
 	
