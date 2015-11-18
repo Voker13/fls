@@ -58,14 +58,17 @@ public class Tour {
 	
 	public boolean addNextStopPizza() {
 		if (!Main.getLocations().isEmpty()) {
-			if (tourStops.size() == 0) {
+			System.out.println("toruStops.size: "+tourStops.size());
+			if (tourStops.size() == 1) {
 					return addStop(Main.findClosestLocation(Main.getDepot(), Main.getLocations()));
 			} 
 //			else if (tourStops.size() == 1) {
 //				return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations()));
 //			}
 			else {
-				return addStop(Main.getLocationWithClosestAngle(tourStops.get(tourStops.size()), Main.getLocations()));
+				System.out.println("Location long: "+tourStops.get(tourStops.size()-1).getLong());
+				System.out.println("Location lat: "+tourStops.get(tourStops.size()-1).getLat());
+				return addStop(Main.getLocationWithClosestAngle(tourStops.get(tourStops.size()-1), Main.getLocations()));
 			}
 		}
 		else {
