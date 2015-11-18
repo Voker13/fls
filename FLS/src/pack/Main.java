@@ -105,6 +105,10 @@ public class Main {
 	kilometerPerHour = (distanceGround * 60) / (time);
 	meterPerSecond = kilometerPerHour / 3.6F;
 
+	for (int i=0; i<locations.size(); i++) {
+		System.out.println("location"+(i+1)+".-->   "+locations.get(i).getLat()+" : "+locations.get(i).getLong()+" : "+locations.get(i).getAngle());
+	}
+	
 	// Here is the Strategy, Tours are built until locations is empty
 	while (!locations.isEmpty()) {
 	    // allTours.add(findWorkDay());
@@ -192,14 +196,12 @@ public class Main {
     }
 
     public static int getIndex(Location location) {
-    	System.out.println("locations.size: "+locations.size());
+    	System.out.println("locations.size (before.remove): "+locations.size());
 	for (int i = 0; i < locations.size(); i++) {
 	    if (locations.get(i).equals(location)) {
 	    	
 		return i;
 	    }
-	    System.out.println("getIndex: Location long: "+locations.get(i).getLong());
-		System.out.println("getIndex: Location lat: "+locations.get(i).getLat());
 	}
 	
 	return -1;
@@ -210,9 +212,23 @@ public class Main {
 	 *  
 	 * 
 	 */
+    
+    public static Location findLocationWithSmalestAngle() {
+    	double smalestAngle = 720;
+    	Location locWithSmalestAngle = locations.get(0);  //nicht das depot
+    	for (Location loc : locations) {
+    		if (loc.getAngle()<smalestAngle) {
+    			smalestAngle = loc.getAngle();
+    			locWithSmalestAngle = loc;
+    		}
+    	}
+    	return locWithSmalestAngle;
+    }
+    
 
     public static Location getLocationWithClosestAngle(Location currentLocation, ArrayList<Location> locations) {
 	double currentAngle = currentLocation.getAngle();
+	System.out.println("currentAngle: "+currentAngle);
 
 	Location closestAngleLocation = currentLocation;
 	double closestAngle = 360;
@@ -229,6 +245,22 @@ public class Main {
 	}
 
 	return closestAngleLocation;
+    }
+    
+    
+    
+    
+    public static void generateAngleToLocationWithSmalerAngleThanStartLocation(Location loc) {
+    	double x0 = depot.getLong();
+    	double y0 = depot.getLat();
+    	for (Location location : locations) {
+    	    double dx = x0 - location.getLong();
+    	    double dy = y0 - location.getLat();
+    	    double angle = Math.toDegrees(Math.atan(dy / dx));
+    	    if (dx >= 0 && dy >= 0 && angle<loc.getAngle()) {
+    	    	location.setAngle(angle+360);
+    	    }
+    	}
     }
 
     public static void generateAngleToLocation() {
@@ -388,5 +420,6 @@ public class Main {
     public static void setLastLocation(Location lastLocation) {
 	Main.lastLocation = lastLocation;
     }
+
 
 }

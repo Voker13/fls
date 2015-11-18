@@ -2,10 +2,10 @@
   <NumberOfLocations>5</NumberOfLocations>
   <Locations>
     <Location Duration="0" Lat="54.32255" Long="101.3847" Name="Holstenstr. 12, 24103 Kiel" />
-    <Location Duration="65" Lat="54.39581" Long="101.5882" Name="Brahmsweg 19, 24159 Kiel" />
-    <Location Duration="62" Lat="54.30847" Long="100.9441" Name="Hedenholz 13, 24113 Kiel" />
-    <Location Duration="62" Lat="54.33794" Long="100.7734" Name="Ernst-Barlach-Weg 16, 24119 Kronshagen" />
-    <Location Duration="69" Lat="54.39563" Long="101.5377" Name="Wagnerring 52, 24159 Kiel" />
+    <Location Duration="65" Lat="54.39581" Long="101.5882" Name="Brahmsweg 19, 24159 Kiel" /> // - error
+    <Location Duration="62" Lat="54.30847" Long="100.9441" Name="Hedenholz 13, 24113 Kiel" /> //1
+    <Location Duration="62" Lat="54.33794" Long="100.7734" Name="Ernst-Barlach-Weg 16, 24119 Kronshagen" /> //3
+    <Location Duration="69" Lat="54.39563" Long="101.5377" Name="Wagnerring 52, 24159 Kiel" /> //2
   </Locations>
   <Edges>
     <Edge Distance="12288" Duration="15" From="0" To="1" />

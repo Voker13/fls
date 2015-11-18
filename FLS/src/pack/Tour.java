@@ -43,6 +43,8 @@ public class Tour {
 					* Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration();
 			tourStops.add(location);
 			Main.getLocations().remove(Main.getIndex(location));
+			System.out.println("remove --> Location: "+location.getLong()+" : "+location.getLat());
+			System.out.println("locations.size (after.remove): "+Main.getLocations().size());
 			Main.setLastLocation(location);
 			return true;
 		}
@@ -60,15 +62,27 @@ public class Tour {
 		if (!Main.getLocations().isEmpty()) {
 			System.out.println("toruStops.size: "+tourStops.size());
 			if (tourStops.size() == 1) {
-					return addStop(Main.findClosestLocation(tourStops.get(tourStops.size()-1), Main.getLocations()));
-			} 
-//			else if (tourStops.size() == 1) {
-//				return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations()));
-//			}
+
+				Location loc = Main.findLocationWithSmalestAngle();
+				return addStop(loc);
+				
+//				Location loc = Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations());
+//				System.out.println("Location: " + loc.getLong() + " : " + loc.getLat());
+//				Main.generateAngleToLocationWithSmalerAngleThanStartLocation(loc);
+//				return addStop(loc);
+
+			}
+			// else if (tourStops.size() == 1) {
+			// return
+			// addStop(Main.findClosestLocation(tourStops.get(tourStops.size() -
+			// 1), Main.getLocations()));
+			// }
 			else {
-				System.out.println("Location long: "+tourStops.get(tourStops.size()-1).getLong());
-				System.out.println("Location lat: "+tourStops.get(tourStops.size()-1).getLat());
-				return addStop(Main.getLocationWithClosestAngle(tourStops.get(tourStops.size()-1), Main.getLocations()));
+
+				Location loc = Main.getLocationWithClosestAngle(tourStops.get(tourStops.size()-1), Main.getLocations());
+				System.out.println("Location: to tourStops "+loc.getLong()+" : "+loc.getLat());
+				return addStop(loc);
+			
 			}
 		}
 		else {
