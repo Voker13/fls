@@ -60,7 +60,7 @@ public class Tour {
 		if (!Main.getLocations().isEmpty()) {
 			System.out.println("toruStops.size: "+tourStops.size());
 			if (tourStops.size() == 1) {
-					return addStop(Main.findClosestLocation(Main.getDepot(), Main.getLocations()));
+					return addStop(Main.findClosestLocation(tourStops.get(tourStops.size()-1), Main.getLocations()));
 			} 
 //			else if (tourStops.size() == 1) {
 //				return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations()));

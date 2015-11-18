@@ -32,7 +32,7 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-400.xml");
+	File xml = new File("Instance-4.xml");
 
 	// load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
@@ -192,11 +192,16 @@ public class Main {
     }
 
     public static int getIndex(Location location) {
+    	System.out.println("locations.size: "+locations.size());
 	for (int i = 0; i < locations.size(); i++) {
 	    if (locations.get(i).equals(location)) {
+	    	
 		return i;
 	    }
+	    System.out.println("getIndex: Location long: "+locations.get(i).getLong());
+		System.out.println("getIndex: Location lat: "+locations.get(i).getLat());
 	}
+	
 	return -1;
     }
 
