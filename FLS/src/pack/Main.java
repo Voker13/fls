@@ -13,7 +13,6 @@ public class Main {
     private static int timePerWorkday = 480;
     private static ArrayList<Location> locations;
     private static ArrayList<Location> locCopy;
-    private static ArrayList<Location> locCopy2;
     private static Instance instance;
     private static ArrayList<Edge> edges;
     private static ArrayList<Tour> allTours;
@@ -26,13 +25,17 @@ public class Main {
     private static float maxLong = 0;
     private static Location depot;
     private static Location lastLocation = null;
+    private static double AngleTourStop1;  // wichtig, ob es rechtsherum oder linksherum gehen soll
+    private static double AngleTourStop2;  // wichtig, ob es rechtsherum oder linksherum gehen soll
+    private static Location TourStop2;
 
-    @SuppressWarnings("unchecked")
+
+	@SuppressWarnings("unchecked")
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-4.xml");
+	File xml = new File("Instance-400.xml");
 
 	// load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
@@ -105,6 +108,7 @@ public class Main {
 	kilometerPerHour = (distanceGround * 60) / (time);
 	meterPerSecond = kilometerPerHour / 3.6F;
 
+	System.out.println("Liste zum 1.: ");
 	for (int i=0; i<locations.size(); i++) {
 		System.out.println("location"+(i+1)+".-->   "+locations.get(i).getLat()+" : "+locations.get(i).getLong()+" : "+locations.get(i).getAngle());
 	}
@@ -130,12 +134,26 @@ public class Main {
 	gf.repaint();
     }
 
+	/*
+	 * Default
+	 * 
+	 */
+	
+	private static Tour findWorkDay() {
+		Tour tour = new Tour();
+		while (tour.addNextStop()) {
+
+		}
+		return tour;
+	    }
+	
     /*
      * PizzaTactic
      */
 
     private static Tour findWorkDayPizza() {
 	Tour tour = new Tour();
+	generateAngleToLocation();
 	while (tour.addNextStopPizza()) {
 
 	}
@@ -196,7 +214,6 @@ public class Main {
     }
 
     public static int getIndex(Location location) {
-    	System.out.println("locations.size (before.remove): "+locations.size());
 	for (int i = 0; i < locations.size(); i++) {
 	    if (locations.get(i).equals(location)) {
 	    	
@@ -226,36 +243,54 @@ public class Main {
     }
     
 
-	public static Location getLocationWithClosestAngle(Location currentLocation, ArrayList<Location> locations) {
-		double currentAngle = currentLocation.getAngle();
-		System.out.println("currentAngle: " + currentAngle);
+	public static Location getLocationWithSmalestAngle(Location currentLocation, ArrayList<Location> locations) {
+//		double currentAngle = currentLocation.getAngle();
+//		System.out.println("currentAngle: " + currentAngle);
 
-		Location closestAngleLocation = currentLocation;
-		double closestDeltaAngle = 720;
+		Location smalestAngleLocation = currentLocation;
+		double smalestAngle = 720;
 
 		for (Location location : locations) {
 			double angle = location.getAngle();
-			double DeltaAngle = betrag(angle - currentAngle);
-			if (DeltaAngle < closestDeltaAngle) { 
-				closestDeltaAngle = DeltaAngle;
-				closestAngleLocation = location;
+			if (angle < smalestAngle) {
+				smalestAngle = angle;
+				smalestAngleLocation = location;
 			}
 		}
+		
+//		for (Location location : locations) {
+//			double angle = location.getAngle();
+//			double DeltaAngle = betrag(angle - currentAngle);
+//			if (DeltaAngle < closestDeltaAngle) { 
+//				closestDeltaAngle = DeltaAngle;
+//				closestAngleLocation = location;
+//			}
+//		}
 
-		return closestAngleLocation;
+		return smalestAngleLocation;
 	}
     
     
     
-    public static void generateAngleToLocationWithSmalerAngleThanStartLocation(Location loc) {
+    public static void generateAngleToLocation(Location loc) {
     	for (Location location : locations) {
-    	    double angle = location.getAngle();
-    		if (angle<loc.getAngle()) {
-    	    	location.setAngle(angle+360);
-    	    }
+		    double angle = location.getAngle();
+			if (angle<Main.getAngleTourStop2()) {
+		    	location.setAngle(angle+360);
+		    }
+		}
+    	System.out.println("AngleTourStop 1&2: " + Main.AngleTourStop1 + " : " + Main.getAngleTourStop2());
+    	if (Main.getAngleTourStop1()>Main.getAngleTourStop2()) { //wenn wahr, dann dreht er die reihenfolge der winkel um
+    		for (Location location : locations) {
+    		    location.setAngle(720-location.getAngle());
+    		}
+    		System.out.println(true);
     	}
-    }
-
+    	
+    }	
+    
+    
+    
     public static void generateAngleToLocation() {
 	double x0 = depot.getLong();
 	double y0 = depot.getLat();
@@ -409,6 +444,30 @@ public class Main {
     public static void setLastLocation(Location lastLocation) {
 	Main.lastLocation = lastLocation;
     }
+    
+    public static double getAngleTourStop1() {
+		return AngleTourStop1;
+	}
+
+	public static void setAngleTourStop1(double angleTourStop1) {
+		AngleTourStop1 = angleTourStop1;
+	}
+
+	public static double getAngleTourStop2() {
+		return AngleTourStop2;
+	}
+
+	public static void setAngleTourStop2(double angleTourStop2) {
+		AngleTourStop2 = angleTourStop2;
+	}
+
+	public static Location getTourStop2() {
+		return TourStop2;
+	}
+
+	public static void setTourStop2(Location tourStop2) {
+		TourStop2 = tourStop2;
+	}
 
 
 }
