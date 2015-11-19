@@ -226,38 +226,31 @@ public class Main {
     }
     
 
-    public static Location getLocationWithClosestAngle(Location currentLocation, ArrayList<Location> locations) {
-	double currentAngle = currentLocation.getAngle();
-	System.out.println("currentAngle: "+currentAngle);
+	public static Location getLocationWithClosestAngle(Location currentLocation, ArrayList<Location> locations) {
+		double currentAngle = currentLocation.getAngle();
+		System.out.println("currentAngle: " + currentAngle);
 
-	Location closestAngleLocation = currentLocation;
-	double closestAngle = 360;
+		Location closestAngleLocation = currentLocation;
+		double closestDeltaAngle = 720;
 
-	for (Location location : locations) {
-	    double angle = location.getAngle();
-	    double DeltaAngle = (currentAngle - angle);
-	    if (DeltaAngle <= 0 && DeltaAngle < closestAngle) { // <<<--- for
-								// short circuit
-								// evaluation
-		closestAngle = angle;
-		closestAngleLocation = location;
-	    }
+		for (Location location : locations) {
+			double angle = location.getAngle();
+			double DeltaAngle = betrag(angle - currentAngle);
+			if (DeltaAngle < closestDeltaAngle) { 
+				closestDeltaAngle = DeltaAngle;
+				closestAngleLocation = location;
+			}
+		}
+
+		return closestAngleLocation;
 	}
-
-	return closestAngleLocation;
-    }
-    
     
     
     
     public static void generateAngleToLocationWithSmalerAngleThanStartLocation(Location loc) {
-    	double x0 = depot.getLong();
-    	double y0 = depot.getLat();
     	for (Location location : locations) {
-    	    double dx = x0 - location.getLong();
-    	    double dy = y0 - location.getLat();
-    	    double angle = Math.toDegrees(Math.atan(dy / dx));
-    	    if (dx >= 0 && dy >= 0 && angle<loc.getAngle()) {
+    	    double angle = location.getAngle();
+    		if (angle<loc.getAngle()) {
     	    	location.setAngle(angle+360);
     	    }
     	}
@@ -272,21 +265,17 @@ public class Main {
 	    if (dx >= 0 && dy >= 0) {
 		location.setAngle(Math.toDegrees(Math.atan(dy / dx)));
 	    } else if (dx < 0 && dy >= 0) {
-		dx = betrag(dx);
-		location.setAngle(Math.toDegrees(Math.atan(dy / dx)) + 90);
+		location.setAngle(Math.toDegrees(Math.atan(dy / dx)) + 180);
 	    } else if (dx < 0 && dy < 0) {
-		dx = betrag(dx);
-		dy = betrag(dy);
 		location.setAngle(Math.toDegrees(Math.atan(dy / dx)) + 180);
 	    } else if (dx >= 0 && dy < 0) {
-		dy = betrag(dy);
-		location.setAngle(Math.toDegrees(Math.atan(dy / dx)) + 270);
+		location.setAngle(Math.toDegrees(Math.atan(dy / dx)) + 360);
 	    }
 	    // System.out.println(location.getAngle());
 	}
     }
 
-    public static double isBigger(double x, double y) {
+    public static double getBigger(double x, double y) {
 	if (x < y) {
 	    return y;
 	} else {
