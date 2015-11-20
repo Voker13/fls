@@ -75,6 +75,6 @@ public class Location {
 	}
 
 	public String toString() {
-		return "Name: " + name + "\nLat: " + lat + "\nLong: " + Long + "\nDuration: " + duration + "\n";
+		return "Name: " + name + "\nLat: " + lat + "\nLong: " + Long + "\nDuration: " + duration + "\nAngle: " + angle + "\n";
 	}
 }

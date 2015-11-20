@@ -15,7 +15,6 @@ public class Main {
     private static ArrayList<Location> locCopy;
     private static Instance instance;
     private static ArrayList<Edge> edges;
-    //private static ArrayList<Tour> allTours;
     private static double groundAirQuotient;
     private static double kilometerPerHour;
     private static double meterPerSecond;
@@ -116,6 +115,7 @@ public class Main {
 	ArrayList<Tour> allToursCircle = new ArrayList<Tour>();
 	ArrayList<Tour> allToursPizza = new ArrayList<Tour>();
 	ArrayList<Tour> allToursRandom = new ArrayList<Tour>();
+	ArrayList<Tour> allToursSlices = new ArrayList<Tour>();
 	
 	// Here is the Strategy, Tours are built until locations is empty
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
@@ -132,11 +132,17 @@ public class Main {
 	while (!workCopy.isEmpty()) {
 	    allToursPizza.add(findWorkDayPizza(workCopy));
 	}
+	
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursRandom.add(findWorkDayRandom(workCopy));
 	}
-
+	
+	workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursSlices.add(findWorkDaySlices(workCopy));
+	}
+	
 	// Counts time for all Tours
 	int durationOverallClosest = 0;
 	for (Tour tour : allToursClosest) {
@@ -157,12 +163,18 @@ public class Main {
 	for (Tour tour : allToursRandom) {
 	    durationOverallRandom += tour.getDuration();
 	}
+	
+	int durationOverallSlices = 0;
+	for (Tour tour : allToursSlices) {
+	    durationOverallSlices += tour.getDuration();
+	}
 
 	// Some Debug info, like time and Graph
 	System.out.println("Closest Strategy: " + allToursClosest.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
 	System.out.println("Circle Strategy: " + allToursCircle.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
 	System.out.println("Pizza Strategy: " + allToursPizza.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
 	System.out.println("Random Strategy: " + allToursRandom.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
+	System.out.println("Slices Strategy: " + allToursRandom.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
 	long endTime = System.currentTimeMillis();
 	System.out.println("Elapsed Time: " + (endTime - startTime) + "ms");
 	ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
@@ -170,9 +182,18 @@ public class Main {
 	tours.add(allToursCircle);
 	tours.add(allToursPizza);
 	tours.add(allToursRandom);
+	tours.add(allToursSlices);
 	GraphFrame gf = new GraphFrame(tours);
 	gf.repaint();
     }
+
+	private static Tour findWorkDaySlices(ArrayList<Location> locations) {
+	    Tour tour = new Tour();
+		while (tour.addNextStopSlices(locations)) {
+
+		}
+		return tour;
+	}
 
 	/*
 	 * Default
