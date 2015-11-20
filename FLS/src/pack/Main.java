@@ -35,7 +35,7 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-60.xml");
+	File xml = new File("Instance-400.xml");
 
 	// load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);

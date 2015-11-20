@@ -186,6 +186,7 @@ public class Tour {
 		slice10.add(location);
 	    }
 	}
+	//System.out.println(slice1.size()+slice2.size()+slice3.size()+slice4.size()+slice5.size()+slice6.size()+slice7.size()+slice8.size()+slice9.size()+slice10.size());
 	if (!slice1.isEmpty()) {
 	    return addStopSlice(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice1), slice1,locations);
 	} else {

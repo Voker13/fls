@@ -18,7 +18,7 @@ public class MyPanel extends JPanel {
     private int frameHeight;
     private ArrayList<ArrayList<Tour>> tours;
     JCheckBox box1 = new JCheckBox("Strategy: Closest Location");
-    JCheckBox box2 = new JCheckBox("Strategy: Clocest Location + Circle");
+    JCheckBox box2 = new JCheckBox("Strategy: 'Circle'");
     JCheckBox box3 = new JCheckBox("Strategy: Pizza");
     JCheckBox box4 = new JCheckBox("Strategy: Random");
     JCheckBox box5 = new JCheckBox("Strategy: Slices (10)");
