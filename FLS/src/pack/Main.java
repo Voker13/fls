@@ -36,7 +36,7 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-4.xml");
+	File xml = new File("Instance-400.xml");
 
 	// load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
@@ -177,7 +177,7 @@ public class Main {
 	System.out.println("Circle Strategy: " + allToursCircle.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
 	System.out.println("Pizza Strategy: " + allToursPizza.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
 	System.out.println("Random Strategy: " + allToursRandom.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
-	System.out.println("Slices Strategy: " + allToursRandom.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
+	System.out.println("Slices Strategy: " + allToursSlices.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
 	long endTime = System.currentTimeMillis();
 	System.out.println("Elapsed Time: " + (endTime - startTime) + "ms");
 	ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
