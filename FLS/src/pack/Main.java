@@ -36,7 +36,7 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-4.xml");
+	File xml = new File("Instance-400.xml");
 
 	// load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
@@ -130,9 +130,22 @@ public class Main {
 	    allToursCircle.add(findWorkDayCircle(workCopy));
 	}
 
-	workCopy = (ArrayList<Location>) locations.clone();
-	while (!workCopy.isEmpty()) {
-	    allToursPizza.add(findWorkDayPizza(workCopy));
+	//workCopy = (ArrayList<Location>) locations.clone();
+	ArrayList<Location> radius1 = new ArrayList<>();
+	ArrayList<Location> radius2 = new ArrayList<>();
+	for (Location loc : locations) {
+		if (loc.getDistance0()<0.03) {
+			radius1.add(loc);
+		}
+		else {
+			radius2.add(loc);
+		}
+	}
+	while (!radius1.isEmpty()) {
+	    allToursPizza.add(findWorkDayPizza(radius1));
+	}
+	while (!radius2.isEmpty()) {
+	    allToursPizza.add(findWorkDayPizza(radius2));
 	}
 
 	workCopy = (ArrayList<Location>) locations.clone();
@@ -330,9 +343,7 @@ public class Main {
     }
 
     public static Location getLocationWithSmalestAngle(Location currentLocation, ArrayList<Location> locations) {
-	// double currentAngle = currentLocation.getAngle();
-	// System.out.println("currentAngle: " + currentAngle);
-
+	
 	Location smalestAngleLocation = currentLocation;
 	double smalestAngle = 720;
 
@@ -343,15 +354,6 @@ public class Main {
 		smalestAngleLocation = location;
 	    }
 	}
-
-	// for (Location location : locations) {
-	// double angle = location.getAngle();
-	// double DeltaAngle = betrag(angle - currentAngle);
-	// if (DeltaAngle < closestDeltaAngle) {
-	// closestDeltaAngle = DeltaAngle;
-	// closestAngleLocation = location;
-	// }
-	// }
 
 	return smalestAngleLocation;
     }
@@ -364,12 +366,7 @@ public class Main {
 	    }
 	}
 	System.out.println("AngleTourStop 1&2: " + Main.AngleTourStop1 + " : " + Main.getAngleTourStop2());
-	if (Main.getAngleTourStop1() > Main.getAngleTourStop2()) { // wenn wahr,
-								   // dann dreht
-								   // er die
-								   // reihenfolge
-								   // der winkel
-								   // um
+	if (Main.getAngleTourStop1() > Main.getAngleTourStop2()) { // wenn wahr, deht die reihenfolge der winkel um
 	    for (Location location : locations) {
 		location.setAngle(720 - location.getAngle());
 	    }
@@ -395,6 +392,19 @@ public class Main {
 	    }
 	    // System.out.println(location.getAngle());
 	}
+    }
+    
+    public static void bla() {
+    	ArrayList<Location> radius1 = new ArrayList<>();
+    	ArrayList<Location> radius2 = new ArrayList<>();
+    	for (Location loc : locations) {
+    		if (loc.getDistance0()<0.03) {
+    			radius1.add(loc);
+    		}
+    		else {
+    			radius2.add(loc);
+    		}
+    	}
     }
     
     public static void generateDistance0ToLocation() {
