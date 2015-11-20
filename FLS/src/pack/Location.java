@@ -11,6 +11,7 @@ public class Location {
 	private float Long;
 	private String name;
 	private double angle;
+	private double distance0;
 
 	public Location() {
 		
@@ -71,6 +72,14 @@ public class Location {
 
 	public void setAngle(double angle) {
 		this.angle = angle;
+	}
+
+	public double getDistance0() {
+		return distance0;
+	}
+
+	public void setDistance0(double distance0) {
+		this.distance0 = distance0;
 	}
 
 	public String toString() {

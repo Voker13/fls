@@ -54,6 +54,7 @@ public class Main {
 	locations.remove(0);
 
 	generateAngleToLocation();
+	generateDistance0ToLocation();
 
 	// get all Edges
 	edges = (ArrayList<Edge>) instance.getEdges();
@@ -394,6 +395,17 @@ public class Main {
 	    }
 	    // System.out.println(location.getAngle());
 	}
+    }
+    
+    public static void generateDistance0ToLocation() {
+    	double x0 = depot.getLong();
+    	double y0 = depot.getLat();
+    	for (Location location : locations) {
+    		double dx = x0 - location.getLong();
+    	    double dy = y0 - location.getLat();
+    	    location.setDistance0(Math.sqrt((dx*dx)+(dy*dy)));
+    	    //System.out.println("distance0: "+location.getDistance0());
+    	}
     }
 
     public static double getBigger(double x, double y) {
