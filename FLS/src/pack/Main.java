@@ -24,13 +24,14 @@ public class Main {
     private static float maxLong = 0;
     private static Location depot;
     private static Location lastLocation = null;
-    private static double AngleTourStop1;  // wichtig, ob es rechtsherum oder linksherum gehen soll
-    private static double AngleTourStop2;  // wichtig, ob es rechtsherum oder linksherum gehen soll
+    private static double AngleTourStop1; // wichtig, ob es rechtsherum oder
+					  // linksherum gehen soll
+    private static double AngleTourStop2; // wichtig, ob es rechtsherum oder
+					  // linksherum gehen soll
     private static Location TourStop2;
     private static boolean isUsed = false;
 
-
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
@@ -107,63 +108,63 @@ public class Main {
 	meterPerSecond = kilometerPerHour / 3.6F;
 
 	System.out.println("Liste zum 1.: ");
-	for (int i=0; i<locations.size(); i++) {
-		System.out.println("location"+(i+1)+".-->   "+locations.get(i).getLat()+" : "+locations.get(i).getLong()+" : "+locations.get(i).getAngle());
+	for (int i = 0; i < locations.size(); i++) {
+	    System.out.println("location" + (i + 1) + ".-->   " + locations.get(i).getLat() + " : " + locations.get(i).getLong() + " : " + locations.get(i).getAngle());
 	}
-	
+
 	ArrayList<Tour> allToursClosest = new ArrayList<Tour>();
 	ArrayList<Tour> allToursCircle = new ArrayList<Tour>();
 	ArrayList<Tour> allToursPizza = new ArrayList<Tour>();
 	ArrayList<Tour> allToursRandom = new ArrayList<Tour>();
 	ArrayList<Tour> allToursSlices = new ArrayList<Tour>();
-	
+
 	// Here is the Strategy, Tours are built until locations is empty
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursClosest.add(findWorkDay(workCopy));
 	}
-	
+
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursCircle.add(findWorkDayCircle(workCopy));
 	}
-	
+
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursPizza.add(findWorkDayPizza(workCopy));
 	}
-	
+
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursRandom.add(findWorkDayRandom(workCopy));
 	}
-	
+
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursSlices.add(findWorkDaySlices(workCopy));
 	}
-	
+
 	// Counts time for all Tours
 	int durationOverallClosest = 0;
 	for (Tour tour : allToursClosest) {
 	    durationOverallClosest += tour.getDuration();
 	}
-	
+
 	int durationOverallCircle = 0;
 	for (Tour tour : allToursCircle) {
 	    durationOverallCircle += tour.getDuration();
 	}
-	
+
 	int durationOverallPizza = 0;
 	for (Tour tour : allToursPizza) {
 	    durationOverallPizza += tour.getDuration();
 	}
-	
+
 	int durationOverallRandom = 0;
 	for (Tour tour : allToursRandom) {
 	    durationOverallRandom += tour.getDuration();
 	}
-	
+
 	int durationOverallSlices = 0;
 	for (Tour tour : allToursSlices) {
 	    durationOverallSlices += tour.getDuration();
@@ -183,39 +184,52 @@ public class Main {
 	tours.add(allToursPizza);
 	tours.add(allToursRandom);
 	tours.add(allToursSlices);
+	//runStrategyClosest((ArrayList<Location>) locations.clone());
 	GraphFrame gf = new GraphFrame(tours);
 	gf.repaint();
     }
 
-	private static Tour findWorkDaySlices(ArrayList<Location> locations) {
-	    Tour tour = new Tour();
-		while (tour.addNextStopSlices(locations)) {
-
-		}
-		return tour;
+    @SuppressWarnings({ "unused" })
+    private static ArrayList<Tour> runStrategyClosest(ArrayList<Location> workCopy) {
+	ArrayList<Tour> allToursClosest = new ArrayList<Tour>();
+	while (!workCopy.isEmpty()) {
+	    allToursClosest.add(findWorkDay(workCopy));
 	}
-
-	/*
-	 * Default
-	 * 
-	 */
-	
-	private static Tour findWorkDayRandom(ArrayList<Location> locations) {
-	    Tour tour = new Tour();
-		while (tour.addNextStopRandom(locations)) {
-
-		}
-		return tour;
+	int durationOverallClosest = 0;
+	for (Tour tour : allToursClosest) {
+	    durationOverallClosest += tour.getDuration();
 	}
+	return allToursClosest;
+    }
 
-	private static Tour findWorkDay(ArrayList<Location> locations) {
-		Tour tour = new Tour();
-		while (tour.addNextStop(locations)) {
+    private static Tour findWorkDaySlices(ArrayList<Location> locations) {
+	Tour tour = new Tour();
+	while (tour.addNextStopSlices(locations)) {
 
-		}
-		return tour;
-	    }
-	
+	}
+	return tour;
+    }
+
+    /*
+     * Default
+     */
+
+    private static Tour findWorkDayRandom(ArrayList<Location> locations) {
+	Tour tour = new Tour();
+	while (tour.addNextStopRandom(locations)) {
+
+	}
+	return tour;
+    }
+
+    private static Tour findWorkDay(ArrayList<Location> locations) {
+	Tour tour = new Tour();
+	while (tour.addNextStop(locations)) {
+
+	}
+	return tour;
+    }
+
     /*
      * PizzaTactic
      */
@@ -281,11 +295,11 @@ public class Main {
     public static int getIndex(ArrayList<Location> locations, Location location) {
 	for (int i = 0; i < locations.size(); i++) {
 	    if (locations.get(i).equals(location)) {
-	    	
+
 		return i;
 	    }
 	}
-	
+
 	return -1;
     }
 
@@ -294,68 +308,68 @@ public class Main {
 	 *  
 	 * 
 	 */
-    
+
     public static Location findLocationWithSmalestAngle() {
-    	double smalestAngle = 720;
-    	Location locWithSmalestAngle = locations.get(0);  //nicht das depot
-    	for (Location loc : locations) {
-    		if (loc.getAngle()<smalestAngle) {
-    			smalestAngle = loc.getAngle();
-    			locWithSmalestAngle = loc;
-    		}
-    	}
-    	return locWithSmalestAngle;
-    }
-    
-
-	public static Location getLocationWithSmalestAngle(Location currentLocation, ArrayList<Location> locations) {
-//		double currentAngle = currentLocation.getAngle();
-//		System.out.println("currentAngle: " + currentAngle);
-
-		Location smalestAngleLocation = currentLocation;
-		double smalestAngle = 720;
-
-		for (Location location : locations) {
-			double angle = location.getAngle();
-			if (angle < smalestAngle) {
-				smalestAngle = angle;
-				smalestAngleLocation = location;
-			}
-		}
-		
-//		for (Location location : locations) {
-//			double angle = location.getAngle();
-//			double DeltaAngle = betrag(angle - currentAngle);
-//			if (DeltaAngle < closestDeltaAngle) { 
-//				closestDeltaAngle = DeltaAngle;
-//				closestAngleLocation = location;
-//			}
-//		}
-
-		return smalestAngleLocation;
+	double smalestAngle = 720;
+	Location locWithSmalestAngle = locations.get(0); // nicht das depot
+	for (Location loc : locations) {
+	    if (loc.getAngle() < smalestAngle) {
+		smalestAngle = loc.getAngle();
+		locWithSmalestAngle = loc;
+	    }
 	}
-    
-    
-    
+	return locWithSmalestAngle;
+    }
+
+    public static Location getLocationWithSmalestAngle(Location currentLocation, ArrayList<Location> locations) {
+	// double currentAngle = currentLocation.getAngle();
+	// System.out.println("currentAngle: " + currentAngle);
+
+	Location smalestAngleLocation = currentLocation;
+	double smalestAngle = 720;
+
+	for (Location location : locations) {
+	    double angle = location.getAngle();
+	    if (angle < smalestAngle) {
+		smalestAngle = angle;
+		smalestAngleLocation = location;
+	    }
+	}
+
+	// for (Location location : locations) {
+	// double angle = location.getAngle();
+	// double DeltaAngle = betrag(angle - currentAngle);
+	// if (DeltaAngle < closestDeltaAngle) {
+	// closestDeltaAngle = DeltaAngle;
+	// closestAngleLocation = location;
+	// }
+	// }
+
+	return smalestAngleLocation;
+    }
+
     public static void generateAngleToLocation(Location loc) {
-    	for (Location location : locations) {
-		    double angle = location.getAngle();
-			if (angle<Main.getAngleTourStop2()) {
-		    	location.setAngle(angle+360);
-		    }
-		}
-    	System.out.println("AngleTourStop 1&2: " + Main.AngleTourStop1 + " : " + Main.getAngleTourStop2());
-    	if (Main.getAngleTourStop1()>Main.getAngleTourStop2()) { //wenn wahr, dann dreht er die reihenfolge der winkel um
-    		for (Location location : locations) {
-    		    location.setAngle(720-location.getAngle());
-    		}
-    		System.out.println(true);
-    	}
-    	
-    }	
-    
-    
-    
+	for (Location location : locations) {
+	    double angle = location.getAngle();
+	    if (angle < Main.getAngleTourStop2()) {
+		location.setAngle(angle + 360);
+	    }
+	}
+	System.out.println("AngleTourStop 1&2: " + Main.AngleTourStop1 + " : " + Main.getAngleTourStop2());
+	if (Main.getAngleTourStop1() > Main.getAngleTourStop2()) { // wenn wahr,
+								   // dann dreht
+								   // er die
+								   // reihenfolge
+								   // der winkel
+								   // um
+	    for (Location location : locations) {
+		location.setAngle(720 - location.getAngle());
+	    }
+	    System.out.println(true);
+	}
+
+    }
+
     public static void generateAngleToLocation() {
 	double x0 = depot.getLong();
 	double y0 = depot.getLat();
@@ -501,38 +515,37 @@ public class Main {
     public static void setLastLocation(Location lastLocation) {
 	Main.lastLocation = lastLocation;
     }
-    
+
     public static double getAngleTourStop1() {
-		return AngleTourStop1;
-	}
+	return AngleTourStop1;
+    }
 
-	public static void setAngleTourStop1(double angleTourStop1) {
-		AngleTourStop1 = angleTourStop1;
-	}
+    public static void setAngleTourStop1(double angleTourStop1) {
+	AngleTourStop1 = angleTourStop1;
+    }
 
-	public static double getAngleTourStop2() {
-		return AngleTourStop2;
-	}
+    public static double getAngleTourStop2() {
+	return AngleTourStop2;
+    }
 
-	public static void setAngleTourStop2(double angleTourStop2) {
-		AngleTourStop2 = angleTourStop2;
-	}
+    public static void setAngleTourStop2(double angleTourStop2) {
+	AngleTourStop2 = angleTourStop2;
+    }
 
-	public static Location getTourStop2() {
-		return TourStop2;
-	}
+    public static Location getTourStop2() {
+	return TourStop2;
+    }
 
-	public static void setTourStop2(Location tourStop2) {
-		TourStop2 = tourStop2;
-	}
+    public static void setTourStop2(Location tourStop2) {
+	TourStop2 = tourStop2;
+    }
 
-	public static boolean isUsed() {
-		return isUsed;
-	}
+    public static boolean isUsed() {
+	return isUsed;
+    }
 
-	public static void setUsed(boolean isUsed) {
-		Main.isUsed = isUsed;
-	}
-
+    public static void setUsed(boolean isUsed) {
+	Main.isUsed = isUsed;
+    }
 
 }
