@@ -61,17 +61,18 @@ public class Tour {
 	public boolean addNextStopPizza() {
 		if (!Main.getLocations().isEmpty()) {
 //			System.out.println("toruStops.size: " + tourStops.size());
-			if (tourStops.size() == 1) {
+			if (!Main.isUsed() && tourStops.size() == 1) {
 
 				Location loc = Main.findClosestLocation(tourStops.get(tourStops.size() -1), Main.getLocations());
 				Main.setAngleTourStop1(loc.getAngle());
 				return addStop(loc);
 
-			} else if (tourStops.size() == 2) {
+			} else if (!Main.isUsed() && tourStops.size() == 2) {
 
 				Location loc2 = Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations());
 				Main.setAngleTourStop2(loc2.getAngle());
 				Main.generateAngleToLocation(Main.getTourStop2()); //wichtig! für die winkelfunktion ---> ordnet die winkel neu!
+				Main.setUsed(true);
 				return addStop(loc2);
 
 			} else {

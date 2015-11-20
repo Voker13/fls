@@ -28,6 +28,7 @@ public class Main {
     private static double AngleTourStop1;  // wichtig, ob es rechtsherum oder linksherum gehen soll
     private static double AngleTourStop2;  // wichtig, ob es rechtsherum oder linksherum gehen soll
     private static Location TourStop2;
+    private static boolean isUsed = false;
 
 
 	@SuppressWarnings("unchecked")
@@ -467,6 +468,14 @@ public class Main {
 
 	public static void setTourStop2(Location tourStop2) {
 		TourStop2 = tourStop2;
+	}
+
+	public static boolean isUsed() {
+		return isUsed;
+	}
+
+	public static void setUsed(boolean isUsed) {
+		Main.isUsed = isUsed;
 	}
 
 
