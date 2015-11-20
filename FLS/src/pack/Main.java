@@ -172,6 +172,11 @@ public class Main {
 	    durationOverallSlices += tour.getDuration();
 	}
 
+	for(int i = 0; i < allToursSlices.size(); i++) {
+	    System.err.println(allToursSlices.get(i).getTourStops().get(1).getName()+ " " + i);
+	    System.err.println(allToursSlices.get(i).getTourStops().get(allToursSlices.get(i).getTourStops().size()-1).getName() + " " + i);
+	}
+
 	// Some Debug info, like time and Graph
 	System.out.println("Closest Strategy: " + allToursClosest.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
 	System.out.println("Circle Strategy: " + allToursCircle.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
