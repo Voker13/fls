@@ -96,6 +96,7 @@ public class Main {
 		distanceGroundCalculated += getDistance(depot, locations.get(i)) * groundAirQuotient;
 	    }
 	}
+	//this below is what we also need to improve, the calculated value is twice as much as the real value!
 	System.out.println(distanceGroundCalculated + " " + distanceGround);
 
 	// Calculate avarage speed
@@ -185,16 +186,12 @@ public class Main {
     }
 
     public static Location findClosestLocation(Location location, ArrayList<Location> locations) {
-	long startTime = System.currentTimeMillis();
 	Location returnLocation = locations.get(0);
 	for (int i = 1; i < locations.size(); i++) {
 	    if ((getDistance(location, locations.get(i)) < getDistance(returnLocation, location))) {
 		returnLocation = locations.get(i);
 	    }
 	}
-
-	long endTime = System.currentTimeMillis();
-	System.out.println("Elapsed Time for finding closest Place: " + (endTime - startTime) + "ms");
 	return returnLocation;
     }
 
