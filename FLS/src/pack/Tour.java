@@ -155,34 +155,34 @@ public class Tour {
 	ArrayList<Location> slice9 = new ArrayList<>();
 	ArrayList<Location> slice10 = new ArrayList<>();
 	for (Location location : locations) {
-	    if (location.getAngle() >= 0 && location.getAngle() < 36) {
+	    if (location.getAngle()%360 >= 0 && location.getAngle()%360 < 36) {
 		slice1.add(location);
 	    }
-	    if (location.getAngle() >= 36 && location.getAngle() < 72) {
+	    if (location.getAngle()%360 >= 36 && location.getAngle()%360 < 72) {
 		slice2.add(location);
 	    }
-	    if (location.getAngle() >= 72 && location.getAngle() < 108) {
+	    if (location.getAngle()%360 >= 72 && location.getAngle()%360 < 108) {
 		slice3.add(location);
 	    }
-	    if (location.getAngle() >= 108 && location.getAngle() < 144) {
+	    if (location.getAngle()%360 >= 108 && location.getAngle()%360 < 144) {
 		slice4.add(location);
 	    }
-	    if (location.getAngle() >= 144 && location.getAngle() < 180) {
+	    if (location.getAngle()%360 >= 144 && location.getAngle()%360 < 180) {
 		slice5.add(location);
 	    }
-	    if (location.getAngle() >= 180 && location.getAngle() < 216) {
+	    if (location.getAngle()%360 >= 180 && location.getAngle()%360 < 216) {
 		slice6.add(location);
 	    }
-	    if (location.getAngle() >= 216 && location.getAngle() < 252) {
+	    if (location.getAngle()%360 >= 216 && location.getAngle()%360 < 252) {
 		slice7.add(location);
 	    }
-	    if (location.getAngle() >= 252 && location.getAngle() < 288) {
+	    if (location.getAngle()%360 >= 252 && location.getAngle()%360 < 288) {
 		slice8.add(location);
 	    }
-	    if (location.getAngle() >= 288 && location.getAngle() < 324) {
+	    if (location.getAngle()%360 >= 288 && location.getAngle()%360 < 324) {
 		slice9.add(location);
 	    }
-	    if (location.getAngle() >= 324 && location.getAngle() < 360) {
+	    if (location.getAngle()%360 >= 324 && location.getAngle()%360 < 360) {
 		slice10.add(location);
 	    }
 	}

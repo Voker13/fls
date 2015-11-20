@@ -36,7 +36,7 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-400.xml");
+	File xml = new File("Instance-4.xml");
 
 	// load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
@@ -139,10 +139,12 @@ public class Main {
 	    allToursRandom.add(findWorkDayRandom(workCopy));
 	}
 
+	
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursSlices.add(findWorkDaySlices(workCopy));
 	}
+	
 
 	// Counts time for all Tours
 	int durationOverallClosest = 0;
