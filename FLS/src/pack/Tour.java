@@ -118,4 +118,10 @@ public class Tour {
 			}
 		}
 	}
+
+	public boolean addNextStopRandom() {
+	    return Main.getLocations().isEmpty() ? false
+			: addStop(Main.getLocations().get((int)(Math.random()*Main.getLocations().size())));
+
+	}
 }

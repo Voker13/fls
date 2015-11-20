@@ -118,7 +118,8 @@ public class Main {
 	while (!locations.isEmpty()) {
 	    // allTours.add(findWorkDay());
 	    // allTours.add(findWorkDayCircle());
-	    allTours.add(findWorkDayPizza());
+	    // allTours.add(findWorkDayPizza());
+	    allTours.add(findWorkDayRandom());
 	}
 
 	// Counts time for all Tours
@@ -140,6 +141,14 @@ public class Main {
 	 * 
 	 */
 	
+	private static Tour findWorkDayRandom() {
+	    Tour tour = new Tour();
+		while (tour.addNextStopRandom()) {
+
+		}
+		return tour;
+	}
+
 	private static Tour findWorkDay() {
 		Tour tour = new Tour();
 		while (tour.addNextStop()) {
