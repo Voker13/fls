@@ -96,8 +96,7 @@ public class Main {
 		distanceGroundCalculated += getDistance(depot, locations.get(i)) * groundAirQuotient;
 	    }
 	}
-	//this below is what we also need to improve, the calculated value is twice as much as the real value!
-	System.out.println(distanceGroundCalculated + " " + distanceGround);
+	System.out.println("Calculated Value: " + distanceGroundCalculated + " " + "Real Value: " + distanceGround);
 
 	// Calculate avarage speed
 	int time = 0;

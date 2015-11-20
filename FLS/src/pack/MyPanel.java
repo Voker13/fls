@@ -27,7 +27,6 @@ public class MyPanel extends JPanel {
 	
 	JButton showTours = new JButton("Show Tours");
 	showTours.setSize(new Dimension(200,50));
-	System.out.println(width + " " + height);
 	showTours.setLocation(width - 230,height/2 - 50);
 	showTours.addActionListener(new ActionListener() {
 
@@ -58,7 +57,6 @@ public class MyPanel extends JPanel {
 	super.paintComponent(g);
 	if (drawTours) {
 	    g.setColor(Color.BLACK);
-	    System.out.println("paintComponent called()");
 	    for (Tour tour : Main.getAllTours()) {
 		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
 		    g.drawLine(20+(int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())),20+ (int) ((tour.getTourStops()
@@ -68,7 +66,6 @@ public class MyPanel extends JPanel {
 	}
 	if (drawLocations) {
 	    g.setColor(Color.BLACK);
-	    System.out.println("paintComponent called()");
 	    for (Location location : Main.getLocCopy()) {
 		g.fillOval(20+(int) ((location.getLat()-Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),18+ (int) ((location.getLong()-Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())), 4, 4);
 		g.drawOval(20+(int) ((location.getLat()-Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),18+ (int) ((location.getLong()-Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())), 4, 4);
