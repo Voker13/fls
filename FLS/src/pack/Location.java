@@ -24,7 +24,6 @@ public class Location {
 			Long /= 10;
 		}
 		this.name = Name;
-		Main.generateAngleToLocation();
 	}
 
 	@XmlAttribute(name = "Duration")
