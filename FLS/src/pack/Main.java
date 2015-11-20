@@ -115,11 +115,12 @@ public class Main {
 	}
 	
 	// Here is the Strategy, Tours are built until locations is empty
-	while (!locations.isEmpty()) {
-	    // allTours.add(findWorkDay());
-	    // allTours.add(findWorkDayCircle());
-	    // allTours.add(findWorkDayPizza());
-	    allTours.add(findWorkDayRandom());
+	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    //allTours.add(findWorkDay(workCopy));
+	    //allTours.add(findWorkDayCircle(workCopy));
+	    //allTours.add(findWorkDayPizza(workCopy));
+	    allTours.add(findWorkDayRandom(workCopy));
 	}
 
 	// Counts time for all Tours
@@ -141,17 +142,17 @@ public class Main {
 	 * 
 	 */
 	
-	private static Tour findWorkDayRandom() {
+	private static Tour findWorkDayRandom(ArrayList<Location> locations) {
 	    Tour tour = new Tour();
-		while (tour.addNextStopRandom()) {
+		while (tour.addNextStopRandom(locations)) {
 
 		}
 		return tour;
 	}
 
-	private static Tour findWorkDay() {
+	private static Tour findWorkDay(ArrayList<Location> locations) {
 		Tour tour = new Tour();
-		while (tour.addNextStop()) {
+		while (tour.addNextStop(locations)) {
 
 		}
 		return tour;
@@ -161,10 +162,10 @@ public class Main {
      * PizzaTactic
      */
 
-    private static Tour findWorkDayPizza() {
+    private static Tour findWorkDayPizza(ArrayList<Location> locations) {
 	Tour tour = new Tour();
 	generateAngleToLocation();
-	while (tour.addNextStopPizza()) {
+	while (tour.addNextStopPizza(locations)) {
 
 	}
 	System.out.println(tour.getDuration() + " " + tour.getTourStops());
@@ -174,9 +175,9 @@ public class Main {
     /*
      * The solution needs even longer than findWorkDay()
      */
-    private static Tour findWorkDayCircle() {
+    private static Tour findWorkDayCircle(ArrayList<Location> locations) {
 	Tour tour = new Tour();
-	while (tour.addNextStopCircle()) {
+	while (tour.addNextStopCircle(locations)) {
 
 	}
 	System.out.println(tour.getDuration() + " " + tour.getTourStops());
@@ -223,7 +224,7 @@ public class Main {
 	return null;
     }
 
-    public static int getIndex(Location location) {
+    public static int getIndex(ArrayList<Location> locations, Location location) {
 	for (int i = 0; i < locations.size(); i++) {
 	    if (locations.get(i).equals(location)) {
 	    	
