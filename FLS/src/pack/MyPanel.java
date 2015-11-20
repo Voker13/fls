@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -15,10 +16,12 @@ public class MyPanel extends JPanel {
     private boolean drawLocations = true;
     private int frameWidth;
     private int frameHeight;
+    private ArrayList<ArrayList<Tour>> tours;
 
     private static final long serialVersionUID = 1L;
 
-    public MyPanel(int width, int height) {
+    public MyPanel(int width, int height, ArrayList<ArrayList<Tour>> tours) {
+	this.tours = tours;
 	this.setBackground(Color.WHITE);
 	this.setLayout(null);
 	this.setVisible(true);
@@ -57,7 +60,7 @@ public class MyPanel extends JPanel {
 	super.paintComponent(g);
 	if (drawTours) {
 	    g.setColor(Color.BLACK);
-	    for (Tour tour : Main.getAllTours()) {
+	    for (Tour tour : tours.get(0)) {
 		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
 		    g.drawLine(20+(int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())),20+ (int) ((tour.getTourStops()
 			    .get(i + 1).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())));

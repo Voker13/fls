@@ -15,7 +15,7 @@ public class Main {
     private static ArrayList<Location> locCopy;
     private static Instance instance;
     private static ArrayList<Edge> edges;
-    private static ArrayList<Tour> allTours;
+    //private static ArrayList<Tour> allTours;
     private static double groundAirQuotient;
     private static double kilometerPerHour;
     private static double meterPerSecond;
@@ -57,8 +57,6 @@ public class Main {
 
 	// get all Edges
 	edges = (ArrayList<Edge>) instance.getEdges();
-
-	allTours = new ArrayList<Tour>();
 
 	// Calculate Quotient and get Min-/max Long and Lat
 	int distanceAir = 0;
@@ -114,26 +112,65 @@ public class Main {
 		System.out.println("location"+(i+1)+".-->   "+locations.get(i).getLat()+" : "+locations.get(i).getLong()+" : "+locations.get(i).getAngle());
 	}
 	
+	ArrayList<Tour> allToursClosest = new ArrayList<Tour>();
+	ArrayList<Tour> allToursCircle = new ArrayList<Tour>();
+	ArrayList<Tour> allToursPizza = new ArrayList<Tour>();
+	ArrayList<Tour> allToursRandom = new ArrayList<Tour>();
+	
 	// Here is the Strategy, Tours are built until locations is empty
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
-	    //allTours.add(findWorkDay(workCopy));
-	    //allTours.add(findWorkDayCircle(workCopy));
-	    //allTours.add(findWorkDayPizza(workCopy));
-	    allTours.add(findWorkDayRandom(workCopy));
+	    allToursClosest.add(findWorkDay(workCopy));
+	}
+	
+	workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursCircle.add(findWorkDayCircle(workCopy));
+	}
+	
+	workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursPizza.add(findWorkDayPizza(workCopy));
+	}
+	workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursRandom.add(findWorkDayRandom(workCopy));
 	}
 
 	// Counts time for all Tours
-	int durationOverall = 0;
-	for (Tour tour : allTours) {
-	    durationOverall += tour.getDuration();
+	int durationOverallClosest = 0;
+	for (Tour tour : allToursClosest) {
+	    durationOverallClosest += tour.getDuration();
+	}
+	
+	int durationOverallCircle = 0;
+	for (Tour tour : allToursCircle) {
+	    durationOverallCircle += tour.getDuration();
+	}
+	
+	int durationOverallPizza = 0;
+	for (Tour tour : allToursPizza) {
+	    durationOverallPizza += tour.getDuration();
+	}
+	
+	int durationOverallRandom = 0;
+	for (Tour tour : allToursRandom) {
+	    durationOverallRandom += tour.getDuration();
 	}
 
 	// Some Debug info, like time and Graph
-	System.out.println(allTours.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverall + " Minuten");
+	System.out.println("Closest Strategy: " + allToursClosest.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
+	System.out.println("Circle Strategy: " + allToursCircle.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
+	System.out.println("Pizza Strategy: " + allToursPizza.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
+	System.out.println("Random Strategy: " + allToursRandom.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
 	long endTime = System.currentTimeMillis();
 	System.out.println("Elapsed Time: " + (endTime - startTime) + "ms");
-	GraphFrame gf = new GraphFrame();
+	ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
+	tours.add(allToursClosest);
+	tours.add(allToursCircle);
+	tours.add(allToursPizza);
+	tours.add(allToursRandom);
+	GraphFrame gf = new GraphFrame(tours);
 	gf.repaint();
     }
 
@@ -370,14 +407,6 @@ public class Main {
 
     public static void setEdges(ArrayList<Edge> edges) {
 	Main.edges = edges;
-    }
-
-    public static ArrayList<Tour> getAllTours() {
-	return allTours;
-    }
-
-    public static void setAllTours(ArrayList<Tour> allTours) {
-	Main.allTours = allTours;
     }
 
     public static double getGroundAirQuotient() {
