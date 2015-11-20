@@ -72,7 +72,7 @@ public class Tour {
 				Location loc2 = Main.findClosestLocation(tourStops.get(tourStops.size() - 1), Main.getLocations());
 				Main.setAngleTourStop2(loc2.getAngle());
 				Main.generateAngleToLocation(Main.getTourStop2()); //wichtig! für die winkelfunktion ---> ordnet die winkel neu!
-				Main.setUsed(true);
+				Main.setUsed(true); // if true: benutzt die beiden ifups nur ein einziges mal
 				return addStop(loc2);
 
 			} else {
