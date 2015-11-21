@@ -222,4 +222,9 @@ public class Tour {
 	    }
 	}
     }
+
+    public boolean addNextStopFarToClose(ArrayList<Location> locations) {
+	return locations.isEmpty() ? false : tourStops.size()==1 ? addStop(Main.findFarthestLocation(tourStops.get(0), locations),locations) : addStop(Main.findClosestLocation(tourStops.get(tourStops.size()-1),locations), locations);
+	//return locations.isEmpty() ? false : tourStops.size()==1 ? addStop(Main.findFarthestLocation(tourStops.get(0), locations),locations) : addStop(Main.findClosestLocationGoingToTheMiddle(tourStops.get(tourStops.size()-1),locations), locations);
+    }
 }

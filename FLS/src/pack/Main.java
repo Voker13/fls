@@ -118,6 +118,7 @@ public class Main {
 	ArrayList<Tour> allToursPizza = new ArrayList<Tour>();
 	ArrayList<Tour> allToursRandom = new ArrayList<Tour>();
 	ArrayList<Tour> allToursSlices = new ArrayList<Tour>();
+	ArrayList<Tour> allToursFarToClose = new ArrayList<Tour>();
 
 	// Here is the Strategy, Tours are built until locations is empty
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
@@ -130,16 +131,15 @@ public class Main {
 	    allToursCircle.add(findWorkDayCircle(workCopy));
 	}
 
-	//workCopy = (ArrayList<Location>) locations.clone();
+	// workCopy = (ArrayList<Location>) locations.clone();
 	ArrayList<Location> radius1 = new ArrayList<>();
 	ArrayList<Location> radius2 = new ArrayList<>();
 	for (Location loc : locations) {
-		if (loc.getDistance0()<0.03) {
-			radius1.add(loc);
-		}
-		else {
-			radius2.add(loc);
-		}
+	    if (loc.getDistance0() < 0.03) {
+		radius1.add(loc);
+	    } else {
+		radius2.add(loc);
+	    }
 	}
 	while (!radius1.isEmpty()) {
 	    allToursPizza.add(findWorkDayPizza(radius1));
@@ -153,12 +153,15 @@ public class Main {
 	    allToursRandom.add(findWorkDayRandom(workCopy));
 	}
 
-	
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursSlices.add(findWorkDaySlices(workCopy));
 	}
-	
+
+	workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursFarToClose.add(findWorkDayFarToClose(workCopy));
+	}
 
 	// Counts time for all Tours
 	int durationOverallClosest = 0;
@@ -186,9 +189,14 @@ public class Main {
 	    durationOverallSlices += tour.getDuration();
 	}
 
-	for(int i = 0; i < allToursSlices.size(); i++) {
-	    System.err.println(allToursSlices.get(i).getTourStops().get(1).getName()+ " " + i);
-	    System.err.println(allToursSlices.get(i).getTourStops().get(allToursSlices.get(i).getTourStops().size()-1).getName() + " " + i);
+	int durationOverallFarToClose = 0;
+	for (Tour tour : allToursFarToClose) {
+	    durationOverallFarToClose += tour.getDuration();
+	}
+
+	for (int i = 0; i < allToursSlices.size(); i++) {
+	    System.err.println(allToursSlices.get(i).getTourStops().get(1).getName() + " " + i);
+	    System.err.println(allToursSlices.get(i).getTourStops().get(allToursSlices.get(i).getTourStops().size() - 1).getName() + " " + i);
 	}
 
 	// Some Debug info, like time and Graph
@@ -197,6 +205,7 @@ public class Main {
 	System.out.println("Pizza Strategy: " + allToursPizza.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
 	System.out.println("Random Strategy: " + allToursRandom.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
 	System.out.println("Slices Strategy: " + allToursRandom.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
+	System.out.println("FarToClose Strategy: " + allToursFarToClose.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
 	long endTime = System.currentTimeMillis();
 	System.out.println("Elapsed Time: " + (endTime - startTime) + "ms");
 	ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
@@ -205,7 +214,8 @@ public class Main {
 	tours.add(allToursPizza);
 	tours.add(allToursRandom);
 	tours.add(allToursSlices);
-	//runStrategyClosest((ArrayList<Location>) locations.clone());
+	tours.add(allToursFarToClose);
+	// runStrategyClosest((ArrayList<Location>) locations.clone());
 	GraphFrame gf = new GraphFrame(tours);
 	gf.repaint();
     }
@@ -234,6 +244,14 @@ public class Main {
     /*
      * Default
      */
+
+    private static Tour findWorkDayFarToClose(ArrayList<Location> locations) {
+	Tour tour = new Tour();
+	while (tour.addNextStopFarToClose(locations)) {
+
+	}
+	return tour;
+    }
 
     private static Tour findWorkDayRandom(ArrayList<Location> locations) {
 	Tour tour = new Tour();
@@ -283,6 +301,35 @@ public class Main {
 	    if ((getDistance(location, locations.get(i)) < getDistance(returnLocation, location))) {
 		returnLocation = locations.get(i);
 	    }
+	}
+	return returnLocation;
+    }
+
+    public static Location findFarthestLocation(Location location, ArrayList<Location> locations) {
+	Location returnLocation = locations.get(0);
+	for (int i = 1; i < locations.size(); i++) {
+	    if ((getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
+		returnLocation = locations.get(i);
+	    }
+	}
+	return returnLocation;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Location findClosestLocationGoingToTheMiddle(Location location, ArrayList<Location> locations) {
+	ArrayList<Location> copy = (ArrayList<Location>) locations.clone();
+	Location returnLocation = locations.get(0);
+	Location closestLocation = locations.get(0);
+	for (int i = 1; i < copy.size(); i++) {
+	    if ((getDistance(location, copy.get(i)) < getDistance(returnLocation, location))) {
+		closestLocation = copy.get(i);
+	    }
+	}
+	if (getDistance(closestLocation, depot) < getDistance(location, depot)) {
+	    returnLocation = closestLocation;
+	} else {
+	    copy.remove(getIndex(copy,closestLocation));
+	    returnLocation = findClosestLocation(location,copy);
 	}
 	return returnLocation;
     }
@@ -343,7 +390,7 @@ public class Main {
     }
 
     public static Location getLocationWithSmalestAngle(Location currentLocation, ArrayList<Location> locations) {
-	
+
 	Location smalestAngleLocation = currentLocation;
 	double smalestAngle = 720;
 
@@ -366,7 +413,11 @@ public class Main {
 	    }
 	}
 	System.out.println("AngleTourStop 1&2: " + Main.AngleTourStop1 + " : " + Main.getAngleTourStop2());
-	if (Main.getAngleTourStop1() > Main.getAngleTourStop2()) { // wenn wahr, deht die reihenfolge der winkel um
+	if (Main.getAngleTourStop1() > Main.getAngleTourStop2()) { // wenn wahr,
+								   // deht die
+								   // reihenfolge
+								   // der winkel
+								   // um
 	    for (Location location : locations) {
 		location.setAngle(720 - location.getAngle());
 	    }
@@ -393,29 +444,28 @@ public class Main {
 	    // System.out.println(location.getAngle());
 	}
     }
-    
+
     public static void bla() {
-    	ArrayList<Location> radius1 = new ArrayList<>();
-    	ArrayList<Location> radius2 = new ArrayList<>();
-    	for (Location loc : locations) {
-    		if (loc.getDistance0()<0.03) {
-    			radius1.add(loc);
-    		}
-    		else {
-    			radius2.add(loc);
-    		}
-    	}
+	ArrayList<Location> radius1 = new ArrayList<>();
+	ArrayList<Location> radius2 = new ArrayList<>();
+	for (Location loc : locations) {
+	    if (loc.getDistance0() < 0.03) {
+		radius1.add(loc);
+	    } else {
+		radius2.add(loc);
+	    }
+	}
     }
-    
+
     public static void generateDistance0ToLocation() {
-    	double x0 = depot.getLong();
-    	double y0 = depot.getLat();
-    	for (Location location : locations) {
-    		double dx = x0 - location.getLong();
-    	    double dy = y0 - location.getLat();
-    	    location.setDistance0(Math.sqrt((dx*dx)+(dy*dy)));
-    	    //System.out.println("distance0: "+location.getDistance0());
-    	}
+	double x0 = depot.getLong();
+	double y0 = depot.getLat();
+	for (Location location : locations) {
+	    double dx = x0 - location.getLong();
+	    double dy = y0 - location.getLat();
+	    location.setDistance0(Math.sqrt((dx * dx) + (dy * dy)));
+	    // System.out.println("distance0: "+location.getDistance0());
+	}
     }
 
     public static double getBigger(double x, double y) {
