@@ -36,7 +36,12 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-60.xml");
+	File xml = null;
+	if (args.length == 0) {
+	xml = new File("Instance-4.xml");
+	} else {
+	    xml = new File(args[0]);
+	}
 
 	// load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
@@ -95,7 +100,7 @@ public class Main {
 		distanceGroundCalculated += getDistance(depot, locations.get(i)) * groundAirQuotient;
 	    }
 	}
-	System.err.println("Calculated Value: " + distanceGroundCalculated + " " + "Real Value: " + distanceGround);
+	//System.err.println("Calculated Value: " + distanceGroundCalculated + " " + "Real Value: " + distanceGround);
 
 	// Calculate avarage speed
 	int time = 0;
@@ -108,9 +113,9 @@ public class Main {
 	kilometerPerHour = (distanceGround * 60) / (time);
 	meterPerSecond = kilometerPerHour / 3.6F;
 
-	System.err.println("Liste zum 1.: ");
+	//System.err.println("Liste zum 1.: ");
 	for (int i = 0; i < locations.size(); i++) {
-	    System.err.println("location" + (i + 1) + ".-->   " + locations.get(i).getLat() + " : " + locations.get(i).getLong() + " : " + locations.get(i).getAngle());
+	    //System.err.println("location" + (i + 1) + ".-->   " + locations.get(i).getLat() + " : " + locations.get(i).getLong() + " : " + locations.get(i).getAngle());
 	}
 
 	ArrayList<Tour> allToursClosest = new ArrayList<Tour>();
@@ -205,21 +210,18 @@ public class Main {
 	    durationOverallSlicePlusFar += tour.getDuration();
 	}
 
-	for (int i = 0; i < allToursSlices.size(); i++) {
-	    System.err.println(allToursSlices.get(i).getTourStops().get(1).getName() + " " + i);
-	    System.err.println(allToursSlices.get(i).getTourStops().get(allToursSlices.get(i).getTourStops().size() - 1).getName() + " " + i);
-	}
-
 	// Some Debug info, like time and Graph
-	System.err.println("Closest Strategy: " + (allToursClosest.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
-	System.err.println("Circle Strategy: " + (allToursCircle.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
-	System.err.println("Pizza Strategy: " + (allToursPizza.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
-	System.err.println("Random Strategy: " + (allToursRandom.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
-	System.err.println("Slices Strategy: " + (allToursRandom.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
-	System.err.println("FarToClose Strategy: " + (allToursFarToClose.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
-	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
+	/*
+	//System.err.println("Closest Strategy: " + (allToursClosest.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
+	//System.err.println("Circle Strategy: " + (allToursCircle.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
+	//System.err.println("Pizza Strategy: " + (allToursPizza.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
+	//System.err.println("Random Strategy: " + (allToursRandom.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
+	//System.err.println("Slices Strategy: " + (allToursRandom.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
+	//System.err.println("FarToClose Strategy: " + (allToursFarToClose.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
+	//System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size() - 1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
+	
 	long endTime = System.currentTimeMillis();
-	System.err.println("Elapsed Time: " + (endTime - startTime) + "ms");
+	//System.err.println("Elapsed Time: " + (endTime - startTime) + "ms");
 	ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
 	tours.add(allToursClosest);
 	tours.add(allToursCircle);
@@ -228,10 +230,11 @@ public class Main {
 	tours.add(allToursSlices);
 	tours.add(allToursFarToClose);
 	tours.add(allToursSlicePlusFar);
+	*/
 	// runStrategyClosest((ArrayList<Location>) locations.clone());
-	System.out.println(durationOverallSlices);
-	GraphFrame gf = new GraphFrame(tours);
-	gf.repaint();
+	System.out.println("SOLUTION " + durationOverallSlices);
+	//GraphFrame gf = new GraphFrame(tours);
+	//gf.repaint();
     }
 
     @SuppressWarnings({ "unused" })
@@ -301,7 +304,7 @@ public class Main {
 	while (tour.addNextStopPizza(locations)) {
 
 	}
-	System.err.println(tour.getDuration() + " " + tour.getTourStops());
+	//System.err.println(tour.getDuration() + " " + tour.getTourStops());
 	return tour;
     }
 
@@ -313,7 +316,7 @@ public class Main {
 	while (tour.addNextStopCircle(locations)) {
 
 	}
-	System.err.println(tour.getDuration() + " " + tour.getTourStops());
+	//System.err.println(tour.getDuration() + " " + tour.getTourStops());
 	return tour;
     }
 
@@ -434,7 +437,7 @@ public class Main {
 		location.setAngle(angle + 360);
 	    }
 	}
-	System.err.println("AngleTourStop 1&2: " + Main.AngleTourStop1 + " : " + Main.getAngleTourStop2());
+	//System.err.println("AngleTourStop 1&2: " + Main.AngleTourStop1 + " : " + Main.getAngleTourStop2());
 	if (Main.getAngleTourStop1() > Main.getAngleTourStop2()) { // wenn wahr,
 								   // deht die
 								   // reihenfolge
@@ -443,7 +446,7 @@ public class Main {
 	    for (Location location : locations) {
 		location.setAngle(720 - location.getAngle());
 	    }
-	    System.err.println(true);
+	    //System.err.println(true);
 	}
 
     }
@@ -463,7 +466,7 @@ public class Main {
 	    } else if (dx >= 0 && dy < 0) {
 		location.setAngle(Math.toDegrees(Math.atan(dy / dx)) + 360);
 	    }
-	    // System.err.println(location.getAngle());
+	    // //System.err.println(location.getAngle());
 	}
     }
 
@@ -486,7 +489,7 @@ public class Main {
 	    double dx = x0 - location.getLong();
 	    double dy = y0 - location.getLat();
 	    location.setDistance0(Math.sqrt((dx * dx) + (dy * dy)));
-	    // System.err.println("distance0: "+location.getDistance0());
+	    // //System.err.println("distance0: "+location.getDistance0());
 	}
     }
 

@@ -85,7 +85,7 @@ public class Tour {
 		Location loc2 = Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations);
 		Main.setAngleTourStop2(loc2.getAngle());
 		Main.generateAngleToLocation(Main.getTourStop2()); // wichtig!
-								   // für die
+								   // fuer die
 								   // winkelfunktion
 								   // --->
 								   // ordnet die
