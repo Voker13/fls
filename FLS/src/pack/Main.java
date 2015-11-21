@@ -36,7 +36,7 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-400.xml");
+	File xml = new File("Instance-80.xml");
 
 	// load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
@@ -200,12 +200,12 @@ public class Main {
 	}
 
 	// Some Debug info, like time and Graph
-	System.out.println("Closest Strategy: " + allToursClosest.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
-	System.out.println("Circle Strategy: " + allToursCircle.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
-	System.out.println("Pizza Strategy: " + allToursPizza.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
-	System.out.println("Random Strategy: " + allToursRandom.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
-	System.out.println("Slices Strategy: " + allToursRandom.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
-	System.out.println("FarToClose Strategy: " + allToursFarToClose.size() + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
+	System.out.println("Closest Strategy: " + (allToursClosest.size()-1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
+	System.out.println("Circle Strategy: " + (allToursCircle.size()-1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
+	System.out.println("Pizza Strategy: " + (allToursPizza.size()-1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
+	System.out.println("Random Strategy: " + (allToursRandom.size()-1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
+	System.out.println("Slices Strategy: " + (allToursRandom.size()-1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
+	System.out.println("FarToClose Strategy: " + (allToursFarToClose.size()-1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
 	long endTime = System.currentTimeMillis();
 	System.out.println("Elapsed Time: " + (endTime - startTime) + "ms");
 	ArrayList<ArrayList<Tour>> tours = new ArrayList<>();

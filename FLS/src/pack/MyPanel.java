@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 public class MyPanel extends JPanel {
 
     private boolean drawLocations = true;
+    private boolean showNumbers = true;
     private int frameWidth;
     private int frameHeight;
     private ArrayList<ArrayList<Tour>> tours;
@@ -33,9 +34,9 @@ public class MyPanel extends JPanel {
 	this.setVisible(true);
 	this.setFrameWidth(width - 16);
 	this.setFrameHeight(height - 34);
-	
-	box1.setSize(new Dimension(200,50));
-	box1.setLocation(width-230,height/2 - 300);
+
+	box1.setSize(new Dimension(200, 50));
+	box1.setLocation(width - 230, height / 2 - 300);
 	box1.setBackground(Color.WHITE);
 	box1.addActionListener(new ActionListener() {
 	    @Override
@@ -44,10 +45,9 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(box1);
-	
-	
-	box2.setSize(new Dimension(200,50));
-	box2.setLocation(width-230,height/2 - 250);
+
+	box2.setSize(new Dimension(200, 50));
+	box2.setLocation(width - 230, height / 2 - 250);
 	box2.setBackground(Color.WHITE);
 	box2.addActionListener(new ActionListener() {
 	    @Override
@@ -56,9 +56,9 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(box2);
-	
-	box3.setSize(new Dimension(200,50));
-	box3.setLocation(width-230,height/2 - 200);
+
+	box3.setSize(new Dimension(200, 50));
+	box3.setLocation(width - 230, height / 2 - 200);
 	box3.setBackground(Color.WHITE);
 	box3.addActionListener(new ActionListener() {
 	    @Override
@@ -67,9 +67,9 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(box3);
-	
-	box4.setSize(new Dimension(200,50));
-	box4.setLocation(width-230,height/2 - 150);
+
+	box4.setSize(new Dimension(200, 50));
+	box4.setLocation(width - 230, height / 2 - 150);
 	box4.setBackground(Color.WHITE);
 	box4.addActionListener(new ActionListener() {
 	    @Override
@@ -78,9 +78,9 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(box4);
-	
-	box5.setSize(new Dimension(200,50));
-	box5.setLocation(width-230,height/2 - 100);
+
+	box5.setSize(new Dimension(200, 50));
+	box5.setLocation(width - 230, height / 2 - 100);
 	box5.setBackground(Color.WHITE);
 	box5.addActionListener(new ActionListener() {
 	    @Override
@@ -89,9 +89,9 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(box5);
-	
-	box6.setSize(new Dimension(200,50));
-	box6.setLocation(width-230,height/2 - 50);
+
+	box6.setSize(new Dimension(200, 50));
+	box6.setLocation(width - 230, height / 2 - 50);
 	box6.setBackground(Color.WHITE);
 	box6.addActionListener(new ActionListener() {
 	    @Override
@@ -100,26 +100,21 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(box6);
-	
-	/*
-	JButton showTours = new JButton("Show Tours");
-	showTours.setSize(new Dimension(200,50));
-	showTours.setLocation(width - 230,height/2 - 50);
-	showTours.addActionListener(new ActionListener() {
 
-	    @Override
-	    public void actionPerformed(ActionEvent arg0) {
-		drawTours = !drawTours;
-		repaint();
-	    }
-	    
-	});
-	this.add(showTours);
-	*/
-	
+	/*
+	 * JButton showTours = new JButton("Show Tours"); showTours.setSize(new
+	 * Dimension(200,50)); showTours.setLocation(width - 230,height/2 - 50);
+	 * showTours.addActionListener(new ActionListener() {
+	 * 
+	 * @Override public void actionPerformed(ActionEvent arg0) { drawTours =
+	 * !drawTours; repaint(); }
+	 * 
+	 * }); this.add(showTours);
+	 */
+
 	JButton showLocations = new JButton("Show Locations");
-	showLocations.setSize(new Dimension(200,50));
-	showLocations.setLocation(width - 230,height/2 + 25);
+	showLocations.setSize(new Dimension(200, 50));
+	showLocations.setLocation(width - 230, height / 2 + 25);
 	showLocations.addActionListener(new ActionListener() {
 
 	    @Override
@@ -129,6 +124,19 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(showLocations);
+
+	JButton showNumbersButton = new JButton("Show Numbers");
+	showNumbersButton.setSize(new Dimension(200, 50));
+	showNumbersButton.setLocation(width - 230, height / 2 + 100);
+	showNumbersButton.addActionListener(new ActionListener() {
+
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		showNumbers = !showNumbers;
+		repaint();
+	    }
+	});
+	this.add(showNumbersButton);
     }
 
     public void paintComponent(Graphics g) {
@@ -136,64 +144,128 @@ public class MyPanel extends JPanel {
 	if (drawLocations) {
 	    g.setColor(Color.BLACK);
 	    for (Location location : Main.getLocCopy()) {
-		g.fillOval(20+(int) ((location.getLat()-Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),18+ (int) ((location.getLong()-Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())), 4, 4);
-		g.drawOval(20+(int) ((location.getLat()-Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),18+ (int) ((location.getLong()-Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())), 4, 4);
+		g.fillOval(20 + (int) ((location.getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 18 + (int) ((location.getLong() - Main.getMinLong())
+			* (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 4, 4);
+		g.drawOval(20 + (int) ((location.getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 18 + (int) ((location.getLong() - Main.getMinLong())
+			* (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 4, 4);
 	    }
 	    g.setColor(Color.RED);
-	    g.fillOval(20+(int) ((Main.getDepot().getLat()-Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),18+ (int) ((Main.getDepot().getLong()-Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())), 4, 4);
-	    g.drawOval(20+(int) ((Main.getDepot().getLat()-Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),18+ (int) ((Main.getDepot().getLong()-Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())), 4, 4);
+	    g.fillOval(20 + (int) ((Main.getDepot().getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
+		    18 + (int) ((Main.getDepot().getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 4, 4);
+	    g.drawOval(20 + (int) ((Main.getDepot().getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
+		    18 + (int) ((Main.getDepot().getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 4, 4);
 	}
 	if (box1.isSelected()) {
 	    g.setColor(Color.BLACK);
+	    int cnt = 1;
 	    for (Tour tour : tours.get(0)) {
 		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    g.drawLine(20+(int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())),20+ (int) ((tour.getTourStops()
-			    .get(i + 1).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())));
+		    if (showNumbers) {
+			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
+				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    }
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+			    .get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
+			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+				    .get(i + 1).getLong() - Main.getMinLong())
+				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    cnt++;
 		}
 	    }
 	}
 	if (box2.isSelected()) {
 	    g.setColor(Color.BLACK);
+	    int cnt = 1;
 	    for (Tour tour : tours.get(1)) {
 		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    g.drawLine(20+(int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())),20+ (int) ((tour.getTourStops()
-			    .get(i + 1).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())));
+		    if (showNumbers) {
+			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
+				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    }
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+			    .get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
+			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+				    .get(i + 1).getLong() - Main.getMinLong())
+				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    cnt++;
 		}
 	    }
 	}
 	if (box3.isSelected()) {
 	    g.setColor(Color.BLACK);
+	    int cnt = 1;
 	    for (Tour tour : tours.get(2)) {
 		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    g.drawLine(20+(int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())),20+ (int) ((tour.getTourStops()
-			    .get(i + 1).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())));
+		    if (showNumbers) {
+			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
+				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    }
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+			    .get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
+			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+				    .get(i + 1).getLong() - Main.getMinLong())
+				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    cnt++;
 		}
 	    }
 	}
 	if (box4.isSelected()) {
 	    g.setColor(Color.BLACK);
+	    int cnt = 1;
 	    for (Tour tour : tours.get(3)) {
 		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    g.drawLine(20+(int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())),20+ (int) ((tour.getTourStops()
-			    .get(i + 1).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())));
+		    if (showNumbers) {
+			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
+				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    }
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+			    .get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
+			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+				    .get(i + 1).getLong() - Main.getMinLong())
+				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    cnt++;
 		}
 	    }
 	}
 	if (box5.isSelected()) {
 	    g.setColor(Color.BLACK);
+	    int cnt = 1;
 	    for (Tour tour : tours.get(4)) {
 		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    g.drawLine(20+(int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())),20+ (int) ((tour.getTourStops()
-			    .get(i + 1).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())));
+		    if (showNumbers) {
+			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
+				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    }
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+			    .get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
+			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+				    .get(i + 1).getLong() - Main.getMinLong())
+				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    cnt++;
 		}
 	    }
 	}
 	if (box6.isSelected()) {
 	    g.setColor(Color.BLACK);
+	    int cnt = 1;
 	    for (Tour tour : tours.get(5)) {
 		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    g.drawLine(20+(int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())),20+ (int) ((tour.getTourStops()
-			    .get(i + 1).getLat() - Main.getMinLat()) * (frameWidth-250)/((Main.getMaxLat()-Main.getMinLat()))),20+ (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight-40)/(Main.getMaxLong()-Main.getMinLong())));
+		    if (showNumbers) {
+			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
+				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    }
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+			    .get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
+			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
+				    .get(i + 1).getLong() - Main.getMinLong())
+				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    cnt++;
 		}
 	    }
 	}
