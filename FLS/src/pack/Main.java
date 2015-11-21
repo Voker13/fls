@@ -36,7 +36,7 @@ public class Main {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
-	File xml = new File("Instance-80.xml");
+	File xml = new File("Instance-400.xml");
 
 	// load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
@@ -119,6 +119,7 @@ public class Main {
 	ArrayList<Tour> allToursRandom = new ArrayList<Tour>();
 	ArrayList<Tour> allToursSlices = new ArrayList<Tour>();
 	ArrayList<Tour> allToursFarToClose = new ArrayList<Tour>();
+	ArrayList<Tour> allToursSlicePlusFar = new ArrayList<Tour>();
 
 	// Here is the Strategy, Tours are built until locations is empty
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
@@ -162,6 +163,11 @@ public class Main {
 	while (!workCopy.isEmpty()) {
 	    allToursFarToClose.add(findWorkDayFarToClose(workCopy));
 	}
+	
+	workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursSlicePlusFar.add(findWorkDaySlicePlusFar(workCopy));
+	}
 
 	// Counts time for all Tours
 	int durationOverallClosest = 0;
@@ -193,6 +199,11 @@ public class Main {
 	for (Tour tour : allToursFarToClose) {
 	    durationOverallFarToClose += tour.getDuration();
 	}
+	
+	int durationOverallSlicePlusFar = 0;
+	for (Tour tour : allToursSlicePlusFar) {
+	    durationOverallSlicePlusFar += tour.getDuration();
+	}
 
 	for (int i = 0; i < allToursSlices.size(); i++) {
 	    System.err.println(allToursSlices.get(i).getTourStops().get(1).getName() + " " + i);
@@ -206,6 +217,7 @@ public class Main {
 	System.out.println("Random Strategy: " + (allToursRandom.size()-1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
 	System.out.println("Slices Strategy: " + (allToursRandom.size()-1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
 	System.out.println("FarToClose Strategy: " + (allToursFarToClose.size()-1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
+	System.out.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()-1) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
 	long endTime = System.currentTimeMillis();
 	System.out.println("Elapsed Time: " + (endTime - startTime) + "ms");
 	ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
@@ -215,6 +227,7 @@ public class Main {
 	tours.add(allToursRandom);
 	tours.add(allToursSlices);
 	tours.add(allToursFarToClose);
+	tours.add(allToursSlicePlusFar);
 	// runStrategyClosest((ArrayList<Location>) locations.clone());
 	GraphFrame gf = new GraphFrame(tours);
 	gf.repaint();
@@ -248,6 +261,15 @@ public class Main {
     private static Tour findWorkDayFarToClose(ArrayList<Location> locations) {
 	Tour tour = new Tour();
 	while (tour.addNextStopFarToClose(locations)) {
+
+	}
+	return tour;
+    }
+    
+
+    private static Tour findWorkDaySlicePlusFar(ArrayList<Location> locations) {
+	Tour tour = new Tour();
+	while (tour.addNextStopSlicePlusFar(locations)) {
 
 	}
 	return tour;
