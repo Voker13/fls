@@ -122,12 +122,6 @@ public class Tour {
 		Location loc2 = Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations);
 		Main.setAngleTourStop2(loc2.getAngle());
 		Main.generateAngleToLocation(Main.getTourStop2()); // wichtig!
-								   // fuer die
-								   // winkelfunktion
-								   // --->
-								   // ordnet die
-								   // winkel
-								   // neu!
 		// Main.setUsed(true); // if true: benutzt die beiden ifups nur
 		// ein einziges mal
 		return addStop(loc2, locations);
@@ -155,20 +149,20 @@ public class Tour {
 	    if (locations.isEmpty()) {
 		return false;
 	    } else {
-		return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
+		return addStopDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
 	    }
 	} else {
 	    if (tourStops.size() == 1) {
 		if (locations.isEmpty()) {
 		    return false;
 		} else {
-		    return addStop(Main.findClosestLocation(Main.findClosestLocation(Main.getLastLocation(), locations), locations), locations);
+		    return addStopDepot(Main.findClosestLocation(Main.findClosestLocation(Main.getLastLocation(), locations), locations), locations);
 		}
 	    } else {
 		if (locations.isEmpty()) {
 		    return false;
 		} else {
-		    return addStop(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
+		    return addStopDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
 		}
 	    }
 	}
@@ -176,7 +170,7 @@ public class Tour {
 
     public boolean addNextStopRandom(ArrayList<Location> locations) {
 	int rnd = (int) (Math.random() * locations.size());
-	return locations.isEmpty() ? false : addStop(locations.get(rnd), locations);
+	return locations.isEmpty() ? false : addStopDepot(locations.get(rnd), locations);
 
     }
 
@@ -268,7 +262,7 @@ public class Tour {
     }
 
     public boolean addNextStopFarToClose(ArrayList<Location> locations) {
-	return locations.isEmpty() ? false : tourStops.size() == 1 ? addStop(Main.findFarthestLocation(tourStops.get(0), locations), locations) : addStop(
+	return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopDepot(Main.findFarthestLocation(tourStops.get(0), locations), locations) : addStopDepot(
 		Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
 	// return locations.isEmpty() ? false : tourStops.size()==1 ?
 	// addStop(Main.findFarthestLocation(tourStops.get(0),
