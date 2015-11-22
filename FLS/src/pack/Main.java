@@ -489,6 +489,7 @@ public class Main {
 	    }
 	}
     }
+    
 
     public static void generateDistance0ToLocation() {
 	double x0 = depot.getLong();
