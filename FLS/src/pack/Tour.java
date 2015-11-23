@@ -113,7 +113,7 @@ public class Tour {
 	if (!locations.isEmpty()) {
 	    // System.out.println("toruStops.size: " + tourStops.size());
 	    if (!Main.isUsed() && tourStops.size() == 1) {
-
+	    //System.out.println("tourstopsget0: "+tourStops.get(0).getLat()+" : "+tourStops.get(0).getLong());
 		Location loc = Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations);
 		Main.setAngleTourStop1(loc.getAngle());
 		return addStop(loc, locations);
@@ -466,29 +466,6 @@ public class Tour {
     	}
         
     
-    
-    public void plusForecasting(ArrayList<Location> locations){
-    	
-    	int expo = 3; //tourlänge //width
-    	int erg = (int)Math.pow(2, expo); //length
-    	
-    	Location[][] locArray = new Location[erg][expo];
-	    
-    	for (int j=0; j<erg; j++) {
-			locArray[j][0] = Main.findFarthestLocation(tourStops.get(0), locations);
-		}
-      	for (int j=1; j>expo; j++) {
-      		int i = (int) Math.pow(2, expo-j);
-	    	for (int t=0; t<erg/i; t++) {
-	    		for (int r=0; r<i; r++) {
-		    		if (t%2==0) locArray[t][j] = Main.findFarthestLocation(locArray[t][j-1],Main.findFarthestLocation(locArray[t][j-1],locations), locations);
-		    		else Main.findFarthestLocation(locArray[t][j-1],locations);
-	    		}
-			}
-    	}
-	
-    	
-    }
     
     
     

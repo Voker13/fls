@@ -128,6 +128,7 @@ public class Main {
 
 	// Here is the Strategy, Tours are built until locations is empty
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
+	plusForecasting(workCopy);
 	while (!workCopy.isEmpty()) {
 	    allToursClosest.add(findWorkDay(workCopy));
 	}
@@ -415,6 +416,42 @@ public class Main {
 
 	return -1;
     }
+    
+    /**
+     * 
+     * 
+     * 
+     */
+    
+    
+public static void plusForecasting(ArrayList<Location> locations){
+    	
+    	int deltaTourlänge = 4;
+    	int expo = deltaTourlänge-1; //tourlänge //width
+    	int erg = (int)Math.pow(2, expo); //length
+    	
+    	Location[][] locArray = new Location[erg][expo];
+    	Location locO0 = Main.findFarthestLocation(Main.getDepot(), locations);
+    	
+    	for (int j=0; j<erg; j++) {
+			locArray[j][0] = locO0;
+		}
+      	for (int j=1; j>expo; j++) {
+      		int i = (int) Math.pow(2, expo-j);
+	    	for (int t=0; t<erg/i; t++) {
+	    		for (int r=0; r<i; r++) {
+		    		if (t%2==0) locArray[t][j] = Main.findFarthestLocation(locArray[t][j-1],Main.findFarthestLocation(locArray[t][j-1],locations), locations);
+		    		else Main.findFarthestLocation(locArray[t][j-1],locations);
+	    		}
+			}
+    	}
+      	System.out.println("locArray.length: "+locArray.length);
+      	for (int i = 0 ; i<locArray.length; i++) {
+      		System.out.println("locArray["+1+"]["+locArray[1][i].getName()+"]");
+      	}
+    	
+    }
+    
 
     /**
 	 * 
