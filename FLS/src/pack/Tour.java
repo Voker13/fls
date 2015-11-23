@@ -467,24 +467,26 @@ public class Tour {
         
     
     
-    public void x(ArrayList<Location> locations){
-    	int multip = 1;
-    	int tourStops_Amount = 3; //exponent //width
-    	int exp = (int)Math.pow(2, tourStops_Amount); //length
+    public void plusForecasting(ArrayList<Location> locations){
     	
-    	Location[][] locArray = new Location[exp][tourStops_Amount];
+    	int expo = 3; //tourlänge //width
+    	int erg = (int)Math.pow(2, expo); //length
+    	
+    	Location[][] locArray = new Location[erg][expo];
 	    
-    	for (int j=0; j<exp; j++) {
+    	for (int j=0; j<erg; j++) {
 			locArray[j][0] = Main.findFarthestLocation(tourStops.get(0), locations);
 		}
-    	    	
-    	for (int i=1; i>tourStops_Amount; i++) {
-	    	for (int j=0; j<exp; j++) {
-	    		/* ifup-fehlt */if (true) locArray[j][i] = Main.findFarthestLocation(locArray[j][i-1],Main.findFarthestLocation(locArray[j][i-1],locations), locations);
-	    		else Main.findFarthestLocation(locArray[j][i-1],locations);
+      	for (int j=1; j>expo; j++) {
+      		int i = (int) Math.pow(2, expo-j);
+	    	for (int t=0; t<erg/i; t++) {
+	    		for (int r=0; r<i; r++) {
+		    		if (t%2==0) locArray[t][j] = Main.findFarthestLocation(locArray[t][j-1],Main.findFarthestLocation(locArray[t][j-1],locations), locations);
+		    		else Main.findFarthestLocation(locArray[t][j-1],locations);
+	    		}
 			}
     	}
-    	
+	
     	
     }
     
