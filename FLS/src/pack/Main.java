@@ -347,6 +347,18 @@ public class Main {
 	}
 	return returnLocation;
     }
+    
+    public static Location findFarthestLocation(Location location, Location withoutLoc, ArrayList<Location> locations) {
+    	Location returnLocation = locations.get(0);
+    	for (int i = 1; i < locations.size(); i++) {
+    	    if ((getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
+    	    	if (locations.get(i)!=withoutLoc) {
+    	    		returnLocation = locations.get(i);
+    	    	}
+    	    }
+    	}
+    	return returnLocation;
+        }
 
     @SuppressWarnings("unchecked")
     public static Location findClosestLocationGoingToTheMiddle(Location location, ArrayList<Location> locations) {

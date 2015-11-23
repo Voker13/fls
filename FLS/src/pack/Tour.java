@@ -469,20 +469,19 @@ public class Tour {
     
     public void x(ArrayList<Location> locations){
     	int multip = 1;
-    	int Tours_Amount = 3; //exponent
-    	int deltaStopsAmount = 9; //breite
-    	int exp = (int)Math.pow(2, Tours_Amount); //länge
+    	int tourStops_Amount = 3; //exponent //width
+    	int exp = (int)Math.pow(2, tourStops_Amount); //length
     	
-    	Location[][] locArray = new Location[exp][deltaStopsAmount];
+    	Location[][] locArray = new Location[exp][tourStops_Amount];
 	    
     	for (int j=0; j<exp; j++) {
 			locArray[j][0] = Main.findFarthestLocation(tourStops.get(0), locations);
 		}
     	    	
-    	for (int i=1; i>deltaStopsAmount; i++) {
+    	for (int i=1; i>tourStops_Amount; i++) {
 	    	for (int j=0; j<exp; j++) {
-//	    		if (j/2 < exp) locArray[j][i] = Main.findFarthestLocation(locArray[j][i-1], locations);
-//	    		else locArray[j][i]
+	    		/* ifup-fehlt */if (true) locArray[j][i] = Main.findFarthestLocation(locArray[j][i-1],Main.findFarthestLocation(locArray[j][i-1],locations), locations);
+	    		else Main.findFarthestLocation(locArray[j][i-1],locations);
 			}
     	}
     	
