@@ -25,6 +25,7 @@ public class MyPanel extends JPanel {
     JCheckBox box5 = new JCheckBox("Strategy: Slices (10)");
     JCheckBox box6 = new JCheckBox("Strategy: Far To Close");
     JCheckBox box7 = new JCheckBox("Strategy: Slice Plus Far");
+    JCheckBox box8 = new JCheckBox("Strategy: Slice Plus Far Plus ForeC");
 
     private static final long serialVersionUID = 1L;
 
@@ -112,6 +113,17 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(box7);
+	
+	box8.setSize(new Dimension(200, 50));
+	box8.setLocation(width - 230, height / 2 - 0);
+	box8.setBackground(Color.WHITE);
+	box8.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		repaint();
+	    }
+	});
+	this.add(box8);
 
 	/*
 	 * JButton showTours = new JButton("Show Tours"); showTours.setSize(new
@@ -126,7 +138,7 @@ public class MyPanel extends JPanel {
 
 	JButton showLocations = new JButton("Show Locations");
 	showLocations.setSize(new Dimension(200, 50));
-	showLocations.setLocation(width - 230, height / 2 + 25);
+	showLocations.setLocation(width - 230, height / 2 + 75);
 	showLocations.addActionListener(new ActionListener() {
 
 	    @Override
@@ -139,7 +151,7 @@ public class MyPanel extends JPanel {
 
 	JButton showNumbersButton = new JButton("Show Numbers");
 	showNumbersButton.setSize(new Dimension(200, 50));
-	showNumbersButton.setLocation(width - 230, height / 2 + 100);
+	showNumbersButton.setLocation(width - 230, height / 2 + 150);
 	showNumbersButton.addActionListener(new ActionListener() {
 
 	    @Override

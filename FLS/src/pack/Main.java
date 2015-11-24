@@ -125,10 +125,10 @@ public class Main {
 	ArrayList<Tour> allToursSlices = new ArrayList<Tour>();
 	ArrayList<Tour> allToursFarToClose = new ArrayList<Tour>();
 	ArrayList<Tour> allToursSlicePlusFar = new ArrayList<Tour>();
+	ArrayList<Tour> allToursSlicePlusFarPlusForecasting = new ArrayList<Tour>();
 
 	// Here is the Strategy, Tours are built until locations is empty
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-	plusForecasting(workCopy);
 	while (!workCopy.isEmpty()) {
 	    allToursClosest.add(findWorkDay(workCopy));
 	}
@@ -174,6 +174,11 @@ public class Main {
 	while (!workCopy.isEmpty()) {
 	    allToursSlicePlusFar.add(findWorkDaySlicePlusFar(workCopy));
 	}
+	
+	workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(workCopy));
+	}
 
 	// Counts time for all Tours
 	int durationOverallClosest = 0;
@@ -215,6 +220,14 @@ public class Main {
 	for (Tour tour : allToursSlicePlusFar) {
 	    durationOverallSlicePlusFar += tour.getDuration();
 	}
+	
+	int durationOverallSlicePlusFarPlusForecasting = 0;
+	for (Tour tour : allToursSlicePlusFarPlusForecasting) {
+	    durationOverallSlicePlusFar += tour.getDuration();
+	}
+	
+	
+	
 
 	// Some Debug info, like time and Graph
 	
@@ -224,6 +237,7 @@ public class Main {
 	System.err.println("Random Strategy: " + (allToursRandom.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
 	System.err.println("FarToClose Strategy: " + (allToursFarToClose.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
 	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
+	System.err.println("SlicePlusFarPlusForecasting Strategy: " + (allToursSlicePlusFarPlusForecasting.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFarPlusForecasting + " Minuten");
 	
 //	long endTime = System.currentTimeMillis();
 	//System.err.println("Elapsed Time: " + (endTime - startTime) + "ms");
@@ -236,6 +250,7 @@ public class Main {
 	tours.add(allToursSlices);
 	tours.add(allToursFarToClose);
 	tours.add(allToursSlicePlusFar);
+	tours.add(allToursSlicePlusFarPlusForecasting);
 	// runStrategyClosest((ArrayList<Location>) locations.clone());
 	//System.err.println("Slices Strategy: " + (allToursSlices.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten und " + stopSlices + " Stops");
 	System.out.println("SOLUTION " + durationOverallSlices);
@@ -303,6 +318,16 @@ public class Main {
 	return tour;
     }
 
+    private static Tour findWorkDaySlicePlusFarPlusForecasting(ArrayList<Location> locations) {
+    	Tour tour = new Tour();
+    	generateAngleToLocation();
+    	while (tour.addNextStopPizza(locations)) {
+
+    	}
+    	//System.err.println(tour.getDuration() + " " + tour.getTourStops());
+    	return tour;
+    }
+    
     /*
      * PizzaTactic
      */
@@ -419,10 +444,9 @@ public class Main {
     
     /**
      * 
-     * 
+     * BAUSTELLE!!
      * 
      */
-    
     
 public static void plusForecasting(ArrayList<Location> locations){
     	
@@ -430,13 +454,13 @@ public static void plusForecasting(ArrayList<Location> locations){
     	int expo = deltaTourlänge-1; //tourlänge //width
     	int erg = (int)Math.pow(2, expo); //length
     	
-    	Location[][] locArray = new Location[erg][expo];
+    	Location[][] locArray = new Location[erg][deltaTourlänge];
     	Location locO0 = Main.findFarthestLocation(Main.getDepot(), locations);
     	
-    	for (int j=0; j<erg; j++) {
-			locArray[j][0] = locO0;
+    	for (int i=0; i<erg; i++) {
+			locArray[i][0] = locO0;
 		}
-      	for (int j=1; j>expo; j++) {
+      	for (int j=1; j<expo; j++) {
       		int i = (int) Math.pow(2, expo-j);
 	    	for (int t=0; t<erg/i; t++) {
 	    		for (int r=0; r<i; r++) {
@@ -449,6 +473,9 @@ public static void plusForecasting(ArrayList<Location> locations){
       	for (int i = 0 ; i<locArray.length; i++) {
       		System.out.println("locArray["+1+"]["+locArray[1][i].getName()+"]");
       	}
+      	Location returnLocation;
+//      	for ()
+//      	return 
     	
     }
     
