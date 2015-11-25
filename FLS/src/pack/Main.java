@@ -202,13 +202,8 @@ public class Main {
 	}
 
 	int durationOverallSlices = 0;
-	int stopSlices = 0;
 	for (Tour tour : allToursSlices) {
 	    durationOverallSlices += tour.getDuration();
-	    stopSlices += tour.getTourStops().size();
-	    //System.err.println(tour.getDuration());
-	    //System.err.println(tour.getTourStops().get(0).getName());
-	    //System.err.println(tour.getTourStops().get(tour.getTourStops().size()-1).getName());
 	}
 
 	int durationOverallFarToClose = 0;
@@ -223,7 +218,7 @@ public class Main {
 	
 	int durationOverallSlicePlusFarPlusForecasting = 0;
 	for (Tour tour : allToursSlicePlusFarPlusForecasting) {
-	    durationOverallSlicePlusFar += tour.getDuration();
+	    durationOverallSlicePlusFarPlusForecasting += tour.getDuration();
 	}
 	
 	
@@ -253,7 +248,7 @@ public class Main {
 	tours.add(allToursSlicePlusFarPlusForecasting);
 	// runStrategyClosest((ArrayList<Location>) locations.clone());
 	//System.err.println("Slices Strategy: " + (allToursSlices.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten und " + stopSlices + " Stops");
-	System.out.println("SOLUTION " + durationOverallSlices);
+	//System.out.println("SOLUTION " + durationOverallSlices);
 	GraphFrame gf = new GraphFrame(tours);
 	gf.repaint();
     }
