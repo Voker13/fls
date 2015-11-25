@@ -58,8 +58,6 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
     public void mouseWheelMoved(MouseWheelEvent e) {
 	if (ctrl) {
 	    int notches = e.getWheelRotation();
-	    int x = e.getX();
-	    int y = e.getY();
 	    if (notches < 0) {
 		drawPanel.incZoomFactor();
 		drawPanel.setSize((int) (width * drawPanel.getZoomFactor()), (int) (width * drawPanel.getZoomFactor()));

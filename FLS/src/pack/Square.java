@@ -2,6 +2,7 @@ package pack;
 
 public class Square {
 
+	@SuppressWarnings("unused")
 	private static final double SQUARESIZE = 0.03;
 	private float xCoordinate;
 	private float yCoordinate;
