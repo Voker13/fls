@@ -56,6 +56,8 @@ public class Main {
 	locations = (ArrayList<Location>) instance.getLocations();
 	locCopy = (ArrayList<Location>) locations.clone();
 	// remove depot from Locations
+	System.out.println(Main.getDepot().getLat() + " : " + Main.getDepot().getLong());
+	System.out.println(locations.get(0).getLat() + " : " + locations.get(0).getLong());
 	locations.remove(0);
 
 	generateAngleToLocation();
@@ -303,9 +305,15 @@ public class Main {
     private static Tour findWorkDaySlicePlusFarPlusForecasting(ArrayList<Location> locations) {
 	Tour tour = new Tour();
 	generateAngleToLocation();
-	while (tour.addNextStopPizza(locations)) {
-
+	ArrayList<Location> slice1 = new ArrayList<>();
+	for (Location location : locations) {
+	    if (location.getAngle() % 360 >= 0 && location.getAngle() % 360 < 36) {
+		slice1.add(location);
+	    }
 	}
+	plusForecasting(slice1);
+	//while (tour.addNextStopSlicePlusFarPlusForecasting(locations)) {
+	while (tour.addNextStopPizza(slice1));
 	// System.err.println(tour.getDuration() + " " + tour.getTourStops());
 	return tour;
     }
@@ -358,15 +366,36 @@ public class Main {
 
     public static Location findFarthestLocation(Location location, Location withoutLoc, ArrayList<Location> locations) {
 	Location returnLocation = locations.get(0);
+	System.out.println(returnLocation.getLat() + " : " + returnLocation.getLong());
 	for (int i = 1; i < locations.size(); i++) {
-	    if ((getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
-		if (locations.get(i) != withoutLoc) {
+	    if (locations.get(i) != withoutLoc && (getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
 		    returnLocation = locations.get(i);
-		}
 	    }
 	}
 	return returnLocation;
     }
+    
+    public static Location findFarthestLocationToDepot(ArrayList<Location> locations) {
+    	Location returnLocation = Main.getDepot();
+    	Location origin = Main.getDepot();
+    	for (int i = 1; i < locations.size(); i++) {
+    	    if ((getDistance(origin, locations.get(i)) > getDistance(returnLocation, origin))) {
+    		returnLocation = locations.get(i);
+    	    }
+    	}
+    	return returnLocation;
+        }
+
+        public static Location findFarthestLocationToDepot(Location location, Location withoutLoc, ArrayList<Location> locations) {
+    	Location returnLocation = Main.getDepot();
+    	System.out.println(Main.getDepot().getLat() + " : " + Main.getDepot().getLong());
+    	for (int i = 1; i < locations.size(); i++) {
+    	    if (locations.get(i) != withoutLoc && (getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
+    		    returnLocation = locations.get(i);
+    	    }
+    	}
+    	return returnLocation;
+        }
 
     @SuppressWarnings("unchecked")
     public static Location findClosestLocationGoingToTheMiddle(Location location, ArrayList<Location> locations) {
@@ -437,18 +466,24 @@ public class Main {
 	int erg = (int) Math.pow(2, expo); // length
 
 	Location[][] locArray = new Location[erg][deltaTourlänge];
+	Location[][] usedLocArray = new Location[erg][];
 	Location locO0 = Main.findFarthestLocation(Main.getDepot(), locations);
 
-	for (int i = 0; i < erg; i++) {
+	for (int i = 0; i < deltaTourlänge; i++) {
 	    locArray[i][0] = locO0;
 	}
+	int s = 0; //Stelle im locArray
 	for (int j = 1; j < expo; j++) {
 	    int i = (int) Math.pow(2, expo - j);
 	    for (int t = 0; t < erg / i; t++) {
 		for (int r = 0; r < i; r++) {
-		    if (t % 2 == 0)
-			locArray[t][j] = Main.findFarthestLocation(locArray[t][j - 1], Main.findFarthestLocation(locArray[t][j - 1], locations), locations);
-		    else Main.findFarthestLocation(locArray[t][j - 1], locations);
+		    if (t % 2 == 0) {
+		    	locArray[s][j] = Main.findFarthestLocation(locArray[s][j - 1], Main.findFarthestLocation(locArray[s][j - 1], locations), locations);
+		    }
+		    else {
+		    	locArray[s][j] = Main.findFarthestLocation(locArray[s][j - 1], locations);
+		    }
+		    s++;
 		}
 	    }
 	}
