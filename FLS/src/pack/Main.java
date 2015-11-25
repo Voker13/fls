@@ -113,7 +113,7 @@ public class Main {
 
 	kilometerPerHour = (distanceGround * 60) / (time);
 	meterPerSecond = kilometerPerHour / 3.6F;
-
+ 
 	// System.err.println("Liste zum 1.: ");
 	for (int i = 0; i < locations.size(); i++) {
 	    // System.err.println("location" + (i + 1) + ".-->   " +
