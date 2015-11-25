@@ -94,14 +94,14 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
     @Override
     public void keyPressed(KeyEvent e) {
 	if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
-	    System.err.println("CTRL pressed");
+	    //System.err.println("CTRL pressed");
 	    ctrl = true;
 	}
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-	System.err.println("CTRL released");
+	//System.err.println("CTRL released");
 	ctrl = false;
     }
 

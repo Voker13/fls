@@ -19,6 +19,7 @@ public class ControlPanel extends JPanel {
     JCheckBox box5 = new JCheckBox("Strategy: Slices (10)");
     JCheckBox box6 = new JCheckBox("Strategy: Far To Close");
     JCheckBox box7 = new JCheckBox("Strategy: Slice Plus Far");
+    JCheckBox box8 = new JCheckBox("Strategy: Slice Plus Far Plus ForeC");
 
     
     public ControlPanel(int width, int height, GraphFrame graphFrame) {
@@ -111,9 +112,21 @@ public class ControlPanel extends JPanel {
 	});
 	this.add(box7);
 	
+	box8.setSize(new Dimension(200, 50));
+	box8.setLocation(width - 230, height / 2 - 0);
+	box8.setBackground(Color.WHITE);
+	box8.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		parent.repaint();
+		parent.requestFocus();
+	    }
+	});
+	this.add(box8);
+	
 	JButton showLocations = new JButton("Show Locations");
 	showLocations.setSize(new Dimension(200, 50));
-	showLocations.setLocation(width - 230, height / 2 + 25);
+	showLocations.setLocation(width - 230, height / 2 + 75);
 	showLocations.addActionListener(new ActionListener() {
 
 	    @Override
@@ -127,7 +140,7 @@ public class ControlPanel extends JPanel {
 
 	JButton showNumbersButton = new JButton("Show Numbers");
 	showNumbersButton.setSize(new Dimension(200, 50));
-	showNumbersButton.setLocation(width - 230, height / 2 + 100);
+	showNumbersButton.setLocation(width - 230, height / 2 + 150);
 	showNumbersButton.addActionListener(new ActionListener() {
 
 	    @Override

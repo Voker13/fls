@@ -171,6 +171,24 @@ public class DrawPanel extends JPanel {
 		}
 	    }
 	}
+	if (panel2.box8.isSelected()) {
+	    g.setColor(Color.BLACK);
+	    int cnt = 1;
+	    for (Tour tour : tours.get(7)) {
+		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+		    if (GraphFrame.getShowNumbers()) {
+			g.drawString((cnt) + "",
+				(int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 260) / ((Main.getMaxLat() - Main.getMinLat()))))),
+				(int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 60) / (Main.getMaxLong() - Main.getMinLong())))));
+		    }
+		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 260) / ((Main.getMaxLat() - Main.getMinLat()))))),
+			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong()) * (frameHeight - 60) / (Main.getMaxLong() - Main.getMinLong())))),
+			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 260) / ((Main.getMaxLat() - Main.getMinLat()))))),
+			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 60) / (Main.getMaxLong() - Main.getMinLong())))));
+		    cnt++;
+		}
+	    }
+	}
     }
 
     public int getFrameWidth() {
