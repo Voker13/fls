@@ -17,7 +17,7 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
     private static final long serialVersionUID = 1L;
     private static boolean drawLocations = true;
     private static boolean showNumbers = true;
-    DrawPanel panel;
+    DrawPanel drawPanel;
     JScrollPane scroller;
     int width;
     int height;
@@ -35,12 +35,12 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
 	int width2 = this.getWidth() - width;
 	int height2 = this.getHeight() - 38;
 
-	ControlPanel panel2 = new ControlPanel(width2, height2, this);
-	panel2.setLocation(width, 0);
+	ControlPanel controlPanel = new ControlPanel(width2, height2, this);
+	controlPanel.setLocation(width, 0);
 
-	panel = new DrawPanel(this.getWidth(), this.getHeight(), tours, panel2);
+	drawPanel = new DrawPanel(width-18, height-18, tours, controlPanel);
 
-	scroller = new JScrollPane(panel);
+	scroller = new JScrollPane(drawPanel);
 	scroller.setBounds(0, 0, width, height);
 	scroller.addMouseWheelListener(this);
 	scroller.addKeyListener(this);
@@ -48,7 +48,7 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
 	scroller.getHorizontalScrollBar().setUnitIncrement(20);
 	scroller.setFocusable(true);
 
-	this.add(panel2);
+	this.add(controlPanel);
 	this.add(scroller);
 	this.addMouseWheelListener(this);
 	this.addKeyListener(this);
@@ -61,13 +61,13 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
 	    int x = e.getX();
 	    int y = e.getY();
 	    if (notches < 0) {
-		panel.incZoomFactor();
-		panel.setSize((int) (width * panel.getZoomFactor()), (int) (width * panel.getZoomFactor()));
-		panel.setPreferredSize(new Dimension((int) (width * panel.getZoomFactor()), (int) (height * panel.getZoomFactor())));
+		drawPanel.incZoomFactor();
+		drawPanel.setSize((int) (width * drawPanel.getZoomFactor()), (int) (width * drawPanel.getZoomFactor()));
+		drawPanel.setPreferredSize(new Dimension((int) (width * drawPanel.getZoomFactor()), (int) (height * drawPanel.getZoomFactor())));
 	    } else {
-		panel.decrZoomFactor();
-		panel.setSize((int) (width * panel.getZoomFactor()), (int) (width * panel.getZoomFactor()));
-		panel.setPreferredSize(new Dimension((int) (width * panel.getZoomFactor()), (int) (height * panel.getZoomFactor())));
+		drawPanel.decrZoomFactor();
+		drawPanel.setSize((int) (width * drawPanel.getZoomFactor()), (int) (width * drawPanel.getZoomFactor()));
+		drawPanel.setPreferredSize(new Dimension((int) (width * drawPanel.getZoomFactor()), (int) (height * drawPanel.getZoomFactor())));
 	    }
 	}
 	else {
