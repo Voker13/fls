@@ -231,8 +231,7 @@ public class Main {
 	System.err.println("Slices Strategy: " + (allToursSlices.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
 	System.err.println("FarToClose Strategy: " + (allToursFarToClose.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
 	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
-	System.err.println("SlicePlusFarPlusForecasting Strategy: " + (allToursSlicePlusFarPlusForecasting.size()) + " Touren mit einer Gesamtfahrzeit von "
-		+ durationOverallSlicePlusFarPlusForecasting + " Minuten");
+	System.err.println("SlicePlusFarPlusForecasting Strategy: " + (allToursSlicePlusFarPlusForecasting.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFarPlusForecasting + " Minuten");
 
 	// long endTime = System.currentTimeMillis();
 	// System.err.println("Elapsed Time: " + (endTime - startTime) + "ms");
@@ -449,8 +448,7 @@ public class Main {
 		for (int r = 0; r < i; r++) {
 		    if (t % 2 == 0)
 			locArray[t][j] = Main.findFarthestLocation(locArray[t][j - 1], Main.findFarthestLocation(locArray[t][j - 1], locations), locations);
-		    else
-			Main.findFarthestLocation(locArray[t][j - 1], locations);
+		    else Main.findFarthestLocation(locArray[t][j - 1], locations);
 		}
 	    }
 	}

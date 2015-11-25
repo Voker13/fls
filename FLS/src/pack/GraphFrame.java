@@ -38,7 +38,7 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
 	ControlPanel controlPanel = new ControlPanel(width2, height2, this);
 	controlPanel.setLocation(width, 0);
 
-	drawPanel = new DrawPanel(width-18, height-18, tours, controlPanel);
+	drawPanel = new DrawPanel(width - 18, height - 18, tours, controlPanel);
 
 	scroller = new JScrollPane(drawPanel);
 	scroller.setBounds(0, 0, width, height);
@@ -67,9 +67,8 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
 		drawPanel.setSize((int) (width * drawPanel.getZoomFactor()), (int) (width * drawPanel.getZoomFactor()));
 		drawPanel.setPreferredSize(new Dimension((int) (width * drawPanel.getZoomFactor()), (int) (height * drawPanel.getZoomFactor())));
 	    }
-	}
-	else {
-	    
+	} else {
+
 	}
     }
 
@@ -92,14 +91,14 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
     @Override
     public void keyPressed(KeyEvent e) {
 	if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
-	    //System.err.println("CTRL pressed");
+	    // System.err.println("CTRL pressed");
 	    ctrl = true;
 	}
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-	//System.err.println("CTRL released");
+	// System.err.println("CTRL released");
 	ctrl = false;
     }
 
@@ -112,30 +111,30 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
     @Override
     public void mouseClicked(MouseEvent arg0) {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void mouseEntered(MouseEvent arg0) {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void mouseExited(MouseEvent arg0) {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void mousePressed(MouseEvent arg0) {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
 	// TODO Auto-generated method stub
-	
+
     }
 }

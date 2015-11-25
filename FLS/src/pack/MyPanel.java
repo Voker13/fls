@@ -102,7 +102,7 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(box6);
-	
+
 	box7.setSize(new Dimension(200, 50));
 	box7.setLocation(width - 230, height / 2 - 50);
 	box7.setBackground(Color.WHITE);
@@ -113,7 +113,7 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(box7);
-	
+
 	box8.setSize(new Dimension(200, 50));
 	box8.setLocation(width - 230, height / 2 - 0);
 	box8.setBackground(Color.WHITE);
@@ -168,10 +168,10 @@ public class MyPanel extends JPanel {
 	if (drawLocations) {
 	    g.setColor(Color.BLACK);
 	    for (Location location : Main.getLocCopy()) {
-		g.fillOval(20 + (int) ((location.getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 18 + (int) ((location.getLong() - Main.getMinLong())
-			* (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 4, 4);
-		g.drawOval(20 + (int) ((location.getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 18 + (int) ((location.getLong() - Main.getMinLong())
-			* (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 4, 4);
+		g.fillOval(20 + (int) ((location.getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
+			18 + (int) ((location.getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 4, 4);
+		g.drawOval(20 + (int) ((location.getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
+			18 + (int) ((location.getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 4, 4);
 	    }
 	    g.setColor(Color.RED);
 	    g.fillOval(20 + (int) ((Main.getDepot().getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
@@ -188,12 +188,10 @@ public class MyPanel extends JPanel {
 			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
 				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    }
-		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-			    .get(i).getLong() - Main.getMinLong())
-			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
-			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-				    .get(i + 1).getLong() - Main.getMinLong())
-				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour
+			    .getTourStops().get(i + 1).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    cnt++;
 		}
 	    }
@@ -207,12 +205,10 @@ public class MyPanel extends JPanel {
 			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
 				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    }
-		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-			    .get(i).getLong() - Main.getMinLong())
-			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
-			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-				    .get(i + 1).getLong() - Main.getMinLong())
-				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour
+			    .getTourStops().get(i + 1).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    cnt++;
 		}
 	    }
@@ -226,12 +222,10 @@ public class MyPanel extends JPanel {
 			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
 				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    }
-		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-			    .get(i).getLong() - Main.getMinLong())
-			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
-			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-				    .get(i + 1).getLong() - Main.getMinLong())
-				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour
+			    .getTourStops().get(i + 1).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    cnt++;
 		}
 	    }
@@ -245,12 +239,10 @@ public class MyPanel extends JPanel {
 			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
 				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    }
-		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-			    .get(i).getLong() - Main.getMinLong())
-			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
-			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-				    .get(i + 1).getLong() - Main.getMinLong())
-				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour
+			    .getTourStops().get(i + 1).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    cnt++;
 		}
 	    }
@@ -264,12 +256,10 @@ public class MyPanel extends JPanel {
 			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
 				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    }
-		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-			    .get(i).getLong() - Main.getMinLong())
-			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
-			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-				    .get(i + 1).getLong() - Main.getMinLong())
-				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour
+			    .getTourStops().get(i + 1).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    cnt++;
 		}
 	    }
@@ -283,12 +273,10 @@ public class MyPanel extends JPanel {
 			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
 				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    }
-		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-			    .get(i).getLong() - Main.getMinLong())
-			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
-			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-				    .get(i + 1).getLong() - Main.getMinLong())
-				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour
+			    .getTourStops().get(i + 1).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    cnt++;
 		}
 	    }
@@ -302,12 +290,10 @@ public class MyPanel extends JPanel {
 			g.drawString((cnt) + "", 15 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))),
 				15 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    }
-		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-			    .get(i).getLong() - Main.getMinLong())
-			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())),
-			    20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops()
-				    .get(i + 1).getLong() - Main.getMinLong())
-				    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
+		    g.drawLine(20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour.getTourStops().get(i).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())), 20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth - 250) / ((Main.getMaxLat() - Main.getMinLat()))), 20 + (int) ((tour
+			    .getTourStops().get(i + 1).getLong() - Main.getMinLong())
+			    * (frameHeight - 40) / (Main.getMaxLong() - Main.getMinLong())));
 		    cnt++;
 		}
 	    }

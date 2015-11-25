@@ -1,4 +1,5 @@
 package pack;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,7 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 public class ControlPanel extends JPanel {
-    
+
     private static final long serialVersionUID = 1L;
     private GraphFrame parent;
     JCheckBox box1 = new JCheckBox("Strategy: Closest Location");
@@ -21,12 +22,11 @@ public class ControlPanel extends JPanel {
     JCheckBox box7 = new JCheckBox("Strategy: Slice Plus Far");
     JCheckBox box8 = new JCheckBox("Strategy: Slice Plus Far Plus ForeC");
 
-    
     public ControlPanel(int width, int height, GraphFrame graphFrame) {
 	this.setLayout(null);
-	this.setSize(new Dimension(width,height));
+	this.setSize(new Dimension(width, height));
 	this.setBackground(Color.WHITE);
-	this.parent = graphFrame;	
+	this.parent = graphFrame;
 
 	box1.setSize(new Dimension(200, 50));
 	box1.setLocation(width - 230, height / 2 - 350);
@@ -99,7 +99,7 @@ public class ControlPanel extends JPanel {
 	    }
 	});
 	this.add(box6);
-	
+
 	box7.setSize(new Dimension(200, 50));
 	box7.setLocation(width - 230, height / 2 - 50);
 	box7.setBackground(Color.WHITE);
@@ -111,7 +111,7 @@ public class ControlPanel extends JPanel {
 	    }
 	});
 	this.add(box7);
-	
+
 	box8.setSize(new Dimension(200, 50));
 	box8.setLocation(width - 230, height / 2 - 0);
 	box8.setBackground(Color.WHITE);
@@ -123,7 +123,7 @@ public class ControlPanel extends JPanel {
 	    }
 	});
 	this.add(box8);
-	
+
 	JButton showLocations = new JButton("Show Locations");
 	showLocations.setSize(new Dimension(200, 50));
 	showLocations.setLocation(width - 230, height / 2 + 75);

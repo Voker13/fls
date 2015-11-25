@@ -96,7 +96,7 @@ public class Tour {
 	}
 	duration += (Main.getDistance(Main.getDepot(), tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60;
 	tourStops.add(Main.getDepot());
-	//System.out.println("tourstops"+tourStops.size());
+	// System.out.println("tourstops"+tourStops.size());
 	return false;
     }
 
@@ -113,7 +113,7 @@ public class Tour {
 	if (!locations.isEmpty()) {
 	    // System.out.println("toruStops.size: " + tourStops.size());
 	    if (!Main.isUsed() && tourStops.size() == 1) {
-	    //System.out.println("tourstopsget0: "+tourStops.get(0).getLat()+" : "+tourStops.get(0).getLong());
+		// System.out.println("tourstopsget0: "+tourStops.get(0).getLat()+" : "+tourStops.get(0).getLong());
 		Location loc = Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations);
 		Main.setAngleTourStop1(loc.getAngle());
 		return addStop(loc, locations);
@@ -263,8 +263,7 @@ public class Tour {
     }
 
     public boolean addNextStopFarToClose(ArrayList<Location> locations) {
-	return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopDepot(Main.findFarthestLocation(tourStops.get(0), locations), locations) : addStopDepot(
-		Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
+	return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopDepot(Main.findFarthestLocation(tourStops.get(0), locations), locations) : addStopDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
 	// return locations.isEmpty() ? false : tourStops.size()==1 ?
 	// addStop(Main.findFarthestLocation(tourStops.get(0),
 	// locations),locations) :
@@ -272,8 +271,6 @@ public class Tour {
 	// locations);
     }
 
-    
-    
     public boolean addNextStopSlicePlusFar(ArrayList<Location> locations) {
 	ArrayList<Location> slice1 = new ArrayList<>();
 	ArrayList<Location> slice2 = new ArrayList<>();
@@ -319,12 +316,12 @@ public class Tour {
 	}
 	// System.out.println(slice1.size()+slice2.size()+slice3.size()+slice4.size()+slice5.size()+slice6.size()+slice7.size()+slice8.size()+slice9.size()+slice10.size());
 	if (!slice1.isEmpty()) {
-	    return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice1), slice1, locations) : addStopSlice(
-		    Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice1), slice1, locations);
+	    return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice1), slice1, locations) : addStopSlice(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice1),
+		    slice1, locations);
 	} else {
 	    if (!slice2.isEmpty()) {
-		return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice2), slice2, locations) : addStopSlice(
-			Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice2), slice2, locations);
+		return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice2), slice2, locations) : addStopSlice(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice2),
+			slice2, locations);
 	    } else {
 		if (!slice3.isEmpty()) {
 		    return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice3), slice3, locations) : addStopSlice(
@@ -347,16 +344,16 @@ public class Tour {
 					    Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice7), slice7, locations);
 				} else {
 				    if (!slice8.isEmpty()) {
-					return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice8), slice8, locations)
-						: addStopSlice(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice8), slice8, locations);
+					return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice8), slice8, locations) : addStopSlice(
+						Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice8), slice8, locations);
 				    } else {
 					if (!slice9.isEmpty()) {
-					    return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice9), slice9, locations)
-						    : addStopSlice(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice9), slice9, locations);
+					    return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice9), slice9, locations) : addStopSlice(
+						    Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice9), slice9, locations);
 					} else {
 					    if (!slice10.isEmpty()) {
-						return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice10), slice10, locations)
-							: addStopSlice(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice10), slice10, locations);
+						return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSlice(Main.findFarthestLocation(tourStops.get(0), slice10), slice10, locations) : addStopSlice(
+							Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice10), slice10, locations);
 					    } else {
 						return false;
 					    }
@@ -370,23 +367,17 @@ public class Tour {
 	    }
 	}
     }
-    
+
     /**
      * 
      * BAUSTELLE
+     * 
      * @param locations
      * @return
      */
-    
+
     public boolean addNextStopSlicePlusFarPlusForecasting(ArrayList<Location> locations) {
-    	return locations.isEmpty() ? false : false;
+	return locations.isEmpty() ? false : false;
     }
-        
-    
-    
-    
-    
-    
+
 }
-
-
