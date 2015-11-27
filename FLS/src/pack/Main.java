@@ -354,21 +354,16 @@ public class Main {
 	return returnLocation;
     }
     
-    public static Location findClosestLocation(Location location, ArrayList<Location> withoutLocations, ArrayList<Location> locations) {
+    public static Location findClosestLocation(Location location, Location withoutLocation, ArrayList<Location> locations) {
     	Location returnLocation = locations.get(0);
     	for (int i = 1; i < locations.size(); i++) {
-    		for (int j=0; j < withoutLocations.size(); j++) {
-    			if (locations.get(i)==withoutLocations.get(j)) {
-    				break;
-    			}
-    			if ((getDistance(location, locations.get(i)) < getDistance(returnLocation, location))) {
+    		if (locations.get(i)!=withoutLocation && getDistance(location, locations.get(i)) < getDistance(returnLocation, location)) {
     	    		returnLocation = locations.get(i);
-    	    	}
     		}
     	    
     	}
     	return returnLocation;
-        }
+    }
 
     public static Location findFarthestLocation(Location location, ArrayList<Location> locations) {
 	Location returnLocation = locations.get(0);
