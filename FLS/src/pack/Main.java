@@ -182,13 +182,13 @@ public class Main {
 
 	
 	workCopy = (ArrayList<Location>) locations.clone();
-	ArrayList<Location> slice1 = workCopy;
+	ArrayList<Location> slice1 = new ArrayList<>();
 	for (Location location : locations) {
 	    if (location.getAngle() % 360 >= 0 && location.getAngle() % 360 < 36) {
 		slice1.add(location);
 	    }
 	}
-	while (!workCopy.isEmpty()) {
+	while (!slice1.isEmpty()) {
 	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice1));
 	}
 	
@@ -245,7 +245,7 @@ public class Main {
 	System.err.println("FarToClose Strategy: " + (allToursFarToClose.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
 	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
 	System.err.println("SlicePlusFarPlusForecasting Strategy: " + (allToursSlicePlusFarPlusForecasting.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFarPlusForecasting + " Minuten");
-	 */
+	*/
 	
 	// long endTime = System.currentTimeMillis();
 	// System.err.println("Elapsed Time: " + (endTime - startTime) + "ms");
@@ -316,7 +316,7 @@ public class Main {
 
     private static Tour findWorkDaySlicePlusFarPlusForecasting(ArrayList<Location> locations) {
 	
-	generateAngleToLocation();
+	//generateAngleToLocation();
 	
 	Tour tour = plusForecastingTobi(locations);
 	for (int i = 0; i < tour.getTourStops().size(); i++) {
