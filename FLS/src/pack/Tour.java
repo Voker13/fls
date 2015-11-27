@@ -38,14 +38,16 @@ public class Tour {
     
     public boolean createGivenTour(int[] useMethod, ArrayList<Location> locations) {
 	addStop(Main.findFarthestLocation(tourStops.get(tourStops.size()-1), locations),locations);
-	for (int i = 0; i < useMethod.length; i++) {
-	    if (useMethod[i]==0) {
-		addStop(Main.findClosestLocation(tourStops.get(tourStops.size()-1), locations),locations);
-	    }
-	    if (useMethod[i]==1) {
-		addStop(Main.findSecondClosestLocation(tourStops.get(tourStops.size()-1), locations),locations);
-	    }
-	}
+	if (!locations.isEmpty()) {
+		for (int i = 0; i < useMethod.length; i++) {
+		    if (useMethod[i]==0) {
+			addStop(Main.findClosestLocation(tourStops.get(tourStops.size()-1), locations),locations);
+		    }
+		    if (useMethod[i]==1) {
+			addStop(Main.findSecondClosestLocation(tourStops.get(tourStops.size()-1), locations),locations);
+		    }
+		}
+    }
 	return true;
     }
 

@@ -178,14 +178,20 @@ public class Main {
 	    allToursSlicePlusFar.add(findWorkDaySlicePlusFar(workCopy));
 	}
 	
-	plusForecastingTobi((ArrayList<Location>) locations.clone());
+	//plusForecastingTobi((ArrayList<Location>) locations.clone());
 
-	/*
+	
 	workCopy = (ArrayList<Location>) locations.clone();
-	while (!workCopy.isEmpty()) {
-	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(workCopy));
+	ArrayList<Location> slice1 = workCopy;
+	for (Location location : locations) {
+	    if (location.getAngle() % 360 >= 0 && location.getAngle() % 360 < 36) {
+		slice1.add(location);
+	    }
 	}
-	*/
+	while (!workCopy.isEmpty()) {
+	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice1));
+	}
+	
 
 	// Counts time for all Tours
 	int durationOverallClosest = 0;
@@ -309,18 +315,18 @@ public class Main {
     }
 
     private static Tour findWorkDaySlicePlusFarPlusForecasting(ArrayList<Location> locations) {
-	Tour tour = new Tour();
+	
 	generateAngleToLocation();
-	ArrayList<Location> slice1 = new ArrayList<>();
-	for (Location location : locations) {
-	    if (location.getAngle() % 360 >= 0 && location.getAngle() % 360 < 36) {
-		slice1.add(location);
-	    }
+	
+	Tour tour = plusForecastingTobi(locations);
+	for (int i = 0; i < tour.getTourStops().size(); i++) {
+		locations.remove(tour.getTourStops().get(i));
 	}
-	plusForecasting(slice1);
+	System.out.println("locations.size(): " + locations.size());
 	//while (tour.addNextStopSlicePlusFarPlusForecasting(locations)) {
-	while (tour.addNextStopPizza(slice1));
+	//while (tour.addNextStopPizza(slice1));
 	// System.err.println(tour.getDuration() + " " + tour.getTourStops());
+	
 	return tour;
     }
 
@@ -489,7 +495,7 @@ public class Main {
     }
 
     @SuppressWarnings("unchecked")
-    public static void plusForecastingTobi(ArrayList<Location> locations) {
+    public static Tour plusForecastingTobi(ArrayList<Location> locations) {
 	
 	int deltaTourlänge = 5;
 	int erg = (int) Math.pow(2, deltaTourlänge); // length
@@ -519,6 +525,19 @@ public class Main {
 	for (int i = 0; i < possibleTours.length; i++) {
 	    System.out.println(possibleTours[i].getDuration());
 	}
+	
+	// calculates the shortest tour
+	Tour shortestTour = possibleTours[0];
+	int time = shortestTour.getDuration();
+	for (int i = 0; i < possibleTours.length; i++) {
+		if (possibleTours[i].getDuration() < time) {
+			time = possibleTours[i].getDuration();
+			shortestTour = possibleTours[i];
+		}
+	}
+	
+	System.out.println("shortest: "+time);
+	return shortestTour;
 	
     }
     
