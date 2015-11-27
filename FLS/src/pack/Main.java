@@ -477,7 +477,6 @@ public class Main {
 	int erg = (int) Math.pow(2, expo); // length
 
 	Location[][] locArray = new Location[erg][deltaTourlänge];
-	Location[][] usedLocArray = new Location[erg][];
 	Location locO0 = Main.findFarthestLocation(Main.getDepot(), locations);
 
 	for (int i = 0; i < deltaTourlänge; i++) {
@@ -489,11 +488,12 @@ public class Main {
 	    s = 0;
 	    for (int t = 0; t < erg / i; t++) {
 		for (int r = 0; r < i; r++) {
+			Location loc = Main.findClosestLocation(locArray[s][j - 1], locations);
 		    if (t % 2 == 0) {
-		    	locArray[s][j] = Main.findClosestLocation(locArray[s][j - 1], locations);
+		    	locArray[s][j] = Main.findClosestLocation(loc, locations);
 		    }
 		    else {
-		    	locArray[s][j] = Main.findClosestLocation(locArray[s][j - 1], locations);
+		    	locArray[s][j] = loc;
 		    }
 		    s++;
 		}
