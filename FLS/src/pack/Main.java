@@ -361,10 +361,11 @@ public class Main {
     			if (locations.get(i)==withoutLocations.get(j)) {
     				break;
     			}
+    			if ((getDistance(location, locations.get(i)) < getDistance(returnLocation, location))) {
+    	    		returnLocation = locations.get(i);
+    	    	}
     		}
-    	    if ((getDistance(location, locations.get(i)) < getDistance(returnLocation, location))) {
-    		returnLocation = locations.get(i);
-    	    }
+    	    
     	}
     	return returnLocation;
         }
