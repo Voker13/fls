@@ -357,7 +357,7 @@ public class Main {
     public static Location findClosestLocation(Location location, ArrayList<Location> withoutLocations, ArrayList<Location> locations) {
     	Location returnLocation = locations.get(0);
     	for (int i = 1; i < locations.size(); i++) {
-    		for (int j=0; i < withoutLocations.size(); j++) {
+    		for (int j=0; j < withoutLocations.size(); j++) {
     			if (locations.get(i)==withoutLocations.get(j)) {
     				break;
     			}
