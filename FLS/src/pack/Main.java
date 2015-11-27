@@ -177,11 +177,15 @@ public class Main {
 	while (!workCopy.isEmpty()) {
 	    allToursSlicePlusFar.add(findWorkDaySlicePlusFar(workCopy));
 	}
+	
+	plusForecastingTobi((ArrayList<Location>) locations.clone());
 
+	/*
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(workCopy));
 	}
+	*/
 
 	// Counts time for all Tours
 	int durationOverallClosest = 0;
@@ -226,6 +230,7 @@ public class Main {
 
 	// Some Debug info, like time and Graph
 
+	/*
 	System.err.println("Closest Strategy: " + (allToursClosest.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
 	System.err.println("Circle Strategy: " + (allToursCircle.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
 	System.err.println("Pizza Strategy: " + (allToursPizza.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
@@ -234,7 +239,8 @@ public class Main {
 	System.err.println("FarToClose Strategy: " + (allToursFarToClose.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
 	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
 	System.err.println("SlicePlusFarPlusForecasting Strategy: " + (allToursSlicePlusFarPlusForecasting.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFarPlusForecasting + " Minuten");
-
+	 */
+	
 	// long endTime = System.currentTimeMillis();
 	// System.err.println("Elapsed Time: " + (endTime - startTime) + "ms");
 
@@ -354,6 +360,14 @@ public class Main {
 	return returnLocation;
     }
     
+    
+    public static Location findSecondClosestLocation(Location location, ArrayList<Location> locations) {
+	Location closestLocation = findClosestLocation(location,locations);
+	locations.remove(closestLocation);
+	Location secondClosestLocation = findClosestLocation(location,locations);
+	return secondClosestLocation;
+    }
+    
     public static Location findClosestLocation(Location location, Location withoutLocation, ArrayList<Location> locations) {
     	Location returnLocation = locations.get(0);
     	for (int i = 1; i < locations.size(); i++) {
@@ -469,7 +483,44 @@ public class Main {
      * BAUSTELLE!!
      * 
      */
+    
+    public static int[] intToBinary(int number) {
+	return null;
+    }
 
+    public static void plusForecastingTobi(ArrayList<Location> locations) {
+	
+	int deltaTourlänge = 5;
+	int erg = (int) Math.pow(2, deltaTourlänge); // length
+	
+	int[][] methodUse = new int[erg][deltaTourlänge];
+	for (int i = 0; i < erg; i++) {
+	    for (int j = 0; j < deltaTourlänge; j++) {
+		methodUse[i][j]=(int) (i/(Math.pow(2, deltaTourlänge-1-j))) %2;
+	    }
+	}
+	
+	for (int i = 0; i < erg; i++) {
+	    for (int j = 0; j < deltaTourlänge; j++) {
+		System.out.print(methodUse[i][j]);
+	    }
+	    System.out.println();
+	}
+	
+	Tour[] possibleTours = new Tour[erg];
+	
+	for (int i = 0; i < erg; i++) {
+	    Tour tour = new Tour();
+	    tour.createGivenTour(methodUse[i], locations);
+	    possibleTours[i] = tour;
+	}
+	
+	for (int i = 0; i < possibleTours.length; i++) {
+	    System.out.println(possibleTours[i].getDuration());
+	}
+	
+    }
+    
     public static void plusForecasting(ArrayList<Location> locations) {
 
 	int deltaTourlänge = 4;
