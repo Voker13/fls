@@ -475,6 +475,7 @@ public class Main {
 	int s = 0; //Stelle im locArray
 	for (int j = 1; j < expo; j++) {
 	    int i = (int) Math.pow(2, expo - j);
+	    s = 0;
 	    for (int t = 0; t < erg / i; t++) {
 		for (int r = 0; r < i; r++) {
 		    if (t % 2 == 0) {
