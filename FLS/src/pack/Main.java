@@ -488,6 +488,7 @@ public class Main {
 	return null;
     }
 
+    @SuppressWarnings("unchecked")
     public static void plusForecastingTobi(ArrayList<Location> locations) {
 	
 	int deltaTourlänge = 5;
@@ -511,7 +512,7 @@ public class Main {
 	
 	for (int i = 0; i < erg; i++) {
 	    Tour tour = new Tour();
-	    tour.createGivenTour(methodUse[i], locations);
+	    tour.createGivenTour(methodUse[i],(ArrayList<Location>) locations.clone());
 	    possibleTours[i] = tour;
 	}
 	
