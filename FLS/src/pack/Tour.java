@@ -35,19 +35,33 @@ public class Tour {
     public void setTourStops(ArrayList<Location> tourStops) {
 	this.tourStops = tourStops;
     }
-    
+
     public boolean createGivenTour(int[] useMethod, ArrayList<Location> locations) {
-	addStop(Main.findFarthestLocation(tourStops.get(tourStops.size()-1), locations),locations);
+	addStopDepot(Main.findFarthestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
 	if (!locations.isEmpty()) {
-		for (int i = 0; i < useMethod.length; i++) {
-		    if (useMethod[i]==0) {
-			addStop(Main.findClosestLocation(tourStops.get(tourStops.size()-1), locations),locations);
+	    for (int i = 0; i < useMethod.length; i++) {
+		if (useMethod[i] == 0) {
+		    if (locations.size() < 1) {
+			addDepot();
+			return false;
+		    } else {
+			addStopDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
 		    }
-		    if (useMethod[i]==1) {
-			addStop(Main.findSecondClosestLocation(tourStops.get(tourStops.size()-1), locations),locations);
+		    if (useMethod[i] == 1) {
+			if (locations.size() <= 1) {
+			    if (locations.size() < 1) {
+				addDepot();
+				return false;
+			    } else {
+				addStopDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
+			    }
+			} else {
+			    addStopDepot(Main.findSecondClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
+			}
 		    }
 		}
-    }
+	    }
+	}
 	return true;
     }
 
@@ -90,8 +104,8 @@ public class Tour {
     }
 
     public boolean addStopSlice(Location location, ArrayList<Location> locationsSlice, ArrayList<Location> locationsAll) {
-    	double time = (Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration();
-	if (duration + time  < maxDuration) {
+	double time = (Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration();
+	if (duration + time < maxDuration) {
 	    duration += time;
 	    tourStops.add(location);
 	    locationsSlice.remove(Main.getIndex(locationsSlice, location));
@@ -194,15 +208,15 @@ public class Tour {
     // needs to be checked for a few values
     public boolean addNextStopVariableSlices(ArrayList<Location> locations, int slices) {
 	ArrayList<Location> locationsInSlice = new ArrayList<>();
-	for (int i = 0; i < slices;i++) {
+	for (int i = 0; i < slices; i++) {
 	    locationsInSlice = new ArrayList<>();
 	    for (Location location : locations) {
-		if (location.getAngle() % 360 >= i * slices && location.getAngle() % 360 < (i + 1) * (360/slices)) {
+		if (location.getAngle() % 360 >= i * slices && location.getAngle() % 360 < (i + 1) * (360 / slices)) {
 		    locationsInSlice.add(location);
 		}
 	    }
 	    if (locationsInSlice.isEmpty()) {
-		
+
 	    } else {
 		return addStopSliceDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locationsInSlice), locationsInSlice, locations);
 	    }
@@ -413,90 +427,90 @@ public class Tour {
 
     public boolean addNextStopSlicePlusFarPlusForecasting(ArrayList<Location> locations) {
 
-    	ArrayList<Location> slice1 = new ArrayList<>();
-    	ArrayList<Location> slice2 = new ArrayList<>();
-    	ArrayList<Location> slice3 = new ArrayList<>();
-    	ArrayList<Location> slice4 = new ArrayList<>();
-    	ArrayList<Location> slice5 = new ArrayList<>();
-    	ArrayList<Location> slice6 = new ArrayList<>();
-    	ArrayList<Location> slice7 = new ArrayList<>();
-    	ArrayList<Location> slice8 = new ArrayList<>();
-    	ArrayList<Location> slice9 = new ArrayList<>();
-    	ArrayList<Location> slice10 = new ArrayList<>();
-    	for (Location location : locations) {
-    	    if (location.getAngle() % 360 >= 0 && location.getAngle() % 360 < 36) {
-    		slice1.add(location);
-    	    }
-    	    if (location.getAngle() % 360 >= 36 && location.getAngle() % 360 < 72) {
-    		slice2.add(location);
-    	    }
-    	    if (location.getAngle() % 360 >= 72 && location.getAngle() % 360 < 108) {
-    		slice3.add(location);
-    	    }
-    	    if (location.getAngle() % 360 >= 108 && location.getAngle() % 360 < 144) {
-    		slice4.add(location);
-    	    }
-    	    if (location.getAngle() % 360 >= 144 && location.getAngle() % 360 < 180) {
-    		slice5.add(location);
-    	    }
-    	    if (location.getAngle() % 360 >= 180 && location.getAngle() % 360 < 216) {
-    		slice6.add(location);
-    	    }
-    	    if (location.getAngle() % 360 >= 216 && location.getAngle() % 360 < 252) {
-    		slice7.add(location);
-    	    }
-    	    if (location.getAngle() % 360 >= 252 && location.getAngle() % 360 < 288) {
-    		slice8.add(location);
-    	    }
-    	    if (location.getAngle() % 360 >= 288 && location.getAngle() % 360 < 324) {
-    		slice9.add(location);
-    	    }
-    	    if (location.getAngle() % 360 >= 324 && location.getAngle() % 360 < 360) {
-    		slice10.add(location);
-    	    }
-    	}
-    	// System.out.println(slice1.size()+slice2.size()+slice3.size()+slice4.size()+slice5.size()+slice6.size()+slice7.size()+slice8.size()+slice9.size()+slice10.size());
-    	if (!slice1.isEmpty()) {
-    	    return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice1),slice1,locations);
-    	} else {
-    	    if (!slice2.isEmpty()) {
-    	    	return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice2),slice2,locations);
-    	    } else {
-    		if (!slice3.isEmpty()) {
-    			return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice3),slice3,locations);
-    		} else {
-    		    if (!slice4.isEmpty()) {
-    		    	return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice4),slice4,locations);
-    		    } else {
-    			if (!slice5.isEmpty()) {
-    				return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice5),slice5,locations);
-    			} else {
-    			    if (!slice6.isEmpty()) {
-    			    	return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice6),slice6,locations);
-    			    } else {
-    				if (!slice7.isEmpty()) {
-    					return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice7),slice7,locations);
-    				} else {
-    				    if (!slice8.isEmpty()) {
-    				    	return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice8),slice8,locations);
-    				    } else {
-    					if (!slice9.isEmpty()) {
-    						return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice9),slice9,locations);
-    					} else {
-    					    if (!slice10.isEmpty()) {
-    					    	return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice10),slice10,locations);
-    					    } else {
-    						return false;
-    					    }
-    					}
-    				    }
-    				}
-    			    }
-    			}
-    		    }
-    		}
-    	    }
-    	}
+	ArrayList<Location> slice1 = new ArrayList<>();
+	ArrayList<Location> slice2 = new ArrayList<>();
+	ArrayList<Location> slice3 = new ArrayList<>();
+	ArrayList<Location> slice4 = new ArrayList<>();
+	ArrayList<Location> slice5 = new ArrayList<>();
+	ArrayList<Location> slice6 = new ArrayList<>();
+	ArrayList<Location> slice7 = new ArrayList<>();
+	ArrayList<Location> slice8 = new ArrayList<>();
+	ArrayList<Location> slice9 = new ArrayList<>();
+	ArrayList<Location> slice10 = new ArrayList<>();
+	for (Location location : locations) {
+	    if (location.getAngle() % 360 >= 0 && location.getAngle() % 360 < 36) {
+		slice1.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 36 && location.getAngle() % 360 < 72) {
+		slice2.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 72 && location.getAngle() % 360 < 108) {
+		slice3.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 108 && location.getAngle() % 360 < 144) {
+		slice4.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 144 && location.getAngle() % 360 < 180) {
+		slice5.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 180 && location.getAngle() % 360 < 216) {
+		slice6.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 216 && location.getAngle() % 360 < 252) {
+		slice7.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 252 && location.getAngle() % 360 < 288) {
+		slice8.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 288 && location.getAngle() % 360 < 324) {
+		slice9.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 324 && location.getAngle() % 360 < 360) {
+		slice10.add(location);
+	    }
+	}
+	// System.out.println(slice1.size()+slice2.size()+slice3.size()+slice4.size()+slice5.size()+slice6.size()+slice7.size()+slice8.size()+slice9.size()+slice10.size());
+	if (!slice1.isEmpty()) {
+	    return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice1), slice1, locations);
+	} else {
+	    if (!slice2.isEmpty()) {
+		return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice2), slice2, locations);
+	    } else {
+		if (!slice3.isEmpty()) {
+		    return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice3), slice3, locations);
+		} else {
+		    if (!slice4.isEmpty()) {
+			return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice4), slice4, locations);
+		    } else {
+			if (!slice5.isEmpty()) {
+			    return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice5), slice5, locations);
+			} else {
+			    if (!slice6.isEmpty()) {
+				return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice6), slice6, locations);
+			    } else {
+				if (!slice7.isEmpty()) {
+				    return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice7), slice7, locations);
+				} else {
+				    if (!slice8.isEmpty()) {
+					return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice8), slice8, locations);
+				    } else {
+					if (!slice9.isEmpty()) {
+					    return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice9), slice9, locations);
+					} else {
+					    if (!slice10.isEmpty()) {
+						return locations.isEmpty() ? false : addStopSlice(Main.findFarthestLocationToDepot(slice10), slice10, locations);
+					    } else {
+						return false;
+					    }
+					}
+				    }
+				}
+			    }
+			}
+		    }
+		}
+	    }
+	}
     }
 
     public String toString() {
@@ -505,7 +519,7 @@ public class Tour {
 	    returnString += location.getName() + " ";
 	}
 	returnString += "] " + duration + " Minuten";
-	
+
 	return returnString;
     }
 }

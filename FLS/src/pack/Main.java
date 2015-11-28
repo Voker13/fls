@@ -77,8 +77,8 @@ public class Main {
 	sliceStrategy();
 	farToCloseStrategy();
 	slicesPlusFarStrategy();
-	variableSliceStrategy(20);
-	//slicePlusFarPlusForecastStrategy();
+	//variableSliceStrategy(10);
+	slicePlusFarPlusForecastStrategy();
 	
 	GraphFrame gf = new GraphFrame(tours);
 	gf.repaint();
@@ -139,9 +139,6 @@ public class Main {
 	tours.add(allToursClosest);
 	
 	System.err.println("Closest Strategy: " + (allToursClosest.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
-	for (Tour tour : allToursClosest) {
-	    System.err.println(tour);
-	}
     }
     
     @SuppressWarnings("unchecked")
@@ -228,9 +225,6 @@ public class Main {
 	tours.add(allToursSlices);
 	
 	System.err.println("Slices Strategy: " + (allToursSlices.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
-	for (Tour tour : allToursSlices) {
-	    System.err.println(tour);
-	}
     }
     
     @SuppressWarnings("unchecked")
@@ -545,7 +539,7 @@ public class Main {
      */
     @SuppressWarnings("unchecked")
     public static Tour plusForecastingTobi(ArrayList<Location> locations) {
-	//System.out.println("locations(forecasting) size: "+ locations.size());
+	System.out.println("locations(forecasting) size: "+ locations.size());
 	int deltaTourlänge = 5;
 	int erg = (int) Math.pow(2, deltaTourlänge); // length
 	
