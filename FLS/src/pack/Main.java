@@ -77,7 +77,7 @@ public class Main {
 	sliceStrategy();
 	farToCloseStrategy();
 	slicesPlusFarStrategy();
-	variableSliceStrategy(10);
+	variableSliceStrategy(20);
 	//slicePlusFarPlusForecastStrategy();
 	
 	GraphFrame gf = new GraphFrame(tours);
@@ -139,6 +139,9 @@ public class Main {
 	tours.add(allToursClosest);
 	
 	System.err.println("Closest Strategy: " + (allToursClosest.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
+	for (Tour tour : allToursClosest) {
+	    System.err.println(tour);
+	}
     }
     
     @SuppressWarnings("unchecked")
@@ -225,6 +228,9 @@ public class Main {
 	tours.add(allToursSlices);
 	
 	System.err.println("Slices Strategy: " + (allToursSlices.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
+	for (Tour tour : allToursSlices) {
+	    System.err.println(tour);
+	}
     }
     
     @SuppressWarnings("unchecked")

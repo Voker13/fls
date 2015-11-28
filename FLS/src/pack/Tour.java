@@ -210,7 +210,6 @@ public class Tour {
 	return false;
     }
 
-
     public boolean addNextStopSlices(ArrayList<Location> locations) {
 	ArrayList<Location> slice1 = new ArrayList<>();
 	ArrayList<Location> slice2 = new ArrayList<>();
@@ -413,6 +412,7 @@ public class Tour {
      */
 
     public boolean addNextStopSlicePlusFarPlusForecasting(ArrayList<Location> locations) {
+
     	ArrayList<Location> slice1 = new ArrayList<>();
     	ArrayList<Location> slice2 = new ArrayList<>();
     	ArrayList<Location> slice3 = new ArrayList<>();
@@ -499,4 +499,13 @@ public class Tour {
     	}
     }
 
+    public String toString() {
+	String returnString = "[";
+	for (Location location : tourStops) {
+	    returnString += location.getName() + " ";
+	}
+	returnString += "] " + duration + " Minuten";
+	
+	return returnString;
+    }
 }
