@@ -496,7 +496,7 @@ public class Main {
 
     @SuppressWarnings("unchecked")
     public static Tour plusForecastingTobi(ArrayList<Location> locations) {
-	
+	//System.out.println("locations(forecasting) size: "+ locations.size());
 	int deltaTourlänge = 5;
 	int erg = (int) Math.pow(2, deltaTourlänge); // length
 	
