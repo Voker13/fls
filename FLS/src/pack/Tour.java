@@ -41,26 +41,18 @@ public class Tour {
 	if (!locations.isEmpty()) {
 	    for (int i = 0; i < useMethod.length; i++) {
 		if (useMethod[i] == 0) {
-		    if (locations.size() < 1) {
-			addDepot();
-			return false;
-		    } else {
+		    addStopDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
+		}
+		if (useMethod[i] == 1) {
+		    if (locations.size() < 2) {
 			addStopDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
-		    }
-		    if (useMethod[i] == 1) {
-			if (locations.size() <= 1) {
-			    if (locations.size() < 1) {
-				addDepot();
-				return false;
-			    } else {
-				addStopDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
-			    }
-			} else {
-			    addStopDepot(Main.findSecondClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
-			}
+		    } else {
+			addStopDepot(Main.findSecondClosestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
 		    }
 		}
 	    }
+	} else {
+	    return false;
 	}
 	return true;
     }

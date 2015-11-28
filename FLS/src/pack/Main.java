@@ -69,6 +69,8 @@ public class Main {
 
 	calculateAvarageSpeed();
 	
+	System.out.println(findSecondClosestLocation(depot,locations));
+	
 	// run Strategies
 	closestStrategy();
 	circleStrategy();
@@ -415,10 +417,12 @@ public class Main {
 	return returnLocation;
     }
     
+    @SuppressWarnings("unchecked")
     public static Location findSecondClosestLocation(Location location, ArrayList<Location> locations) {
 	Location closestLocation = findClosestLocation(location,locations);
-	locations.remove(closestLocation);
-	Location secondClosestLocation = findClosestLocation(location,locations);
+	ArrayList<Location> localCopy = (ArrayList<Location>) locations.clone();
+	localCopy.remove(closestLocation);
+	Location secondClosestLocation = findClosestLocation(location,localCopy);
 	return secondClosestLocation;
     }
     
