@@ -191,6 +191,26 @@ public class Tour {
 
     }
 
+    // needs to be checked for a few values
+    public boolean addNextStopVariableSlices(ArrayList<Location> locations, int slices) {
+	ArrayList<Location> locationsInSlice = new ArrayList<>();
+	for (int i = 0; i < slices;i++) {
+	    locationsInSlice = new ArrayList<>();
+	    for (Location location : locations) {
+		if (location.getAngle() % 360 >= i * slices && location.getAngle() % 360 < (i + 1) * (360/slices)) {
+		    locationsInSlice.add(location);
+		}
+	    }
+	    if (locationsInSlice.isEmpty()) {
+		
+	    } else {
+		return addStopSliceDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locationsInSlice), locationsInSlice, locations);
+	    }
+	}
+	return false;
+    }
+
+
     public boolean addNextStopSlices(ArrayList<Location> locations) {
 	ArrayList<Location> slice1 = new ArrayList<>();
 	ArrayList<Location> slice2 = new ArrayList<>();

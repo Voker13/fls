@@ -129,6 +129,7 @@ public class Main {
 	ArrayList<Tour> allToursFarToClose = new ArrayList<Tour>();
 	ArrayList<Tour> allToursSlicePlusFar = new ArrayList<Tour>();
 	ArrayList<Tour> allToursSlicePlusFarPlusForecasting = new ArrayList<Tour>();
+	ArrayList<Tour> allToursSliceVariable = new ArrayList<>();
 
 	// Here is the Strategy, Tours are built until locations is empty
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
@@ -192,6 +193,10 @@ public class Main {
 	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice1));
 	}
 	
+	workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursSliceVariable.add(findWorkDayVariableSlices(workCopy));
+	}	
 
 	// Counts time for all Tours
 	int durationOverallClosest = 0;
@@ -233,6 +238,11 @@ public class Main {
 	for (Tour tour : allToursSlicePlusFarPlusForecasting) {
 	    durationOverallSlicePlusFarPlusForecasting += tour.getDuration();
 	}
+	
+	int durationOverallSliceVariable = 0;
+	for (Tour tour : allToursSliceVariable) {
+	    durationOverallSliceVariable += tour.getDuration();
+	}
 
 	// Some Debug info, like time and Graph
 
@@ -245,6 +255,8 @@ public class Main {
 	System.err.println("FarToClose Strategy: " + (allToursFarToClose.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
 	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
 	System.err.println("SlicePlusFarPlusForecasting Strategy: " + (allToursSlicePlusFarPlusForecasting.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFarPlusForecasting + " Minuten");
+	System.err.println("SlicePlusVariable(" + 5 + "): " + (allToursSliceVariable.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariable + " Minuten");
+	 
 	*/
 	
 	// long endTime = System.currentTimeMillis();
@@ -259,6 +271,7 @@ public class Main {
 	tours.add(allToursFarToClose);
 	tours.add(allToursSlicePlusFar);
 	tours.add(allToursSlicePlusFarPlusForecasting);
+	tours.add(allToursSliceVariable);
 	// System.out.println("SOLUTION " + durationOverallSlices);
 	GraphFrame gf = new GraphFrame(tours);
 	gf.repaint();
@@ -306,6 +319,17 @@ public class Main {
     private static Tour findWorkDay(ArrayList<Location> locations) {
 	Tour tour = new Tour();
 	while (tour.addNextStop(locations)) {
+
+	}
+	if (locations.isEmpty()) {
+	    tour.addDepot();
+	}
+	return tour;
+    }
+    
+    private static Tour findWorkDayVariableSlices(ArrayList<Location> locations) {
+	Tour tour = new Tour();
+	while (tour.addNextStopVariableSlices(locations,15)) {
 
 	}
 	if (locations.isEmpty()) {
