@@ -121,54 +121,13 @@ public class Main {
 	    // locations.get(i).getLat() + " : " + locations.get(i).getLong() +
 	    // " : " + locations.get(i).getAngle());
 	}
-
-	ArrayList<Tour> allToursCircle = new ArrayList<Tour>();
-	ArrayList<Tour> allToursPizza = new ArrayList<Tour>();
-	ArrayList<Tour> allToursRandom = new ArrayList<Tour>();
-	ArrayList<Tour> allToursSlices = new ArrayList<Tour>();
-	ArrayList<Tour> allToursFarToClose = new ArrayList<Tour>();
+	
 	ArrayList<Tour> allToursSlicePlusFar = new ArrayList<Tour>();
 	ArrayList<Tour> allToursSlicePlusFarPlusForecasting = new ArrayList<Tour>();
 	ArrayList<Tour> allToursSliceVariable = new ArrayList<>();
 
 	// Here is the Strategy, Tours are built until locations is empty
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-	while (!workCopy.isEmpty()) {
-	    allToursCircle.add(findWorkDayCircle(workCopy));
-	}
-
-	// workCopy = (ArrayList<Location>) locations.clone();
-	ArrayList<Location> radius1 = new ArrayList<>();
-	ArrayList<Location> radius2 = new ArrayList<>();
-	for (Location loc : locations) {
-	    if (loc.getDistance0() < 0.03) {
-		radius1.add(loc);
-	    } else {
-		radius2.add(loc);
-	    }
-	}
-	while (!radius1.isEmpty()) {
-	    allToursPizza.add(findWorkDayPizza(radius1));
-	}
-	while (!radius2.isEmpty()) {
-	    allToursPizza.add(findWorkDayPizza(radius2));
-	}
-
-	workCopy = (ArrayList<Location>) locations.clone();
-	while (!workCopy.isEmpty()) {
-	    allToursRandom.add(findWorkDayRandom(workCopy));
-	}
-
-	workCopy = (ArrayList<Location>) locations.clone();
-	while (!workCopy.isEmpty()) {
-	    allToursSlices.add(findWorkDaySlices(workCopy));
-	}
-
-	workCopy = (ArrayList<Location>) locations.clone();
-	while (!workCopy.isEmpty()) {
-	    allToursFarToClose.add(findWorkDayFarToClose(workCopy));
-	}
-
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursSlicePlusFar.add(findWorkDaySlicePlusFar(workCopy));
@@ -196,31 +155,6 @@ public class Main {
 	}	
 
 	// Counts time for all Tours
-	int durationOverallCircle = 0;
-	for (Tour tour : allToursCircle) {
-	    durationOverallCircle += tour.getDuration();
-	}
-
-	int durationOverallPizza = 0;
-	for (Tour tour : allToursPizza) {
-	    durationOverallPizza += tour.getDuration();
-	}
-
-	int durationOverallRandom = 0;
-	for (Tour tour : allToursRandom) {
-	    durationOverallRandom += tour.getDuration();
-	}
-
-	int durationOverallSlices = 0;
-	for (Tour tour : allToursSlices) {
-	    durationOverallSlices += tour.getDuration();
-	}
-
-	int durationOverallFarToClose = 0;
-	for (Tour tour : allToursFarToClose) {
-	    durationOverallFarToClose += tour.getDuration();
-	}
-
 	int durationOverallSlicePlusFar = 0;
 	for (Tour tour : allToursSlicePlusFar) {
 	    durationOverallSlicePlusFar += tour.getDuration();
@@ -239,26 +173,20 @@ public class Main {
 	// Some Debug info, like time and Graph
 
 	/*
-	System.err.println("Circle Strategy: " + (allToursCircle.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
-	System.err.println("Pizza Strategy: " + (allToursPizza.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
-	System.err.println("Random Strategy: " + (allToursRandom.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
-	System.err.println("Slices Strategy: " + (allToursSlices.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
-	System.err.println("FarToClose Strategy: " + (allToursFarToClose.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
 	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
 	System.err.println("SlicePlusFarPlusForecasting Strategy: " + (allToursSlicePlusFarPlusForecasting.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFarPlusForecasting + " Minuten");
 	System.err.println("SlicePlusVariable(" + 5 + "): " + (allToursSliceVariable.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariable + " Minuten");
-	 
 	*/
 	
 	// long endTime = System.currentTimeMillis();
 	// System.err.println("Elapsed Time: " + (endTime - startTime) + "ms");
 
 	closestStrategy();
-	tours.add(allToursCircle);
-	tours.add(allToursPizza);
-	tours.add(allToursRandom);
-	tours.add(allToursSlices);
-	tours.add(allToursFarToClose);
+	circleStrategy();
+	pizzaStrategy();
+	randomStrategy();
+	sliceStrategy();
+	farToCloseStrategy();
 	tours.add(allToursSlicePlusFar);
 	tours.add(allToursSlicePlusFarPlusForecasting);
 	tours.add(allToursSliceVariable);
@@ -284,6 +212,111 @@ public class Main {
 	tours.add(allToursClosest);
 	
 	System.err.println("Closest Strategy: " + (allToursClosest.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
+    }
+    
+    @SuppressWarnings("unchecked")
+    private static void circleStrategy() {
+	ArrayList<Tour> allToursCircle = new ArrayList<Tour>();
+	
+	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursCircle.add(findWorkDayCircle(workCopy));
+	}
+
+	int durationOverallCircle = 0;
+	for (Tour tour : allToursCircle) {
+	    durationOverallCircle += tour.getDuration();
+	}
+
+	tours.add(allToursCircle);
+	
+	System.err.println("Circle Strategy: " + (allToursCircle.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
+    }
+    
+    private static void pizzaStrategy() {
+	ArrayList<Tour> allToursPizza = new ArrayList<Tour>();
+	
+	ArrayList<Location> radius1 = new ArrayList<>();
+	ArrayList<Location> radius2 = new ArrayList<>();
+	for (Location loc : locations) {
+	    if (loc.getDistance0() < 0.03) {
+		radius1.add(loc);
+	    } else {
+		radius2.add(loc);
+	    }
+	}
+	while (!radius1.isEmpty()) {
+	    allToursPizza.add(findWorkDayPizza(radius1));
+	}
+	while (!radius2.isEmpty()) {
+	    allToursPizza.add(findWorkDayPizza(radius2));
+	}
+	
+	int durationOverallPizza = 0;
+	for (Tour tour : allToursPizza) {
+	    durationOverallPizza += tour.getDuration();
+	}
+
+	tours.add(allToursPizza);
+	
+	System.err.println("Pizza Strategy: " + (allToursPizza.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
+    }
+    
+    @SuppressWarnings("unchecked")
+    private static void randomStrategy() {
+	ArrayList<Tour> allToursRandom = new ArrayList<Tour>();
+	
+	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursRandom.add(findWorkDayRandom(workCopy));
+	}
+	
+	int durationOverallRandom = 0;
+	for (Tour tour : allToursRandom) {
+	    durationOverallRandom += tour.getDuration();
+	}
+	
+	tours.add(allToursRandom);
+	
+	System.err.println("Random Strategy: " + (allToursRandom.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
+    }
+    
+    @SuppressWarnings("unchecked")
+    private static void sliceStrategy() {
+	ArrayList<Tour> allToursSlices = new ArrayList<Tour>();
+	
+	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursSlices.add(findWorkDaySlices(workCopy));
+	}
+	
+	int durationOverallSlices = 0;
+	for (Tour tour : allToursSlices) {
+	    durationOverallSlices += tour.getDuration();
+	}
+	
+	tours.add(allToursSlices);
+	
+	System.err.println("Slices Strategy: " + (allToursSlices.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
+    }
+    
+    @SuppressWarnings("unchecked")
+    private static void farToCloseStrategy() {
+	ArrayList<Tour> allToursFarToClose = new ArrayList<Tour>();
+	
+	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursFarToClose.add(findWorkDayFarToClose(workCopy));
+	}
+	
+	int durationOverallFarToClose = 0;
+	for (Tour tour : allToursFarToClose) {
+	    durationOverallFarToClose += tour.getDuration();
+	}
+	
+	tours.add(allToursFarToClose);
+	
+	System.err.println("FarToClose Strategy: " + (allToursFarToClose.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
     }
 
     private static Tour findWorkDaySlices(ArrayList<Location> locations) {
