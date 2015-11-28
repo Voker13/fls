@@ -30,6 +30,7 @@ public class Main {
 					  // linksherum gehen soll
     private static Location TourStop2;
     private static boolean isUsed = false;
+    private static ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
@@ -121,7 +122,6 @@ public class Main {
 	    // " : " + locations.get(i).getAngle());
 	}
 
-	ArrayList<Tour> allToursClosest = new ArrayList<Tour>();
 	ArrayList<Tour> allToursCircle = new ArrayList<Tour>();
 	ArrayList<Tour> allToursPizza = new ArrayList<Tour>();
 	ArrayList<Tour> allToursRandom = new ArrayList<Tour>();
@@ -133,11 +133,6 @@ public class Main {
 
 	// Here is the Strategy, Tours are built until locations is empty
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-	while (!workCopy.isEmpty()) {
-	    allToursClosest.add(findWorkDay(workCopy));
-	}
-
-	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursCircle.add(findWorkDayCircle(workCopy));
 	}
@@ -189,9 +184,11 @@ public class Main {
 		slice1.add(location);
 	    }
 	}
+	/*
 	while (!slice1.isEmpty()) {
 	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice1));
 	}
+	*/
 	
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
@@ -199,11 +196,6 @@ public class Main {
 	}	
 
 	// Counts time for all Tours
-	int durationOverallClosest = 0;
-	for (Tour tour : allToursClosest) {
-	    durationOverallClosest += tour.getDuration();
-	}
-
 	int durationOverallCircle = 0;
 	for (Tour tour : allToursCircle) {
 	    durationOverallCircle += tour.getDuration();
@@ -247,7 +239,6 @@ public class Main {
 	// Some Debug info, like time and Graph
 
 	/*
-	System.err.println("Closest Strategy: " + (allToursClosest.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
 	System.err.println("Circle Strategy: " + (allToursCircle.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
 	System.err.println("Pizza Strategy: " + (allToursPizza.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
 	System.err.println("Random Strategy: " + (allToursRandom.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
@@ -262,8 +253,7 @@ public class Main {
 	// long endTime = System.currentTimeMillis();
 	// System.err.println("Elapsed Time: " + (endTime - startTime) + "ms");
 
-	ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
-	tours.add(allToursClosest);
+	closestStrategy();
 	tours.add(allToursCircle);
 	tours.add(allToursPizza);
 	tours.add(allToursRandom);
@@ -275,6 +265,25 @@ public class Main {
 	// System.out.println("SOLUTION " + durationOverallSlices);
 	GraphFrame gf = new GraphFrame(tours);
 	gf.repaint();
+    }
+    
+    @SuppressWarnings("unchecked")
+    private static void closestStrategy() {
+	ArrayList<Tour> allToursClosest = new ArrayList<Tour>();
+	
+	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursClosest.add(findWorkDay(workCopy));
+	}
+	
+	int durationOverallClosest = 0;
+	for (Tour tour : allToursClosest) {
+	    durationOverallClosest += tour.getDuration();
+	}
+	
+	tours.add(allToursClosest);
+	
+	System.err.println("Closest Strategy: " + (allToursClosest.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
     }
 
     private static Tour findWorkDaySlices(ArrayList<Location> locations) {
@@ -329,7 +338,7 @@ public class Main {
     
     private static Tour findWorkDayVariableSlices(ArrayList<Location> locations) {
 	Tour tour = new Tour();
-	while (tour.addNextStopVariableSlices(locations,15)) {
+	while (tour.addNextStopVariableSlices(locations,10)) {
 
 	}
 	if (locations.isEmpty()) {
