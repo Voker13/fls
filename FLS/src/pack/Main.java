@@ -272,15 +272,78 @@ public class Main {
 	ArrayList<Tour> allToursSlicePlusFarPlusForecasting = new ArrayList<Tour>();
 	
 	ArrayList<Location> slice1 = new ArrayList<>();
+	ArrayList<Location> slice2 = new ArrayList<>();
+	ArrayList<Location> slice3 = new ArrayList<>();
+	ArrayList<Location> slice4 = new ArrayList<>();
+	ArrayList<Location> slice5 = new ArrayList<>();
+	ArrayList<Location> slice6 = new ArrayList<>();
+	ArrayList<Location> slice7 = new ArrayList<>();
+	ArrayList<Location> slice8 = new ArrayList<>();
+	ArrayList<Location> slice9 = new ArrayList<>();
+	ArrayList<Location> slice10 = new ArrayList<>();
 	for (Location location : locations) {
 	    if (location.getAngle() % 360 >= 0 && location.getAngle() % 360 < 36) {
 		slice1.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 36 && location.getAngle() % 360 < 72) {
+		slice2.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 72 && location.getAngle() % 360 < 108) {
+		slice3.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 108 && location.getAngle() % 360 < 144) {
+		slice4.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 144 && location.getAngle() % 360 < 180) {
+		slice5.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 180 && location.getAngle() % 360 < 216) {
+		slice6.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 216 && location.getAngle() % 360 < 252) {
+		slice7.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 252 && location.getAngle() % 360 < 288) {
+		slice8.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 288 && location.getAngle() % 360 < 324) {
+		slice9.add(location);
+	    }
+	    if (location.getAngle() % 360 >= 324 && location.getAngle() % 360 < 360) {
+		slice10.add(location);
 	    }
 	}
 
 	while (!slice1.isEmpty()) {
 	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice1));
 	}
+//	while (!slice2.isEmpty()) {
+//	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice2));
+//	}
+//	while (!slice3.isEmpty()) {
+//	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice3));
+//	}
+//	while (!slice4.isEmpty()) {
+//	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice4));
+//	}
+//	while (!slice5.isEmpty()) {
+//	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice5));
+//	}
+//	while (!slice6.isEmpty()) {
+//	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice6));
+//	}
+//	while (!slice7.isEmpty()) {
+//	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice7));
+//	}
+//	while (!slice8.isEmpty()) {
+//	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice8));
+//	}
+//	while (!slice9.isEmpty()) {
+//	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice9));
+//	}
+//	while (!slice10.isEmpty()) {
+//	    allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice10));
+//	}
 
 	int durationOverallSlicePlusFarPlusForecasting = 0;
 	for (Tour tour : allToursSlicePlusFarPlusForecasting) {
@@ -375,9 +438,7 @@ public class Main {
 	//generateAngleToLocation();
 	
 	Tour tour = plusForecastingTobi(locations);
-	for (int i = 0; i < tour.getTourStops().size(); i++) {
-		locations.remove(tour.getTourStops().get(i));
-	}
+	
 	System.out.println("locations.size(): " + locations.size());
 	//while (tour.addNextStopSlicePlusFarPlusForecasting(locations)) {
 	//while (tour.addNextStopPizza(slice1));
@@ -581,6 +642,11 @@ public class Main {
 			time = possibleTours[i].getDuration();
 			shortestTour = possibleTours[i];
 		}
+	}
+	
+	// removes location in shortest tour out of locations
+	for (int i = 0; i < shortestTour.getTourStops().size(); i++) {
+		locations.remove(shortestTour.getTourStops().get(i));
 	}
 	
 	System.out.println("shortest: "+time);
