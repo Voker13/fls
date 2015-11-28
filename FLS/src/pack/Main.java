@@ -77,8 +77,8 @@ public class Main {
 	sliceStrategy();
 	farToCloseStrategy();
 	slicesPlusFarStrategy();
-	variableSliceStrategy();
-	slicePlusFarPlusForecastStrategy();
+	variableSliceStrategy(10);
+	//slicePlusFarPlusForecastStrategy();
 	
 	GraphFrame gf = new GraphFrame(tours);
 	gf.repaint();
@@ -265,6 +265,7 @@ public class Main {
 	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
     }
     
+    @SuppressWarnings("unused")
     private static void slicePlusFarPlusForecastStrategy() {
 	ArrayList<Tour> allToursSlicePlusFarPlusForecasting = new ArrayList<Tour>();
 	
@@ -290,14 +291,14 @@ public class Main {
     }
     
     @SuppressWarnings("unchecked")
-    private static void variableSliceStrategy() {
+    private static void variableSliceStrategy(int slices) {
 	ArrayList<Tour> allToursSliceVariable = new ArrayList<>();
 	
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-		
+			
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
-	    allToursSliceVariable.add(findWorkDayVariableSlices(workCopy));
+	    allToursSliceVariable.add(findWorkDayVariableSlices(workCopy,slices));
 	}	
 	
 	int durationOverallSliceVariable = 0;
@@ -307,7 +308,7 @@ public class Main {
 	
 	tours.add(allToursSliceVariable);
 	
-	System.err.println("SlicePlusVariable(" + 5 + "): " + (allToursSliceVariable.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariable + " Minuten");
+	System.err.println("SlicePlusVariable(" + slices + "): " + (allToursSliceVariable.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariable + " Minuten");
     }
     
     private static Tour findWorkDaySlices(ArrayList<Location> locations) {
@@ -320,10 +321,6 @@ public class Main {
 	}
 	return tour;
     }
-
-    /*
-     * Default
-     */
 
     private static Tour findWorkDayFarToClose(ArrayList<Location> locations) {
 	Tour tour = new Tour();
@@ -360,9 +357,9 @@ public class Main {
 	return tour;
     }
     
-    private static Tour findWorkDayVariableSlices(ArrayList<Location> locations) {
+    private static Tour findWorkDayVariableSlices(ArrayList<Location> locations,int slices) {
 	Tour tour = new Tour();
-	while (tour.addNextStopVariableSlices(locations,10)) {
+	while (tour.addNextStopVariableSlices(locations,slices)) {
 
 	}
 	if (locations.isEmpty()) {
@@ -390,7 +387,6 @@ public class Main {
     /*
      * PizzaTactic
      */
-
     private static Tour findWorkDayPizza(ArrayList<Location> locations) {
 	Tour tour = new Tour();
 	generateAngleToLocation();
@@ -401,15 +397,11 @@ public class Main {
 	return tour;
     }
 
-    /*
-     * The solution needs even longer than findWorkDay()
-     */
     private static Tour findWorkDayCircle(ArrayList<Location> locations) {
 	Tour tour = new Tour();
 	while (tour.addNextStopCircle(locations)) {
 
 	}
-	// System.err.println(tour.getDuration() + " " + tour.getTourStops());
 	return tour;
     }
 
@@ -422,7 +414,6 @@ public class Main {
 	}
 	return returnLocation;
     }
-    
     
     public static Location findSecondClosestLocation(Location location, ArrayList<Location> locations) {
 	Location closestLocation = findClosestLocation(location,locations);
@@ -474,7 +465,7 @@ public class Main {
     	return returnLocation;
         }
 
-        public static Location findFarthestLocationToDepot(Location location, Location withoutLoc, ArrayList<Location> locations) {
+    public static Location findFarthestLocationToDepot(Location location, Location withoutLoc, ArrayList<Location> locations) {
     	Location returnLocation = Main.getDepot();
     	System.out.println(Main.getDepot().getLat() + " : " + Main.getDepot().getLong());
     	for (int i = 1; i < locations.size(); i++) {
@@ -541,16 +532,11 @@ public class Main {
 	return -1;
     }
 
-    /**
+    /*
      * 
      * BAUSTELLE!!
      * 
      */
-    
-    public static int[] intToBinary(int number) {
-	return null;
-    }
-
     @SuppressWarnings("unchecked")
     public static Tour plusForecastingTobi(ArrayList<Location> locations) {
 	//System.out.println("locations(forecasting) size: "+ locations.size());
@@ -637,12 +623,6 @@ public class Main {
 	// return
 
     }
-
-    /**
-	 * 
-	 *  
-	 * 
-	 */
 
     public static Location findLocationWithSmalestAngle() {
 	double smalestAngle = 720;
