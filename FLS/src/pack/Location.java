@@ -12,11 +12,11 @@ public class Location {
     private String name;
     private double angle;
     private double distance0;
-
+    
     public Location() {
 
     }
-
+   
     public Location(int Duration, float Lat, float Long, String Name) {
 	this.duration = Duration;
 	this.lat = Lat;
