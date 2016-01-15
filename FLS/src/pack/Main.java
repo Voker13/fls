@@ -38,6 +38,8 @@ public class Main {
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
 	JAXBContext jc = JAXBContext.newInstance(Instance.class);
 
+	long timestart = System.currentTimeMillis();
+	
 	Unmarshaller unmarshaller = jc.createUnmarshaller();
 	File xml = null;
 	if (args.length == 0) {
@@ -48,6 +50,10 @@ public class Main {
 
 	// load instance from File
 	instance = (Instance) unmarshaller.unmarshal(xml);
+	
+	long timeend = System.currentTimeMillis();
+	
+	System.out.println(timeend-timestart+"ms for loading instance");
 
 	// save depot as special Locaion
 	depot = instance.getLocations().get(0);
@@ -82,8 +88,8 @@ public class Main {
 	//variableSliceStrategy(10);
 	//slicePlusFarPlusForecastStrategy();
 	
-	GraphFrame gf = new GraphFrame(tours);
-	gf.repaint();
+	//GraphFrame gf = new GraphFrame(tours);
+	//gf.repaint();
     }
 
     private static void calculateGroundToAirQuotient() {
