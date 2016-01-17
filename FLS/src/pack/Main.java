@@ -1,9 +1,8 @@
 package pack;
 
-import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -16,7 +15,6 @@ public class Main {
     private static int timePerWorkday = 480;
     private static ArrayList<Location> locations;
     private static ArrayList<Location> locCopy;
-    private static Instance instance;
     private static ArrayList<Edge> edges;
     private static double groundAirQuotient;
     private static double kilometerPerHour;
@@ -38,25 +36,19 @@ public class Main {
     private static int distanceGround = 0;
 
     @SuppressWarnings("unchecked")
-    public static void main(String[] args) throws FileNotFoundException, XMLStreamException {
-	long timestart = System.currentTimeMillis();
+    public static void main(String[] args) throws XMLStreamException, IOException {
 	
 	XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 	
 	System.out.println("INSTANCE");
 	
-	Console c = System.console();
-        if (c == null) {
-            System.err.println("No console.");
-            System.exit(1);
-        }
-        String file = null;
-
-        file = c.readLine();
+	String file = null;
+	
+	file = readFromSystemIn();
 	
 	File xml = null;
 	if (file==null) {
-	    xml = new File("Instance-400.xml");
+
 	} else {
 	    xml = new File(file);
 	}
@@ -92,11 +84,17 @@ public class Main {
 	calculateGroundToAirQuotient();
 	calculateAvarageSpeed();
 	variableSliceFarStrategy(10);
-
-	long timeend = System.currentTimeMillis();
-	
-	System.out.println(timeend - timestart + "ms for loading instance");
     }
+    
+    private static String readFromSystemIn() throws IOException {
+	String response = "";
+	int nextByte = System.in.read();
+	while (nextByte != -1 && nextByte != '\n') {
+		response += (char) nextByte;
+		nextByte = System.in.read();
+	}
+	return response;
+}
 
     private static void calculateGroundToAirQuotient() {
 	for (int i = 0; i < locations.size(); i++) {
@@ -136,7 +134,7 @@ public class Main {
 	meterPerSecond = kilometerPerHour / 3.6F;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "unused" })
     private static void closestStrategy() {
 	ArrayList<Tour> allToursClosest = new ArrayList<Tour>();
 
@@ -155,7 +153,7 @@ public class Main {
 	System.err.println("Closest Strategy: " + (allToursClosest.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "unused" })
     private static void circleStrategy() {
 	ArrayList<Tour> allToursCircle = new ArrayList<Tour>();
 
@@ -174,6 +172,7 @@ public class Main {
 	System.err.println("Circle Strategy: " + (allToursCircle.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
     }
 
+    @SuppressWarnings("unused")
     private static void pizzaStrategy() {
 	ArrayList<Tour> allToursPizza = new ArrayList<Tour>();
 
@@ -203,7 +202,7 @@ public class Main {
 	System.err.println("Pizza Strategy: " + (allToursPizza.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "unused" })
     private static void randomStrategy() {
 	ArrayList<Tour> allToursRandom = new ArrayList<Tour>();
 
@@ -222,7 +221,7 @@ public class Main {
 	System.err.println("Random Strategy: " + (allToursRandom.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "unused" })
     private static void sliceStrategy() {
 	ArrayList<Tour> allToursSlices = new ArrayList<Tour>();
 
@@ -241,7 +240,7 @@ public class Main {
 	System.err.println("Slices Strategy: " + (allToursSlices.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "unused" })
     private static void farToCloseStrategy() {
 	ArrayList<Tour> allToursFarToClose = new ArrayList<Tour>();
 
@@ -260,7 +259,7 @@ public class Main {
 	System.err.println("FarToClose Strategy: " + (allToursFarToClose.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "unused" })
     private static void slicesPlusFarStrategy() {
 	ArrayList<Tour> allToursSlicePlusFar = new ArrayList<Tour>();
 
@@ -279,7 +278,7 @@ public class Main {
 	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "unused" })
     private static void variableSliceStrategy(int slices) {
 	ArrayList<Tour> allToursSliceVariable = new ArrayList<>();
 
@@ -318,7 +317,8 @@ public class Main {
 
 	tours.add(allToursSliceVariableFar);
 
-	System.err.println("SlicePlusVariable(" + slices + "): " + (allToursSliceVariableFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariableFar + " Minuten");
+	System.out.println("SOLUTION " + durationOverallSliceVariableFar);
+	//System.err.println("SlicePlusVariable(" + slices + "): " + (allToursSliceVariableFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariableFar + " Minuten");
     }
 
     private static Tour findWorkDayVariableSlicesFar(ArrayList<Location> locations, int slices) {
@@ -386,20 +386,6 @@ public class Main {
 	if (locations.isEmpty()) {
 	    tour.addDepot();
 	}
-	return tour;
-    }
-
-    private static Tour findWorkDaySlicePlusFarPlusForecasting(ArrayList<Location> locations) {
-
-	// generateAngleToLocation();
-
-	Tour tour = plusForecastingTobi(locations);
-
-	System.out.println("locations.size(): " + locations.size());
-	// while (tour.addNextStopSlicePlusFarPlusForecasting(locations)) {
-	// while (tour.addNextStopPizza(slice1));
-	// System.err.println(tour.getDuration() + " " + tour.getTourStops());
-
 	return tour;
     }
 
@@ -777,14 +763,6 @@ public class Main {
 
     public static void setLocCopy(ArrayList<Location> locCopy) {
 	Main.locCopy = locCopy;
-    }
-
-    public static Instance getInstance() {
-	return instance;
-    }
-
-    public static void setInstance(Instance instance) {
-	Main.instance = instance;
     }
 
     public static ArrayList<Edge> getEdges() {
