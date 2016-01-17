@@ -1,5 +1,6 @@
 package pack;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -42,11 +43,22 @@ public class Main {
 	
 	XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 	
+	System.out.println("INSTANCE");
+	
+	Console c = System.console();
+        if (c == null) {
+            System.err.println("No console.");
+            System.exit(1);
+        }
+        String file = null;
+
+        file = c.readLine();
+	
 	File xml = null;
-	if (args.length == 0) {
+	if (file==null) {
 	    xml = new File("Instance-400.xml");
 	} else {
-	    xml = new File(args[0]);
+	    xml = new File(file);
 	}
 	
 	InputStream in = new FileInputStream(xml);
@@ -548,18 +560,18 @@ public class Main {
     @SuppressWarnings("unchecked")
     public static Tour plusForecastingTobi(ArrayList<Location> locations) {
 	System.out.println("locations(forecasting) size: " + locations.size());
-	int deltaTourlänge = 5;
-	int erg = (int) Math.pow(2, deltaTourlänge); // length
+	int deltaTourlaenge = 5;
+	int erg = (int) Math.pow(2, deltaTourlaenge); // length
 
-	int[][] methodUse = new int[erg][deltaTourlänge];
+	int[][] methodUse = new int[erg][deltaTourlaenge];
 	for (int i = 0; i < erg; i++) {
-	    for (int j = 0; j < deltaTourlänge; j++) {
-		methodUse[i][j] = (int) (i / (Math.pow(2, deltaTourlänge - 1 - j))) % 2;
+	    for (int j = 0; j < deltaTourlaenge; j++) {
+		methodUse[i][j] = (int) (i / (Math.pow(2, deltaTourlaenge - 1 - j))) % 2;
 	    }
 	}
 
 	for (int i = 0; i < erg; i++) {
-	    for (int j = 0; j < deltaTourlänge; j++) {
+	    for (int j = 0; j < deltaTourlaenge; j++) {
 		System.out.print(methodUse[i][j]);
 	    }
 	    System.out.println();
@@ -599,14 +611,14 @@ public class Main {
 
     public static void plusForecasting(ArrayList<Location> locations) {
 
-	int deltaTourlänge = 4;
-	int expo = deltaTourlänge - 1; // tourlänge //width
+	int deltaTourlaenge = 4;
+	int expo = deltaTourlaenge - 1; // tourlaenge //width
 	int erg = (int) Math.pow(2, expo); // length
 
-	Location[][] locArray = new Location[erg][deltaTourlänge];
+	Location[][] locArray = new Location[erg][deltaTourlaenge];
 	Location locO0 = Main.findFarthestLocation(Main.getDepot(), locations);
 
-	for (int i = 0; i < deltaTourlänge; i++) {
+	for (int i = 0; i < deltaTourlaenge; i++) {
 	    locArray[i][0] = locO0;
 	}
 	int s = 0; // Stelle im locArray
