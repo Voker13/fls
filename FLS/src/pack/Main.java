@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -38,15 +37,18 @@ public class Main {
     private static int distanceGround = 0;
 
     @SuppressWarnings("unchecked")
-    public static void main(String[] args) throws JAXBException, FileNotFoundException, XMLStreamException {
+    public static void main(String[] args) throws FileNotFoundException, XMLStreamException {
+	long timestart = System.currentTimeMillis();
+	
 	XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+	
 	File xml = null;
 	if (args.length == 0) {
 	    xml = new File("Instance-400.xml");
 	} else {
 	    xml = new File(args[0]);
 	}
-	long timestart = System.currentTimeMillis();
+	
 	InputStream in = new FileInputStream(xml);
 	XMLStreamReader streamReader = inputFactory.createXMLStreamReader(in);
 
@@ -77,9 +79,10 @@ public class Main {
 	generateDistance0ToLocation();
 	calculateGroundToAirQuotient();
 	calculateAvarageSpeed();
-	slicesPlusFarStrategy();
+	variableSliceFarStrategy(10);
 
 	long timeend = System.currentTimeMillis();
+	
 	System.out.println(timeend - timestart + "ms for loading instance");
     }
 
@@ -264,105 +267,6 @@ public class Main {
 	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
     }
 
-    // @SuppressWarnings("unused")
-    // private static void slicePlusFarPlusForecastStrategy() {
-    // ArrayList<Tour> allToursSlicePlusFarPlusForecasting = new
-    // ArrayList<Tour>();
-    //
-    // ArrayList<Location> slice1 = new ArrayList<>();
-    // ArrayList<Location> slice2 = new ArrayList<>();
-    // ArrayList<Location> slice3 = new ArrayList<>();
-    // ArrayList<Location> slice4 = new ArrayList<>();
-    // ArrayList<Location> slice5 = new ArrayList<>();
-    // ArrayList<Location> slice6 = new ArrayList<>();
-    // ArrayList<Location> slice7 = new ArrayList<>();
-    // ArrayList<Location> slice8 = new ArrayList<>();
-    // ArrayList<Location> slice9 = new ArrayList<>();
-    // ArrayList<Location> slice10 = new ArrayList<>();
-    // for (Location location : locations) {
-    // if (location.getAngle() % 360 >= 0 && location.getAngle() % 360 < 36) {
-    // slice1.add(location);
-    // }
-    // if (location.getAngle() % 360 >= 36 && location.getAngle() % 360 < 72) {
-    // slice2.add(location);
-    // }
-    // if (location.getAngle() % 360 >= 72 && location.getAngle() % 360 < 108) {
-    // slice3.add(location);
-    // }
-    // if (location.getAngle() % 360 >= 108 && location.getAngle() % 360 < 144)
-    // {
-    // slice4.add(location);
-    // }
-    // if (location.getAngle() % 360 >= 144 && location.getAngle() % 360 < 180)
-    // {
-    // slice5.add(location);
-    // }
-    // if (location.getAngle() % 360 >= 180 && location.getAngle() % 360 < 216)
-    // {
-    // slice6.add(location);
-    // }
-    // if (location.getAngle() % 360 >= 216 && location.getAngle() % 360 < 252)
-    // {
-    // slice7.add(location);
-    // }
-    // if (location.getAngle() % 360 >= 252 && location.getAngle() % 360 < 288)
-    // {
-    // slice8.add(location);
-    // }
-    // if (location.getAngle() % 360 >= 288 && location.getAngle() % 360 < 324)
-    // {
-    // slice9.add(location);
-    // }
-    // if (location.getAngle() % 360 >= 324 && location.getAngle() % 360 < 360)
-    // {
-    // slice10.add(location);
-    // }
-    // }
-    //
-    // while (!slice1.isEmpty()) {
-    // allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice1));
-    // }
-    // while (!slice2.isEmpty()) {
-    // allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice2));
-    // }
-    // while (!slice3.isEmpty()) {
-    // allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice3));
-    // }
-    // while (!slice4.isEmpty()) {
-    // allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice4));
-    // }
-    // while (!slice5.isEmpty()) {
-    // allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice5));
-    // }
-    // while (!slice6.isEmpty()) {
-    // allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice6));
-    // }
-    // while (!slice7.isEmpty()) {
-    // allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice7));
-    // }
-    // while (!slice8.isEmpty()) {
-    // allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice8));
-    // }
-    // while (!slice9.isEmpty()) {
-    // allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice9));
-    // }
-    // while (!slice10.isEmpty()) {
-    // allToursSlicePlusFarPlusForecasting.add(findWorkDaySlicePlusFarPlusForecasting(slice10));
-    // }
-    //
-    // int durationOverallSlicePlusFarPlusForecasting = 0;
-    // for (Tour tour : allToursSlicePlusFarPlusForecasting) {
-    // durationOverallSlicePlusFarPlusForecasting += tour.getDuration();
-    // // }
-    //
-    // tours.add(allToursSlicePlusFarPlusForecasting);
-    //
-    // System.err.println("SlicePlusFarPlusForecasting Strategy: " +
-    // (allToursSlicePlusFarPlusForecasting.size()) +
-    // " Touren mit einer Gesamtfahrzeit von " +
-    // durationOverallSlicePlusFarPlusForecasting + " Minuten");
-    // }
-    //
     @SuppressWarnings("unchecked")
     private static void variableSliceStrategy(int slices) {
 	ArrayList<Tour> allToursSliceVariable = new ArrayList<>();
@@ -383,7 +287,39 @@ public class Main {
 
 	System.err.println("SlicePlusVariable(" + slices + "): " + (allToursSliceVariable.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariable + " Minuten");
     }
+    
+    @SuppressWarnings("unchecked")
+    private static void variableSliceFarStrategy(int slices) {
+	ArrayList<Tour> allToursSliceVariableFar = new ArrayList<>();
 
+	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
+
+	workCopy = (ArrayList<Location>) locations.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursSliceVariableFar.add(findWorkDayVariableSlicesFar(workCopy, slices));
+	}
+
+	int durationOverallSliceVariableFar = 0;
+	for (Tour tour : allToursSliceVariableFar) {
+	    durationOverallSliceVariableFar += tour.getDuration();
+	}
+
+	tours.add(allToursSliceVariableFar);
+
+	System.err.println("SlicePlusVariable(" + slices + "): " + (allToursSliceVariableFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariableFar + " Minuten");
+    }
+
+    private static Tour findWorkDayVariableSlicesFar(ArrayList<Location> locations, int slices) {
+	Tour tour = new Tour();
+	while (tour.addNextStopVariableSlicesFar(locations, slices)) {
+
+	}
+	if (locations.isEmpty()) {
+	    tour.addDepot();
+	}
+	return tour;
+    }
+    
     private static Tour findWorkDaySlices(ArrayList<Location> locations) {
 	Tour tour = new Tour();
 	while (tour.addNextStopSlices(locations)) {
