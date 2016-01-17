@@ -25,10 +25,8 @@ public class Main {
     private static float maxLong = 0;
     private static Location depot;
     private static Location lastLocation = null;
-    private static double AngleTourStop1; // wichtig, ob es rechtsherum oder
-					  // linksherum gehen soll
-    private static double AngleTourStop2; // wichtig, ob es rechtsherum oder
-					  // linksherum gehen soll
+    private static double AngleTourStop1;
+    private static double AngleTourStop2;
     private static Location TourStop2;
     private static boolean isUsed = false;
     private static ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
@@ -102,22 +100,6 @@ public class Main {
 		distanceGround += getEdge(0, i).distance / 1000;
 		distanceAir += getDistance(depot, locations.get(i));
 	    }
-	    if (locations.get(i).getLat() < minLat) {
-		minLat = locations.get(i).getLat();
-	    }
-	    if (locations.get(i).getLat() > maxLat) {
-		maxLat = locations.get(i).getLat();
-	    }
-	    float LLong = locations.get(i).getLong();
-	    while (LLong > 20) {
-		LLong /= 10;
-	    }
-	    if (LLong < minLong) {
-		minLong = LLong;
-	    }
-	    if (LLong > maxLong) {
-		maxLong = LLong;
-	    }
 	}
 	groundAirQuotient = (float) distanceGround / distanceAir;
     }
@@ -149,8 +131,6 @@ public class Main {
 	}
 
 	tours.add(allToursClosest);
-
-	System.err.println("Closest Strategy: " + (allToursClosest.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallClosest + " Minuten");
     }
 
     @SuppressWarnings({ "unchecked", "unused" })
@@ -168,8 +148,6 @@ public class Main {
 	}
 
 	tours.add(allToursCircle);
-
-	System.err.println("Circle Strategy: " + (allToursCircle.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallCircle + " Minuten");
     }
 
     @SuppressWarnings("unused")
@@ -198,8 +176,6 @@ public class Main {
 	}
 
 	tours.add(allToursPizza);
-
-	System.err.println("Pizza Strategy: " + (allToursPizza.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallPizza + " Minuten");
     }
 
     @SuppressWarnings({ "unchecked", "unused" })
@@ -217,8 +193,6 @@ public class Main {
 	}
 
 	tours.add(allToursRandom);
-
-	System.err.println("Random Strategy: " + (allToursRandom.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallRandom + " Minuten");
     }
 
     @SuppressWarnings({ "unchecked", "unused" })
@@ -236,8 +210,6 @@ public class Main {
 	}
 
 	tours.add(allToursSlices);
-
-	System.err.println("Slices Strategy: " + (allToursSlices.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlices + " Minuten");
     }
 
     @SuppressWarnings({ "unchecked", "unused" })
@@ -255,8 +227,6 @@ public class Main {
 	}
 
 	tours.add(allToursFarToClose);
-
-	System.err.println("FarToClose Strategy: " + (allToursFarToClose.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallFarToClose + " Minuten");
     }
 
     @SuppressWarnings({ "unchecked", "unused" })
@@ -274,8 +244,6 @@ public class Main {
 	}
 
 	tours.add(allToursSlicePlusFar);
-
-	System.err.println("SlicePlusFar Strategy: " + (allToursSlicePlusFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSlicePlusFar + " Minuten");
     }
 
     @SuppressWarnings({ "unchecked", "unused" })
@@ -295,8 +263,6 @@ public class Main {
 	}
 
 	tours.add(allToursSliceVariable);
-
-	System.err.println("SlicePlusVariable(" + slices + "): " + (allToursSliceVariable.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariable + " Minuten");
     }
 
     @SuppressWarnings("unchecked")
@@ -388,9 +354,6 @@ public class Main {
 	return tour;
     }
 
-    /*
-     * PizzaTactic
-     */
     private static Tour findWorkDayPizza(ArrayList<Location> locations) {
 	Tour tour = new Tour();
 	generateAngleToLocation();
@@ -500,15 +463,9 @@ public class Main {
 
     public static float getDistance(Location location1, Location location2) {
 	float lat1 = location1.getLat();
-	float long1 = location1.getLong() / 10;
-	while (long1 > 20) {
-	    long1 /= 10;
-	}
+	float long1 = location1.getLong();
 	float lat2 = location2.getLat();
-	float long2 = location2.getLong() / 10;
-	while (long2 > 20) {
-	    long2 /= 10;
-	}
+	float long2 = location2.getLong();
 	double lat = (lat1 + lat2) / 2 * 0.01745;
 	float latDifference = (float) (111.3 * (lat1 - lat2));
 	float longDifference = (float) (111.3 * Math.cos(lat) * (long1 - long2));
@@ -537,7 +494,7 @@ public class Main {
 
     public static Location findLocationWithSmalestAngle() {
 	double smalestAngle = 720;
-	Location locWithSmalestAngle = locations.get(0); // nicht das depot
+	Location locWithSmalestAngle = locations.get(0);
 	for (Location loc : locations) {
 	    if (loc.getAngle() < smalestAngle) {
 		smalestAngle = loc.getAngle();
@@ -559,7 +516,6 @@ public class Main {
 		smalestAngleLocation = location;
 	    }
 	}
-
 	return smalestAngleLocation;
     }
 
@@ -596,18 +552,6 @@ public class Main {
 	}
     }
 
-    public static void bla() {
-	ArrayList<Location> radius1 = new ArrayList<>();
-	ArrayList<Location> radius2 = new ArrayList<>();
-	for (Location loc : locations) {
-	    if (loc.getDistance0() < 0.03) {
-		radius1.add(loc);
-	    } else {
-		radius2.add(loc);
-	    }
-	}
-    }
-
     public static void generateDistance0ToLocation() {
 	double x0 = depot.getLong();
 	double y0 = depot.getLat();
@@ -616,21 +560,6 @@ public class Main {
 	    double dy = y0 - location.getLat();
 	    location.setDistance0(Math.sqrt((dx * dx) + (dy * dy)));
 	}
-    }
-
-    public static double getBigger(double x, double y) {
-	if (x < y) {
-	    return y;
-	} else {
-	    return x;
-	}
-    }
-
-    public static double betrag(double x) {
-	if (x <= 0) {
-	    x *= (-1);
-	}
-	return x;
     }
 
     public static int getTimePerWorkday() {
