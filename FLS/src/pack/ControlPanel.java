@@ -9,6 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * The panel where the User can set setting for Drawing
+ *
+ */
 public class ControlPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;

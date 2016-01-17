@@ -7,6 +7,11 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+/**
+ * 
+ * This is the panel where the Tours get drawn
+ *
+ */
 public class DrawPanel extends JPanel {
 
     private int frameWidth;

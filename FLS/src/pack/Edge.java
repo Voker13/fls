@@ -1,9 +1,10 @@
 package pack;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
+/**
+ * 
+ * This class represents the connection between two Locations
+ *
+ */
 public class Edge {
 
     int duration;
@@ -22,7 +23,6 @@ public class Edge {
 	this.to = to;
     }
 
-    @XmlAttribute(name = "Duration")
     public int getDuration() {
 	return duration;
     }
@@ -31,7 +31,6 @@ public class Edge {
 	this.duration = duration;
     }
 
-    @XmlAttribute(name = "Distance")
     public int getDistance() {
 	return distance;
     }
@@ -40,7 +39,6 @@ public class Edge {
 	this.distance = distance;
     }
 
-    @XmlAttribute(name = "From")
     public int getFrom() {
 	return from;
     }
@@ -49,7 +47,6 @@ public class Edge {
 	this.from = from;
     }
 
-    @XmlAttribute(name = "To")
     public int getTo() {
 	return to;
     }

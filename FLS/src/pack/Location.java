@@ -1,9 +1,10 @@
 package pack;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
+/**
+ * 
+ * This class represents the Client
+ *
+ */
 public class Location {
 
     private int duration;
@@ -27,7 +28,6 @@ public class Location {
 	this.name = Name;
     }
 
-    @XmlAttribute(name = "Duration")
     public int getDuration() {
 	return duration;
     }
@@ -36,7 +36,6 @@ public class Location {
 	this.duration = duration;
     }
 
-    @XmlAttribute(name = "Lat")
     public float getLat() {
 	return lat;
     }
@@ -45,7 +44,6 @@ public class Location {
 	this.lat = lat;
     }
 
-    @XmlAttribute(name = "Long")
     public float getLong() {
 	while (Long > 20) {
 	    Long /= 10;
@@ -57,7 +55,6 @@ public class Location {
 	this.Long = Long;
     }
 
-    @XmlAttribute(name = "Name")
     public String getName() {
 	return name;
     }

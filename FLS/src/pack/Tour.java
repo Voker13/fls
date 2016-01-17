@@ -2,6 +2,11 @@ package pack;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * This class represents a Workday
+ *
+ */
 public class Tour {
 
     private int duration = 0;
@@ -57,36 +62,12 @@ public class Tour {
 	return true;
     }
 
-    // public boolean addStop(Location location, ArrayList<Location> locations)
-    // {
-    // if (duration + (Main.getDistance(location, tourStops.get(tourStops.size()
-    // - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) /
-    // 60 + location.getDuration() < maxDuration) {
-    // duration += (Main.getDistance(location, tourStops.get(tourStops.size() -
-    // 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) /
-    // 60 + location.getDuration();
-    // tourStops.add(location);
-    // locations.remove(Main.getIndex(locations, location));
-    // // System.out.println("remove --> Location: " + location.getLong() +
-    // // " : " + location.getLat());
-    // // System.out.println("locations.size (after.remove): " +
-    // // Main.getLocations().size());
-    // Main.setLastLocation(location);
-    // return true;
-    // }
-    // return false;
-    // }
-
     public boolean addStopDepot(Location location, ArrayList<Location> locations) {
 	if (duration + (Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60
 		+ (Main.getDistance(Main.getDepot(), tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration() < maxDuration) {
 	    duration += (Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration();
 	    tourStops.add(location);
 	    locations.remove(Main.getIndex(locations, location));
-	    // System.out.println("remove --> Location: " + location.getLong() +
-	    // " : " + location.getLat());
-	    // System.out.println("locations.size (after.remove): " +
-	    // Main.getLocations().size());
 	    Main.setLastLocation(location);
 	    return true;
 	}
@@ -100,21 +81,6 @@ public class Tour {
 	tourStops.add(Main.getDepot());
     }
 
-    // public boolean addStopSlice(Location location, ArrayList<Location>
-    // locationsSlice, ArrayList<Location> locationsAll) {
-    // double time = (Main.getDistance(location, tourStops.get(tourStops.size()
-    // - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) /
-    // 60 + location.getDuration();
-    // if (duration + time < maxDuration) {
-    // duration += time;
-    // tourStops.add(location);
-    // locationsSlice.remove(Main.getIndex(locationsSlice, location));
-    // locationsAll.remove(Main.getIndex(locationsAll, location));
-    // return true;
-    // }
-    // return false;
-    // }
-
     public boolean addStopSliceDepot(Location location, ArrayList<Location> locationsSlice, ArrayList<Location> locationsAll) {
 	if ((duration + (Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60
 		+ (Main.getDistance(Main.getDepot(), location) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration()) < maxDuration) {
@@ -126,44 +92,23 @@ public class Tour {
 	}
 	duration += (Main.getDistance(Main.getDepot(), tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60;
 	tourStops.add(Main.getDepot());
-	// System.out.println("tourstops"+tourStops.size());
 	return false;
     }
 
-    /**
-     * 
-     * Tactics here: ....
-     * 
-     * @param locations
-     * 
-     * @return
-     */
-
     public boolean addNextStopPizza(ArrayList<Location> locations) {
 	if (!locations.isEmpty()) {
-	    // System.out.println("toruStops.size: " + tourStops.size());
 	    if (!Main.isUsed() && tourStops.size() == 1) {
-		// System.out.println("tourstopsget0: "+tourStops.get(0).getLat()+" : "+tourStops.get(0).getLong());
 		Location loc = Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations);
 		Main.setAngleTourStop1(loc.getAngle());
 		return addStopDepot(loc, locations);
-
 	    } else if (!Main.isUsed() && tourStops.size() == 2) {
-
 		Location loc2 = Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locations);
 		Main.setAngleTourStop2(loc2.getAngle());
-		Main.generateAngleToLocation(Main.getTourStop2()); // wichtig!
-		// Main.setUsed(true); // if true: benutzt die beiden ifups nur
-		// ein einziges mal
+		Main.generateAngleToLocation(Main.getTourStop2());
 		return addStopDepot(loc2, locations);
-
 	    } else {
-
 		Location loc = Main.getLocationWithSmalestAngle(tourStops.get(tourStops.size() - 1), locations);
-		// System.out.println("Location: to tourStops " + loc.getLong()
-		// + " : " + loc.getLat());
 		return addStopDepot(loc, locations);
-
 	    }
 	} else {
 	    return false;
@@ -237,7 +182,8 @@ public class Tour {
 
 	    } else {
 		return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSliceDepot(Main.findFarthestLocation(tourStops.get(0), locationsInSlice), locationsInSlice, locations) : addStopSliceDepot(
-			    Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locationsInSlice), locationsInSlice, locations);	    }
+			Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locationsInSlice), locationsInSlice, locations);
+	    }
 	}
 	return false;
     }
@@ -285,7 +231,6 @@ public class Tour {
 		slice10.add(location);
 	    }
 	}
-	// System.out.println(slice1.size()+slice2.size()+slice3.size()+slice4.size()+slice5.size()+slice6.size()+slice7.size()+slice8.size()+slice9.size()+slice10.size());
 	if (!slice1.isEmpty()) {
 	    return addStopSliceDepot(Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice1), slice1, locations);
 	} else {
@@ -376,7 +321,6 @@ public class Tour {
 		slice10.add(location);
 	    }
 	}
-	// System.out.println(slice1.size()+slice2.size()+slice3.size()+slice4.size()+slice5.size()+slice6.size()+slice7.size()+slice8.size()+slice9.size()+slice10.size());
 	if (!slice1.isEmpty()) {
 	    return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSliceDepot(Main.findFarthestLocation(tourStops.get(0), slice1), slice1, locations) : addStopSliceDepot(
 		    Main.findClosestLocation(tourStops.get(tourStops.size() - 1), slice1), slice1, locations);

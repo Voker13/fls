@@ -37,28 +37,28 @@ public class Main {
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws XMLStreamException, IOException {
-	
+
 	XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-	
+
 	System.out.println("INSTANCE");
-	
+
 	String file = null;
-	
+
 	file = readFromSystemIn();
-	
+
 	File xml = null;
-	if (file==null) {
+	if (file == null) {
 
 	} else {
 	    xml = new File(file);
 	}
-	
+
 	InputStream in = new FileInputStream(xml);
 	XMLStreamReader streamReader = inputFactory.createXMLStreamReader(in);
 
 	locations = new ArrayList<>();
 	edges = new ArrayList<>();
-	
+
 	while (streamReader.hasNext()) {
 	    int eventType = streamReader.next();
 
@@ -85,16 +85,16 @@ public class Main {
 	calculateAvarageSpeed();
 	variableSliceFarStrategy(10);
     }
-    
+
     private static String readFromSystemIn() throws IOException {
 	String response = "";
 	int nextByte = System.in.read();
 	while (nextByte != -1 && nextByte != '\n') {
-		response += (char) nextByte;
-		nextByte = System.in.read();
+	    response += (char) nextByte;
+	    nextByte = System.in.read();
 	}
 	return response;
-}
+    }
 
     private static void calculateGroundToAirQuotient() {
 	for (int i = 0; i < locations.size(); i++) {
@@ -298,7 +298,7 @@ public class Main {
 
 	System.err.println("SlicePlusVariable(" + slices + "): " + (allToursSliceVariable.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariable + " Minuten");
     }
-    
+
     @SuppressWarnings("unchecked")
     private static void variableSliceFarStrategy(int slices) {
 	ArrayList<Tour> allToursSliceVariableFar = new ArrayList<>();
@@ -318,7 +318,6 @@ public class Main {
 	tours.add(allToursSliceVariableFar);
 
 	System.out.println("SOLUTION " + durationOverallSliceVariableFar);
-	//System.err.println("SlicePlusVariable(" + slices + "): " + (allToursSliceVariableFar.size()) + " Touren mit einer Gesamtfahrzeit von " + durationOverallSliceVariableFar + " Minuten");
     }
 
     private static Tour findWorkDayVariableSlicesFar(ArrayList<Location> locations, int slices) {
@@ -331,7 +330,7 @@ public class Main {
 	}
 	return tour;
     }
-    
+
     private static Tour findWorkDaySlices(ArrayList<Location> locations) {
 	Tour tour = new Tour();
 	while (tour.addNextStopSlices(locations)) {
@@ -398,7 +397,6 @@ public class Main {
 	while (tour.addNextStopPizza(locations)) {
 
 	}
-	// System.err.println(tour.getDuration() + " " + tour.getTourStops());
 	return tour;
     }
 
@@ -452,7 +450,6 @@ public class Main {
 
     public static Location findFarthestLocation(Location location, Location withoutLoc, ArrayList<Location> locations) {
 	Location returnLocation = locations.get(0);
-	System.out.println(Main.getDepot().getLat() + " : " + Main.getDepot().getLong());
 	for (int i = 1; i < locations.size(); i++) {
 	    if (locations.get(i) != withoutLoc && (getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
 		returnLocation = locations.get(i);
@@ -474,7 +471,6 @@ public class Main {
 
     public static Location findFarthestLocationToDepot(Location location, Location withoutLoc, ArrayList<Location> locations) {
 	Location returnLocation = Main.getDepot();
-	System.out.println(Main.getDepot().getLat() + " : " + Main.getDepot().getLong());
 	for (int i = 1; i < locations.size(); i++) {
 	    if (locations.get(i) != withoutLoc && (getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
 		returnLocation = locations.get(i);
@@ -539,101 +535,6 @@ public class Main {
 	return -1;
     }
 
-    /*
-     * 
-     * BAUSTELLE!!
-     */
-    @SuppressWarnings("unchecked")
-    public static Tour plusForecastingTobi(ArrayList<Location> locations) {
-	System.out.println("locations(forecasting) size: " + locations.size());
-	int deltaTourlaenge = 5;
-	int erg = (int) Math.pow(2, deltaTourlaenge); // length
-
-	int[][] methodUse = new int[erg][deltaTourlaenge];
-	for (int i = 0; i < erg; i++) {
-	    for (int j = 0; j < deltaTourlaenge; j++) {
-		methodUse[i][j] = (int) (i / (Math.pow(2, deltaTourlaenge - 1 - j))) % 2;
-	    }
-	}
-
-	for (int i = 0; i < erg; i++) {
-	    for (int j = 0; j < deltaTourlaenge; j++) {
-		System.out.print(methodUse[i][j]);
-	    }
-	    System.out.println();
-	}
-
-	Tour[] possibleTours = new Tour[erg];
-
-	for (int i = 0; i < erg; i++) {
-	    Tour tour = new Tour();
-	    tour.createGivenTour(methodUse[i], (ArrayList<Location>) locations.clone());
-	    possibleTours[i] = tour;
-	}
-
-	for (int i = 0; i < possibleTours.length; i++) {
-	    System.out.println(possibleTours[i].getDuration());
-	}
-
-	// calculates the shortest tour
-	Tour shortestTour = possibleTours[0];
-	int time = shortestTour.getDuration();
-	for (int i = 0; i < possibleTours.length; i++) {
-	    if (possibleTours[i].getDuration() < time) {
-		time = possibleTours[i].getDuration();
-		shortestTour = possibleTours[i];
-	    }
-	}
-
-	// removes location in shortest tour out of locations
-	for (int i = 0; i < shortestTour.getTourStops().size(); i++) {
-	    locations.remove(shortestTour.getTourStops().get(i));
-	}
-
-	System.out.println("shortest: " + time);
-	return shortestTour;
-
-    }
-
-    public static void plusForecasting(ArrayList<Location> locations) {
-
-	int deltaTourlaenge = 4;
-	int expo = deltaTourlaenge - 1; // tourlaenge //width
-	int erg = (int) Math.pow(2, expo); // length
-
-	Location[][] locArray = new Location[erg][deltaTourlaenge];
-	Location locO0 = Main.findFarthestLocation(Main.getDepot(), locations);
-
-	for (int i = 0; i < deltaTourlaenge; i++) {
-	    locArray[i][0] = locO0;
-	}
-	int s = 0; // Stelle im locArray
-	for (int j = 1; j < expo; j++) {
-	    int i = (int) Math.pow(2, expo - j);
-	    s = 0;
-	    for (int t = 0; t < erg / i; t++) {
-		for (int r = 0; r < i; r++) {
-		    Location loc = Main.findClosestLocation(locArray[s][j - 1], locations);
-		    if (t % 2 == 0) {
-			locArray[s][j] = Main.findClosestLocation(loc, loc, locations);
-		    } else {
-			locArray[s][j] = loc;
-		    }
-		    s++;
-		}
-	    }
-	}
-	System.out.println("locArray.length: " + locArray.length);
-	for (int i = 0; i < locArray.length; i++) {
-	    System.out.println("locArray[" + 1 + "][" + locArray[1][i].getName() + "]");
-	}
-	@SuppressWarnings("unused")
-	Location returnLocation;
-	// for ()
-	// return
-
-    }
-
     public static Location findLocationWithSmalestAngle() {
 	double smalestAngle = 720;
 	Location locWithSmalestAngle = locations.get(0); // nicht das depot
@@ -669,17 +570,10 @@ public class Main {
 		location.setAngle(angle + 360);
 	    }
 	}
-	// System.err.println("AngleTourStop 1&2: " + Main.AngleTourStop1 +
-	// " : " + Main.getAngleTourStop2());
-	if (Main.getAngleTourStop1() > Main.getAngleTourStop2()) { // wenn wahr,
-								   // deht die
-								   // reihenfolge
-								   // der winkel
-								   // um
+	if (Main.getAngleTourStop1() > Main.getAngleTourStop2()) {
 	    for (Location location : locations) {
 		location.setAngle(720 - location.getAngle());
 	    }
-	    // System.err.println(true);
 	}
 
     }
@@ -699,7 +593,6 @@ public class Main {
 	    } else if (dx >= 0 && dy < 0) {
 		location.setAngle(Math.toDegrees(Math.atan(dy / dx)) + 360);
 	    }
-	    // //System.err.println(location.getAngle());
 	}
     }
 
@@ -722,7 +615,6 @@ public class Main {
 	    double dx = x0 - location.getLong();
 	    double dy = y0 - location.getLat();
 	    location.setDistance0(Math.sqrt((dx * dx) + (dy * dy)));
-	    // //System.err.println("distance0: "+location.getDistance0());
 	}
     }
 

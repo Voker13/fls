@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
+/**
+ * 
+ * This class is responsible for graphical output
+ *
+ */
 public class GraphFrame extends JFrame implements MouseWheelListener, KeyListener, MouseListener {
 
     private static final long serialVersionUID = 1L;
