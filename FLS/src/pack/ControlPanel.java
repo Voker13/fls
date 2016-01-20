@@ -18,14 +18,14 @@ public class ControlPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private GraphFrame parent;
-    JCheckBox box1 = new JCheckBox("Strategy: Closest Location");
-    JCheckBox box2 = new JCheckBox("Strategy: 'Circle'");
-    JCheckBox box3 = new JCheckBox("Strategy: Pizza");
-    JCheckBox box4 = new JCheckBox("Strategy: Random");
-    JCheckBox box5 = new JCheckBox("Strategy: Slices (10)");
-    JCheckBox box6 = new JCheckBox("Strategy: Far To Close");
-    JCheckBox box7 = new JCheckBox("Strategy: Slice Plus Far");
-    JCheckBox box8 = new JCheckBox("Strategy: Slice Plus Far Plus ForeC");
+    JCheckBox box1 = new JCheckBox("Strategy: 12 Slices");
+    JCheckBox box2 = new JCheckBox("Strategy: 10 Slices");
+    JCheckBox box3 = new JCheckBox("Strategy: 8 Slices");
+    JCheckBox box4 = new JCheckBox("Strategy: 6 Slices");
+    JCheckBox box5 = new JCheckBox("Strategy: 4 Slices");
+    JCheckBox box6 = new JCheckBox("Strategy: 2 Slices");
+    JCheckBox box7 = new JCheckBox("Strategy: 1 Slice");
+    JCheckBox box8 = new JCheckBox("Strategy: unused");
 
     public ControlPanel(int width, int height, GraphFrame graphFrame) {
 	this.setLayout(null);

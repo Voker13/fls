@@ -32,6 +32,8 @@ public class Main {
     private static ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
     private static int distanceAir = 0;
     private static int distanceGround = 0;
+    private static int solution = 0;
+    private static int slices = 12;
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws XMLStreamException, IOException {
@@ -42,11 +44,11 @@ public class Main {
 
 	String file = null;
 
-	file = readFromSystemIn();
+	// file = readFromSystemIn();
 
 	File xml = null;
 	if (file == null) {
-
+	    xml = new File("Instance-80.xml");
 	} else {
 	    xml = new File(file);
 	}
@@ -73,6 +75,8 @@ public class Main {
 
 	depot = locations.get(0);
 
+	setNumbers(locations);
+
 	locCopy = (ArrayList<Location>) locations.clone();
 
 	locations.remove(0);
@@ -81,7 +85,21 @@ public class Main {
 	generateDistance0ToLocation();
 	calculateGroundToAirQuotient();
 	calculateAvarageSpeed();
-	variableSliceFarStrategy(10);
+	while (slices > 1) {
+	    variableSliceFarStrategy(slices);
+	    slices -= 2;
+	}
+	slices = 1;
+	variableSliceFarStrategy(slices);
+
+	GraphFrame frame = new GraphFrame(tours);
+	frame.repaint();
+    }
+
+    private static void setNumbers(ArrayList<Location> l) {
+	for (int i = 0; i < l.size(); i++) {
+	    l.get(i).setNumber(i);
+	}
     }
 
     private static String readFromSystemIn() throws IOException {
@@ -99,6 +117,22 @@ public class Main {
 	    if (!(i == 0)) {
 		distanceGround += getEdge(0, i).distance / 1000;
 		distanceAir += getDistance(depot, locations.get(i));
+	    }
+	    if (locations.get(i).getLat() < minLat) {
+		minLat = locations.get(i).getLat();
+	    }
+	    if (locations.get(i).getLat() > maxLat) {
+		maxLat = locations.get(i).getLat();
+	    }
+	    float LLong = locations.get(i).getLong();
+	    while (LLong > 20) {
+		LLong /= 10;
+	    }
+	    if (LLong < minLong) {
+		minLong = LLong;
+	    }
+	    if (LLong > maxLong) {
+		maxLong = LLong;
 	    }
 	}
 	groundAirQuotient = (float) distanceGround / distanceAir;
@@ -280,10 +314,33 @@ public class Main {
 	for (Tour tour : allToursSliceVariableFar) {
 	    durationOverallSliceVariableFar += tour.getDuration();
 	}
+	int durationReal = getRealDuration(allToursSliceVariableFar);
+	System.out.println("REAL SOLUTION: " + durationReal);
 
 	tours.add(allToursSliceVariableFar);
 
-	System.out.println("SOLUTION " + durationOverallSliceVariableFar);
+	postSolution(durationOverallSliceVariableFar);
+    }
+
+    private static void postSolution(int s) {
+	// if (s < solution || solution == 0) {
+	solution = s;
+	System.out.println("SOLUTION " + solution);
+	// }
+    }
+
+    private static int getRealDuration(ArrayList<Tour> tours) {
+	int duration = 0;
+	for (int i = 0; i < tours.size(); i++) {
+	    ArrayList<Location> tourLocations = tours.get(i).getTourStops();
+	    for (int j = 0; j < tourLocations.size() - 1; j++) {
+		Location one = tourLocations.get(j);
+		Location two = tourLocations.get(j + 1);
+		Edge edge = getEdge(one.getNumber(), two.getNumber());
+		duration += edge.getDuration() + one.getDuration();
+	    }
+	}
+	return duration;
     }
 
     private static Tour findWorkDayVariableSlicesFar(ArrayList<Location> locations, int slices) {

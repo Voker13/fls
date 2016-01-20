@@ -13,6 +13,7 @@ public class Location {
     private String name;
     private double angle;
     private double distance0;
+    private int number;
     
     public Location() {
 
@@ -81,5 +82,13 @@ public class Location {
 
     public String toString() {
 	return "Name: " + name + "\nLat: " + lat + "\nLong: " + Long + "\nDuration: " + duration + "\nAngle: " + angle + "\n";
+    }
+
+    public int getNumber() {
+	return number;
+    }
+
+    public void setNumber(int number) {
+	this.number = number;
     }
 }
