@@ -48,9 +48,7 @@ public class Main {
 
 	File xml = null;
 	if (file == null) {
-	    xml = new File("Instance-400.xml");
-	} else {
-	    xml = new File(file);
+	    xml = new File("Instance-60-17.xml");
 	}
 
 	InputStream in = new FileInputStream(xml);
