@@ -185,6 +185,16 @@ public class Tour {
 			Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locationsInSlice), locationsInSlice, locations);
 	    }
 	}
+	if (slices == 0) { 
+		locationsInSlice = new ArrayList<>();
+		for (Location location : locations) {
+			locationsInSlice.add(location);
+		}
+		if (!locationsInSlice.isEmpty()) {
+			return locations.isEmpty() ? false : tourStops.size() == 1 ? addStopSliceDepot(Main.findFarthestLocation(tourStops.get(0), locationsInSlice), locationsInSlice, locations) : addStopSliceDepot(
+				Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locationsInSlice), locationsInSlice, locations);
+		}
+	}
 	return false;
     }
 

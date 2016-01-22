@@ -48,7 +48,7 @@ public class Main {
 
 	File xml = null;
 	if (file == null) {
-	    xml = new File("Instance-80.xml");
+	    xml = new File("Instance-400.xml");
 	} else {
 	    xml = new File(file);
 	}
@@ -90,7 +90,8 @@ public class Main {
 	    slices -= 2;
 	}
 	slices = 1;
-	variableSliceFarStrategy(slices);
+	variableSliceFarStrategy(1);
+	variableSliceFarStrategy(0);
 
 	GraphFrame frame = new GraphFrame(tours);
 	frame.repaint();
