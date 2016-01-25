@@ -48,7 +48,7 @@ public class Main {
 
 	File xml = null;
 	if (file == null) {
-	    xml = new File("Instance-60-17.xml");
+	    xml = new File("Instance-60.xml");
 	}
 
 	InputStream in = new FileInputStream(xml);
@@ -350,6 +350,9 @@ public class Main {
 	if (locations.isEmpty()) {
 	    tour.addDepot();
 	}
+	if (interlace(tour)) {
+		
+	}
 	return tour;
     }
 
@@ -407,6 +410,7 @@ public class Main {
 	if (locations.isEmpty()) {
 	    tour.addDepot();
 	}
+	
 	return tour;
     }
 
@@ -573,6 +577,38 @@ public class Main {
 	    }
 	}
 	return smalestAngleLocation;
+    }
+    
+    /**
+     * A method to prove if there is a interlace in a Tour, causing unnecessary extra time.
+     * 
+     * @param tour ,is the tour to check for interlaces
+     * @return returns true if there is a interlace, else false
+     */
+    public static boolean interlace(Tour tour) {
+    	if (tour.getTourStops().size() <= 2) {
+    		System.err.println("interlace: tour.getTourStops().size() <= 2 !");
+    		return false;
+    	}
+    	double angleOfFirstStop = tour.getTourStops().get(1).getAngle();
+    	if (angleOfFirstStop < tour.getTourStops().get(2).getAngle()) {
+    		for (int i=2; i<tour.getTourStops().size(); i++) {
+    			if (tour.getTourStops().get(i).getAngle() < angleOfFirstStop) {
+    				System.out.println("interlace@"+i);
+    				return true;
+    			}
+    		}
+    	}
+    	else if (angleOfFirstStop > tour.getTourStops().get(2).getAngle()) {
+    		for (int i=2; i<tour.getTourStops().size(); i++) {
+    			if (tour.getTourStops().get(i).getAngle() > angleOfFirstStop) {
+    				System.out.println("interlace@"+i);
+    				return true;
+    			}
+    		}
+    	}
+    	System.err.println("interlace: Something went terrible wrong!");
+    	return false;
     }
 
     public static void generateAngleToLocation(Location loc) {
