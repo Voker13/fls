@@ -582,6 +582,8 @@ public class Main {
     /**
      * A method to prove if there is a interlace in a Tour, causing unnecessary extra time.
      * 
+     * Prints the place of the Tour, where the interlace is.
+     * 
      * @param tour ,is the tour to check for interlaces
      * @return returns true if there is a interlace, else false
      */
@@ -593,7 +595,7 @@ public class Main {
     	double angleOfFirstStop = tour.getTourStops().get(1).getAngle();
     	if (angleOfFirstStop < tour.getTourStops().get(2).getAngle()) {
     		for (int i=2; i<tour.getTourStops().size(); i++) {
-    			if (tour.getTourStops().get(i).getAngle() < angleOfFirstStop) {
+    			if (!tour.getTourStops().get(i).equals(depot) && tour.getTourStops().get(i).getAngle() < angleOfFirstStop) {
     				System.out.println("interlace@"+i);
     				return true;
     			}
@@ -601,13 +603,12 @@ public class Main {
     	}
     	else if (angleOfFirstStop > tour.getTourStops().get(2).getAngle()) {
     		for (int i=2; i<tour.getTourStops().size(); i++) {
-    			if (tour.getTourStops().get(i).getAngle() > angleOfFirstStop) {
+    			if (!tour.getTourStops().get(i).equals(depot) && tour.getTourStops().get(i).getAngle() > angleOfFirstStop) {
     				System.out.println("interlace@"+i);
     				return true;
     			}
     		}
     	}
-    	System.err.println("interlace: Something went terrible wrong!");
     	return false;
     }
 
