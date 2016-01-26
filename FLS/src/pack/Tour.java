@@ -70,8 +70,8 @@ public class Tour {
     	if (angleOfFirstStop < this.getTourStops().get(2).getAngle()) {
     		for (int i=2; i<this.getTourStops().size(); i++) {
     			if (!this.getTourStops().get(i).equals(Main.getDepot()) && this.getTourStops().get(i).getAngle() < angleOfFirstStop) {
-    				System.out.println("interlace from position "+(i-1)+" to "+i);
-    				System.out.println("The new Startlocation of this Tour should be @"+(i-1));
+//    				System.out.println("interlace from position "+(i-1)+" to "+i);
+//    				System.out.println("The new Startlocation of this Tour should be @"+(i-1));
     				this.setInterlaceAt(i-1);
     				return true;
     			}
@@ -80,8 +80,8 @@ public class Tour {
     	else if (angleOfFirstStop > this.getTourStops().get(2).getAngle()) {
     		for (int i=2; i<this.getTourStops().size(); i++) {
     			if (!this.getTourStops().get(i).equals(Main.getDepot()) && this.getTourStops().get(i).getAngle() > angleOfFirstStop) {
-    				System.out.println("interlace from position "+(i-1)+" to "+i);
-    				System.out.println("The new Startlocation of this Tour should be @"+(i-1));
+//    				System.out.println("interlace from position "+(i-1)+" to "+i);
+//    				System.out.println("The new Startlocation of this Tour should be @"+(i-1));
     				this.setInterlaceAt(i-1);
     				return true;
     			}
@@ -91,7 +91,22 @@ public class Tour {
     }
     
     public void solveInterlace() {
-    	
+    	this.duration = 0;
+    	ArrayList<Location> zwischenspeicherLocations = new ArrayList<>();
+    	zwischenspeicherLocations.add(Main.getDepot());
+    	for (int i=this.getInterlaceAt(); i>=1; i--) {
+    		zwischenspeicherLocations.add(this.getTourStops().get(i));
+    	}
+    	for (int i=this.getInterlaceAt()+1; i<this.getTourStops().size(); i++) {
+    		zwischenspeicherLocations.add(this.getTourStops().get(i));
+    	}
+    	this.setTourStops(zwischenspeicherLocations);
+    }
+    
+    public void addDurationEntireTour() {
+    	for (int i=0; i<this.getTourStops().size(); i++) {
+    		this.addDuration(this.getTourStops().get(i));
+    	}
     }
 
 	public boolean createGivenTour(int[] useMethod, ArrayList<Location> locations) {

@@ -350,9 +350,13 @@ public class Main {
 	if (locations.isEmpty()) {
 	    tour.addDepot();
 	}
-	if (slices == 12 && tour.interlace()) {
-		
+	
+	if (tour.interlace()) {
+		tour.solveInterlace();
+		tour.addDurationEntireTour();
 	}
+	
+	System.out.println(tour.getDuration());
 	return tour;
     }
 
