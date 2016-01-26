@@ -89,6 +89,10 @@ public class Tour {
     	}
     	return false; // if here are no interlaces
     }
+    
+    public void solveInterlace() {
+    	
+    }
 
 	public boolean createGivenTour(int[] useMethod, ArrayList<Location> locations) {
 		addStopDepot(Main.findFarthestLocation(tourStops.get(tourStops.size() - 1), locations), locations);
