@@ -359,11 +359,12 @@ public class Main {
 	    tour.addDepot();
 	}
 	
-	if (tour.interlace()) {
-		tour.solveInterlace();
-		tour.addDurationEntireTour();
-	}
-	
+//	if (tour.interlace()) {
+//		tour.solveInterlace();
+//		tour.addDurationEntireTour();
+//	}
+	tour.addDurationEntireTour();
+	System.out.println(tour.getDuration());
 	return tour;
     }
 

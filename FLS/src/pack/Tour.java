@@ -27,6 +27,7 @@ public class Tour {
 	}
 	
 	public void addDuration(Location location) {
+		System.out.println((Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration());
 		this.duration += (Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration();
 	}
 
@@ -103,14 +104,14 @@ public class Tour {
     }
     
     public void addDurationEntireTour() {
-    	System.out.println("duration_old: "+this.duration);
+    	System.out.println(">>>DURATION_OLD: "+this.duration);
     	this.duration = 0;
-    	for (int i=0; i<this.getTourStops().size(); i++) {
+    	for (int i=1; i<this.getTourStops().size()-1; i++) {
 //    		Location location = this.getTourStops().get(i);
 //    		System.out.println(i+" : "+(Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration() + " : " + this.getDuration());
     		this.addDuration(this.getTourStops().get(i));
     	}
-    	System.out.println("duration_new: "+this.duration);
+    	System.out.println(">>>DURATION_NEW: "+this.duration);
     }
 
 	public boolean createGivenTour(int[] useMethod, ArrayList<Location> locations) {
