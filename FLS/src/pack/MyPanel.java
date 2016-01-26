@@ -162,6 +162,8 @@ public class MyPanel extends JPanel {
 	});
 	this.add(showNumbersButton);
     }
+    
+    //TODO new button interlace on/off
 
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);

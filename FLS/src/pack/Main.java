@@ -33,7 +33,7 @@ public class Main {
     private static int distanceAir = 0;
     private static int distanceGround = 0;
     private static int solution = 0;
-    private static int slices = 10;
+    private static int slices = 12;
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws XMLStreamException, IOException {
@@ -48,9 +48,9 @@ public class Main {
 
 	File xml = null;
 	if (file == null) {
-	    xml = new File("Instance-60.xml");
+	    xml = new File("Instance-400-42.xml");
 	}
-
+	
 	InputStream in = new FileInputStream(xml);
 	XMLStreamReader streamReader = inputFactory.createXMLStreamReader(in);
 
@@ -84,10 +84,6 @@ public class Main {
 	calculateGroundToAirQuotient();
 	calculateAvarageSpeed();
 	
-//	long time = System.currentTimeMillis();
-	variableSliceFarStrategy(12);
-//	long time2 = System.currentTimeMillis();
-//	System.out.println("time in ms: "+(time2-time));
 	
 	while (slices > 1) {
 	    variableSliceFarStrategy(slices);
@@ -359,13 +355,13 @@ public class Main {
 	    tour.addDepot();
 	}
 	
-//	if (tour.interlace()) {
-//		tour.solveInterlace();
-//		tour.addDurationEntireTour();
-//	}
-	System.out.println(tour.toString());
-	tour.addDurationEntireTour();
-	System.out.println(tour.toString());
+	//TODO interlace on/off
+	
+	if (tour.interlace()) {
+		tour.solveInterlace();
+		tour.addDurationEntireTour();
+	}
+
 	return tour;
     }
 

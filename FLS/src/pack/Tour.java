@@ -27,7 +27,7 @@ public class Tour {
 	}
 	
 	public void addDuration(Location location) {
-		System.out.println((Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration());
+//		System.out.println((Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration());
 		this.duration += (Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration();
 	}
 
@@ -104,12 +104,12 @@ public class Tour {
     }
     
     public void addDurationEntireTour() {
-    	System.out.println(">>>DURATION_OLD: "+this.duration);
+//    	System.out.println(">>>DURATION_OLD: "+this.duration);
     	this.duration = 0;
-    	for (int i=1; i<this.getTourStops().size()-1; i++) {
-    		this.addDuration(this.getTourStops().get(i));
+    	for (int i=1; i<this.getTourStops().size(); i++) {
+    		this.duration += (Main.getDistance(this.getTourStops().get(i), tourStops.get(i-1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + this.getTourStops().get(i).getDuration();
     	}
-    	System.out.println(">>>DURATION_NEW: "+this.duration);
+//    	System.out.println(">>>DURATION_NEW: "+this.duration);
     }
 
 	public boolean createGivenTour(int[] useMethod, ArrayList<Location> locations) {
