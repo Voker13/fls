@@ -107,8 +107,6 @@ public class Tour {
     	System.out.println(">>>DURATION_OLD: "+this.duration);
     	this.duration = 0;
     	for (int i=1; i<this.getTourStops().size()-1; i++) {
-//    		Location location = this.getTourStops().get(i);
-//    		System.out.println(i+" : "+(Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration() + " : " + this.getDuration());
     		this.addDuration(this.getTourStops().get(i));
     	}
     	System.out.println(">>>DURATION_NEW: "+this.duration);
