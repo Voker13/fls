@@ -33,7 +33,7 @@ public class Main {
     private static int distanceAir = 0;
     private static int distanceGround = 0;
     private static int solution = 0;
-    private static int slices = 12;
+    private static int slices = 10;
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws XMLStreamException, IOException {
@@ -83,6 +83,12 @@ public class Main {
 	generateDistance0ToLocation();
 	calculateGroundToAirQuotient();
 	calculateAvarageSpeed();
+	
+//	long time = System.currentTimeMillis();
+	variableSliceFarStrategy(12);
+//	long time2 = System.currentTimeMillis();
+//	System.out.println("time in ms: "+(time2-time));
+	
 	while (slices > 1) {
 	    variableSliceFarStrategy(slices);
 	    slices -= 2;
@@ -300,10 +306,11 @@ public class Main {
 
     @SuppressWarnings("unchecked")
     private static void variableSliceFarStrategy(int slices) {
+    
 	ArrayList<Tour> allToursSliceVariableFar = new ArrayList<>();
 
 	ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-
+	
 	workCopy = (ArrayList<Location>) locations.clone();
 	while (!workCopy.isEmpty()) {
 	    allToursSliceVariableFar.add(findWorkDayVariableSlicesFar(workCopy, slices));
@@ -313,6 +320,7 @@ public class Main {
 	for (Tour tour : allToursSliceVariableFar) {
 	    durationOverallSliceVariableFar += tour.getDuration();
 	}
+	
 	int durationReal = getRealDuration(allToursSliceVariableFar);
 	System.out.println("REAL SOLUTION: " + durationReal);
 
@@ -356,7 +364,6 @@ public class Main {
 		tour.addDurationEntireTour();
 	}
 	
-	System.out.println(tour.getDuration());
 	return tour;
     }
 

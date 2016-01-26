@@ -91,7 +91,6 @@ public class Tour {
     }
     
     public void solveInterlace() {
-    	this.duration = 0;
     	ArrayList<Location> zwischenspeicherLocations = new ArrayList<>();
     	zwischenspeicherLocations.add(Main.getDepot());
     	for (int i=this.getInterlaceAt(); i>=1; i--) {
@@ -104,9 +103,14 @@ public class Tour {
     }
     
     public void addDurationEntireTour() {
+    	System.out.println("duration_old: "+this.duration);
+    	this.duration = 0;
     	for (int i=0; i<this.getTourStops().size(); i++) {
+//    		Location location = this.getTourStops().get(i);
+//    		System.out.println(i+" : "+(Main.getDistance(location, tourStops.get(tourStops.size() - 1)) * 1000F * Main.getGroundAirQuotient() / Main.getMeterPerSecond()) / 60 + location.getDuration() + " : " + this.getDuration());
     		this.addDuration(this.getTourStops().get(i));
     	}
+    	System.out.println("duration_new: "+this.duration);
     }
 
 	public boolean createGivenTour(int[] useMethod, ArrayList<Location> locations) {
