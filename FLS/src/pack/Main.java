@@ -33,7 +33,8 @@ public class Main {
     private static int distanceAir = 0;
     private static int distanceGround = 0;
     private static int solution = 0;
-    private static int slices = 12;
+    private static int slices;
+    private static boolean interlace = true;
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws XMLStreamException, IOException {
@@ -84,7 +85,7 @@ public class Main {
 	calculateGroundToAirQuotient();
 	calculateAvarageSpeed();
 	
-	
+	slices = 12;
 	while (slices > 1) {
 	    variableSliceFarStrategy(slices);
 	    slices -= 2;
@@ -92,7 +93,18 @@ public class Main {
 	slices = 1;
 	variableSliceFarStrategy(1);
 	variableSliceFarStrategy(0);
-
+	
+	interlace = false;
+	
+	slices = 12;
+	while (slices > 1) {
+	    variableSliceFarStrategy(slices);
+	    slices -= 2;
+	}
+	slices = 1;
+	variableSliceFarStrategy(1);
+	variableSliceFarStrategy(0);
+	
 	GraphFrame frame = new GraphFrame(tours);
 	frame.repaint();
     }
@@ -357,7 +369,7 @@ public class Main {
 	
 	//TODO interlace on/off
 	
-	if (tour.interlace()) {
+	if (interlace && tour.interlace()) {
 		tour.solveInterlace();
 		tour.addDurationEntireTour();
 	}

@@ -52,145 +52,289 @@ public class DrawPanel extends JPanel {
 	if (panel2.box1.isSelected()) {
 	    g.setColor(Color.BLACK);
 	    int cnt = 1;
-	    for (Tour tour : tours.get(0)) {
-		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    if (GraphFrame.getShowNumbers()) {
-			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
-				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
-				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    }
-		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
-			    .getLong() - Main.getMinLong())
-			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
-			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    cnt++;
-		}
+	    if (GraphFrame.getInterlace()) {
+	    	for (Tour tour : tours.get(0)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
+	    }
+	    else {
+	    	for (Tour tour : tours.get(8)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
 	    }
 	}
 	if (panel2.box2.isSelected()) {
 	    g.setColor(Color.BLACK);
 	    int cnt = 1;
-	    for (Tour tour : tours.get(1)) {
-		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    if (GraphFrame.getShowNumbers()) {
-			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
-				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
-				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    }
-		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
-			    .getLong() - Main.getMinLong())
-			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
-			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    cnt++;
-		}
+	    if (GraphFrame.getInterlace()) {
+	    	for (Tour tour : tours.get(1)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
+	    }
+	    else {
+	    	for (Tour tour : tours.get(9)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
 	    }
 	}
 	if (panel2.box3.isSelected()) {
 	    g.setColor(Color.BLACK);
 	    int cnt = 1;
-	    for (Tour tour : tours.get(2)) {
-		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    if (GraphFrame.getShowNumbers()) {
-			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
-				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
-				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    }
-		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
-			    .getLong() - Main.getMinLong())
-			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
-			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    cnt++;
-		}
+	    if (GraphFrame.getInterlace()) {
+	    	for (Tour tour : tours.get(2)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
+	    }
+	    else {
+	    	for (Tour tour : tours.get(10)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
 	    }
 	}
 	if (panel2.box4.isSelected()) {
 	    g.setColor(Color.BLACK);
 	    int cnt = 1;
-	    for (Tour tour : tours.get(3)) {
-		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    if (GraphFrame.getShowNumbers()) {
-			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
-				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
-				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    }
-		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
-			    .getLong() - Main.getMinLong())
-			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
-			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    cnt++;
-		}
+	    if (GraphFrame.getInterlace()) {
+	    	for (Tour tour : tours.get(3)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
+	    }
+	    else {
+	    	for (Tour tour : tours.get(11)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
 	    }
 	}
 	if (panel2.box5.isSelected()) {
 	    g.setColor(Color.BLACK);
 	    int cnt = 1;
-	    for (Tour tour : tours.get(4)) {
-		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    if (GraphFrame.getShowNumbers()) {
-			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
-				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
-				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    }
-		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
-			    .getLong() - Main.getMinLong())
-			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
-			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    cnt++;
-		}
+	    if (GraphFrame.getInterlace()) {
+	    	for (Tour tour : tours.get(4)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
+	    }
+	    else {
+	    	for (Tour tour : tours.get(12)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
 	    }
 	}
 	if (panel2.box6.isSelected()) {
 	    g.setColor(Color.BLACK);
 	    int cnt = 1;
-	    for (Tour tour : tours.get(5)) {
-		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    if (GraphFrame.getShowNumbers()) {
-			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
-				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
-				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    }
-		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
-			    .getLong() - Main.getMinLong())
-			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
-			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    cnt++;
-		}
+	    if (GraphFrame.getInterlace()) {
+	    	for (Tour tour : tours.get(5)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
+	    }
+	    else {
+	    	for (Tour tour : tours.get(13)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
 	    }
 	}
 	if (panel2.box7.isSelected()) {
 	    g.setColor(Color.BLACK);
 	    int cnt = 1;
-	    for (Tour tour : tours.get(6)) {
-		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    if (GraphFrame.getShowNumbers()) {
-			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
-				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
-				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    }
-		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
-			    .getLong() - Main.getMinLong())
-			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
-			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    cnt++;
-		}
+	    if (GraphFrame.getInterlace()) {
+	    	for (Tour tour : tours.get(6)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
+	    }
+	    else {
+	    	for (Tour tour : tours.get(14)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
 	    }
 	}
 	if (panel2.box8.isSelected()) {
 	    g.setColor(Color.BLACK);
 	    int cnt = 1;
-	    for (Tour tour : tours.get(7)) {
-		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
-		    if (GraphFrame.getShowNumbers()) {
-			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
-				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
-				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    }
-		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
-			    .getLong() - Main.getMinLong())
-			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
-			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
-		    cnt++;
-		}
+	    if (GraphFrame.getInterlace()) {
+	    	for (Tour tour : tours.get(7)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
+	    }
+	    else {
+	    	for (Tour tour : tours.get(15)) {
+	    		for (int i = 0; i < tour.getTourStops().size() - 1; i++) {
+	    		    if (GraphFrame.getShowNumbers()) {
+	    			g.drawString((cnt) + "", (int) (zoomFactor * (14 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (14 + (int) ((tour
+	    				.getTourStops().get(i + 1).getLong() - Main.getMinLong())
+	    				* (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    }
+	    		    g.drawLine((int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i)
+	    			    .getLong() - Main.getMinLong())
+	    			    * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))), (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLat() - Main.getMinLat()) * (frameWidth) / ((Main.getMaxLat() - Main.getMinLat()))))),
+	    			    (int) (zoomFactor * (20 + (int) ((tour.getTourStops().get(i + 1).getLong() - Main.getMinLong()) * (frameHeight) / (Main.getMaxLong() - Main.getMinLong())))));
+	    		    cnt++;
+	    		}
+	    	    }
 	    }
 	}
     }

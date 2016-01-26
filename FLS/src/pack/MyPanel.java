@@ -15,6 +15,7 @@ public class MyPanel extends JPanel {
 
     private boolean drawLocations = true;
     private boolean showNumbers = true;
+    private boolean showInterlace = true;
     private int frameWidth;
     private int frameHeight;
     private ArrayList<ArrayList<Tour>> tours;
@@ -161,9 +162,23 @@ public class MyPanel extends JPanel {
 	    }
 	});
 	this.add(showNumbersButton);
-    }
+    
     
     //TODO new button interlace on/off
+	JButton showInterlaceButton = new JButton("Show Interlace");
+	showNumbersButton.setSize(new Dimension(200, 50));
+	showNumbersButton.setLocation(width - 230, height / 2 + 225);
+	showNumbersButton.addActionListener(new ActionListener() {
+
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		showInterlace = !showInterlace;
+		repaint();
+	    }
+	});
+	this.add(showNumbersButton);
+    }
+    
 
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);

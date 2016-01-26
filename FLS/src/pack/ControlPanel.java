@@ -156,6 +156,21 @@ public class ControlPanel extends JPanel {
 	    }
 	});
 	this.add(showNumbersButton);
+	
+	JButton showInterlaceButton = new JButton("Show Interlace");
+	showInterlaceButton.setSize(new Dimension(200, 50));
+	showInterlaceButton.setLocation(width - 230, height / 2 + 225);
+	showInterlaceButton.addActionListener(new ActionListener() {
+
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		GraphFrame.flipInerlace();
+		parent.repaint();
+		parent.requestFocus();
+	    }
+	});
+	this.add(showInterlaceButton);
+    
     }
 
 }

@@ -22,6 +22,7 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
     private static final long serialVersionUID = 1L;
     private static boolean drawLocations = true;
     private static boolean showNumbers = true;
+    private static boolean showInterlace = true;
     DrawPanel drawPanel;
     JScrollPane scroller;
     int width;
@@ -76,6 +77,10 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
 
 	}
     }
+    
+    public static void flipInerlace() {
+    	showInterlace = !showInterlace;
+    }
 
     public static void flipLocations() {
 	drawLocations = !drawLocations;
@@ -84,7 +89,11 @@ public class GraphFrame extends JFrame implements MouseWheelListener, KeyListene
     public static void flipNumbers() {
 	showNumbers = !showNumbers;
     }
-
+    
+    public static boolean getInterlace() {
+    	return showInterlace;
+    }
+    
     public static boolean getDrawLocations() {
 	return drawLocations;
     }
