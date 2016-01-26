@@ -363,8 +363,9 @@ public class Main {
 //		tour.solveInterlace();
 //		tour.addDurationEntireTour();
 //	}
+	System.out.println(tour.toString());
 	tour.addDurationEntireTour();
-	System.out.println(tour.getDuration());
+	System.out.println(tour.toString());
 	return tour;
     }
 
