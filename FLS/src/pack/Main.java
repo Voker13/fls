@@ -85,6 +85,8 @@ public class Main {
 		locCopy = (ArrayList<Location>) locations.clone();
 
 		locations.remove(0);
+		
+		
 
 		double t2 = System.currentTimeMillis();
 		System.out.println("Init-Time: "+(t2-t1));
@@ -95,6 +97,10 @@ public class Main {
 		calculateGroundToAirQuotient();
 		calculateAvarageSpeed();
 
+		System.out.println(kilometerProStundeImSchnitt()+" km/h");
+		System.out.println(Main.kilometerPerHour+" km/h -old");
+		System.out.println("---------------------");
+		
 		slices = 12;
 		while (slices > 1) {
 			variableSliceFarStrategy(slices);
@@ -664,6 +670,19 @@ public class Main {
 			double dy = y0 - location.getLat();
 			location.setDistance0(Math.sqrt((dx * dx) + (dy * dy)));
 		}
+	}
+	
+	public static double kilometerProStundeImSchnitt() {
+		double erg = 0;
+		for(Edge edge : edges) {
+			if (edge.getDuration() != 0) {
+				erg += edge.getDistance()/edge.getDuration();
+			}
+		}
+		erg = erg / edges.size();
+		erg /= 1000;
+		erg *= 60;
+		return erg;
 	}
 
 	public static int getTimePerWorkday() {
