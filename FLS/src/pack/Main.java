@@ -86,7 +86,6 @@ public class Main {
 
 		locations.remove(0);
 		
-		System.out.println("Hello!!!");
 		
 
 		double t2 = System.currentTimeMillis();
