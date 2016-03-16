@@ -1,824 +1,300 @@
 package pack;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 
 public class Main {
 
-	private static int timePerWorkday = 480;
-	private static ArrayList<Location> locations;
-	private static ArrayList<Location> locCopy;
-	private static ArrayList<Edge> edges;
-	private static double groundAirQuotient;
-	private static double kilometerPerHour;
-	private static double meterPerSecond;
-	private static float minLat = 1000;
-	private static float maxLat = 0;
-	private static float minLong = 1000;
-	private static float maxLong = 0;
-	private static Location depot;
-	private static Location lastLocation = null;
-	private static double AngleTourStop1;
-	private static double AngleTourStop2;
-	private static Location TourStop2;
-	private static boolean isUsed = false;
-	private static ArrayList<ArrayList<Tour>> tours = new ArrayList<>();
-	private static int distanceAir = 0;
-	private static int distanceGround = 0;
-	private static int solution = 0;
-	private static int slices;
-	private static boolean interlace = true;
-
-	@SuppressWarnings("unchecked")
-	public static void main(String[] args) throws XMLStreamException, IOException {
-
-		double t1 = System.currentTimeMillis();
-		
-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-
-		System.out.println("INSTANCE");
-
-		String file = null;
-
-		// file = readFromSystemIn();
-
-		File xml = null;
-		if (file == null) {
-			xml = new File("Instance-400.xml");
-		}
-
-		InputStream in = new FileInputStream(xml);
-		XMLStreamReader streamReader = inputFactory.createXMLStreamReader(in);
-
-		locations = new ArrayList<>();
-		edges = new ArrayList<>();
-
-		while (streamReader.hasNext()) {
-			int eventType = streamReader.next();
-
-			if (eventType == XMLStreamReader.START_ELEMENT) {
-				if (streamReader.getLocalName().equals("Location")) {
-					locations.add(new Location(Integer.parseInt(streamReader.getAttributeValue(null, "Duration")),
-							Float.parseFloat(streamReader.getAttributeValue(null, "Lat")),
-							Float.parseFloat(streamReader.getAttributeValue(null, "Long")),
-							streamReader.getAttributeValue(null, "Name")));
-				} else if (streamReader.getLocalName().equals("Edge")) {
-					edges.add(new Edge(Integer.parseInt(streamReader.getAttributeValue(null, "Duration")),
-							Integer.parseInt(streamReader.getAttributeValue(null, "Distance")),
-							Integer.parseInt(streamReader.getAttributeValue(null, "From")),
-							Integer.parseInt(streamReader.getAttributeValue(null, "To"))));
-				}
-			}
-		}
-
-		depot = locations.get(0);
-
-		setNumbers(locations);
-
-		locCopy = (ArrayList<Location>) locations.clone();
-
-		locations.remove(0);
-		
-		
-
-		double t2 = System.currentTimeMillis();
-		System.out.println("Init-Time: "+(t2-t1));
-		System.out.println("---------------------");
-		
-		generateAngleToLocation();
-		generateDistance0ToLocation();
-		calculateGroundToAirQuotient();
-		calculateAvarageSpeed();
-
-		System.out.println(kilometerProStundeImSchnitt()+" km/h");
-		System.out.println(Main.kilometerPerHour+" km/h -old");
-		System.out.println("---------------------");
-		
-		slices = 12;
-		while (slices > 1) {
-			variableSliceFarStrategy(slices);
-			slices -= 2;
-		}
-		slices = 1;
-		variableSliceFarStrategy(1);
-		variableSliceFarStrategy(0);
-
-		System.out.println(">>>OHNE INTERLACE<<<");
-		System.out.println("---------------------");
-		interlace = false;
-
-		slices = 12;
-		while (slices > 1) {
-			variableSliceFarStrategy(slices);
-			slices -= 2;
-		}
-		slices = 1;
-		variableSliceFarStrategy(1);
-		variableSliceFarStrategy(0);
-
-		GraphFrame frame = new GraphFrame(tours);
-		frame.repaint();
-	}
-
-	private static void setNumbers(ArrayList<Location> l) {
-		for (int i = 0; i < l.size(); i++) {
-			l.get(i).setNumber(i);
-		}
-	}
-
-	private static String readFromSystemIn() throws IOException {
-		String response = "";
-		int nextByte = System.in.read();
-		while (nextByte != -1 && nextByte != '\n') {
-			response += (char) nextByte;
-			nextByte = System.in.read();
-		}
-		return response;
-	}
-
-	private static void calculateGroundToAirQuotient() {
-		for (int i = 0; i < locations.size(); i++) {
-			if (!(i == 0)) {
-				distanceGround += getEdge(0, i).distance / 1000;
-				distanceAir += getDistance(depot, locations.get(i));
-			}
-			if (locations.get(i).getLat() < minLat) {
-				minLat = locations.get(i).getLat();
-			}
-			if (locations.get(i).getLat() > maxLat) {
-				maxLat = locations.get(i).getLat();
-			}
-			float LLong = locations.get(i).getLong();
-			while (LLong > 20) {
-				LLong /= 10;
-			}
-			if (LLong < minLong) {
-				minLong = LLong;
-			}
-			if (LLong > maxLong) {
-				maxLong = LLong;
-			}
-		}
-		groundAirQuotient = (float) distanceGround / distanceAir;
-	}
-
-	private static void calculateAvarageSpeed() {
-		int time = 0;
-		for (int i = 0; i < locations.size(); i++) {
-			if (!(i == 0)) {
-				time += getEdge(0, i).getDuration();
-			}
-		}
-
-		kilometerPerHour = (distanceGround * 60) / (time);
-		meterPerSecond = kilometerPerHour / 3.6F;
-	}
-
-	@SuppressWarnings({ "unchecked", "unused" })
-	private static void closestStrategy() {
-		ArrayList<Tour> allToursClosest = new ArrayList<Tour>();
-
-		ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-		while (!workCopy.isEmpty()) {
-			allToursClosest.add(findWorkDay(workCopy));
-		}
-
-		int durationOverallClosest = 0;
-		for (Tour tour : allToursClosest) {
-			durationOverallClosest += tour.getDuration();
-		}
-
-		tours.add(allToursClosest);
-	}
-
-	@SuppressWarnings({ "unchecked", "unused" })
-	private static void circleStrategy() {
-		ArrayList<Tour> allToursCircle = new ArrayList<Tour>();
-
-		ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-		while (!workCopy.isEmpty()) {
-			allToursCircle.add(findWorkDayCircle(workCopy));
-		}
-
-		int durationOverallCircle = 0;
-		for (Tour tour : allToursCircle) {
-			durationOverallCircle += tour.getDuration();
-		}
-
-		tours.add(allToursCircle);
-	}
-
-	@SuppressWarnings("unused")
-	private static void pizzaStrategy() {
-		ArrayList<Tour> allToursPizza = new ArrayList<Tour>();
-
-		ArrayList<Location> radius1 = new ArrayList<>();
-		ArrayList<Location> radius2 = new ArrayList<>();
-		for (Location loc : locations) {
-			if (loc.getDistance0() < 0.03) {
-				radius1.add(loc);
-			} else {
-				radius2.add(loc);
-			}
-		}
-		while (!radius1.isEmpty()) {
-			allToursPizza.add(findWorkDayPizza(radius1));
-		}
-		while (!radius2.isEmpty()) {
-			allToursPizza.add(findWorkDayPizza(radius2));
-		}
-
-		int durationOverallPizza = 0;
-		for (Tour tour : allToursPizza) {
-			durationOverallPizza += tour.getDuration();
-		}
-
-		tours.add(allToursPizza);
-	}
-
-	@SuppressWarnings({ "unchecked", "unused" })
-	private static void randomStrategy() {
-		ArrayList<Tour> allToursRandom = new ArrayList<Tour>();
-
-		ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-		while (!workCopy.isEmpty()) {
-			allToursRandom.add(findWorkDayRandom(workCopy));
-		}
-
-		int durationOverallRandom = 0;
-		for (Tour tour : allToursRandom) {
-			durationOverallRandom += tour.getDuration();
-		}
-
-		tours.add(allToursRandom);
-	}
-
-	@SuppressWarnings({ "unchecked", "unused" })
-	private static void sliceStrategy() {
-		ArrayList<Tour> allToursSlices = new ArrayList<Tour>();
-
-		ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-		while (!workCopy.isEmpty()) {
-			allToursSlices.add(findWorkDaySlices(workCopy));
-		}
-
-		int durationOverallSlices = 0;
-		for (Tour tour : allToursSlices) {
-			durationOverallSlices += tour.getDuration();
-		}
-
-		tours.add(allToursSlices);
-	}
-
-	@SuppressWarnings({ "unchecked", "unused" })
-	private static void farToCloseStrategy() {
-		ArrayList<Tour> allToursFarToClose = new ArrayList<Tour>();
-
-		ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-		while (!workCopy.isEmpty()) {
-			allToursFarToClose.add(findWorkDayFarToClose(workCopy));
-		}
-
-		int durationOverallFarToClose = 0;
-		for (Tour tour : allToursFarToClose) {
-			durationOverallFarToClose += tour.getDuration();
-		}
-
-		tours.add(allToursFarToClose);
-	}
-
-	@SuppressWarnings({ "unchecked", "unused" })
-	private static void slicesPlusFarStrategy() {
-		ArrayList<Tour> allToursSlicePlusFar = new ArrayList<Tour>();
-
-		ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-		while (!workCopy.isEmpty()) {
-			allToursSlicePlusFar.add(findWorkDaySlicePlusFar(workCopy));
-		}
-
-		int durationOverallSlicePlusFar = 0;
-		for (Tour tour : allToursSlicePlusFar) {
-			durationOverallSlicePlusFar += tour.getDuration();
-		}
-
-		tours.add(allToursSlicePlusFar);
-	}
-
-	@SuppressWarnings({ "unchecked", "unused" })
-	private static void variableSliceStrategy(int slices) {
-		ArrayList<Tour> allToursSliceVariable = new ArrayList<>();
-
-		ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-
-		workCopy = (ArrayList<Location>) locations.clone();
-		while (!workCopy.isEmpty()) {
-			allToursSliceVariable.add(findWorkDayVariableSlices(workCopy, slices));
-		}
-
-		int durationOverallSliceVariable = 0;
-		for (Tour tour : allToursSliceVariable) {
-			durationOverallSliceVariable += tour.getDuration();
-		}
-
-		tours.add(allToursSliceVariable);
-	}
-
-	@SuppressWarnings("unchecked")
-	private static void variableSliceFarStrategy(int slices) {
-
-		double time = System.currentTimeMillis();
-
-		ArrayList<Tour> allToursSliceVariableFar = new ArrayList<>();
-
-		ArrayList<Location> workCopy = (ArrayList<Location>) locations.clone();
-
-		workCopy = (ArrayList<Location>) locations.clone();
-		while (!workCopy.isEmpty()) {
-			allToursSliceVariableFar.add(findWorkDayVariableSlicesFar(workCopy, slices));
-		}
-
-		int durationOverallSliceVariableFar = 0;
-		for (Tour tour : allToursSliceVariableFar) {
-			durationOverallSliceVariableFar += tour.getDuration();
-		}
-
-		int durationReal = getRealDuration(allToursSliceVariableFar);
-		System.out.println("REAL SOLUTION: " + durationReal);
-
-		tours.add(allToursSliceVariableFar);
-
-		postSolution(durationOverallSliceVariableFar);
-
-		double time2 = System.currentTimeMillis();
-		System.out.println("time: " + (time2 - time));
-		System.out.println("---------------------");
-	}
-
-	private static void postSolution(int s) {
-		// if (s < solution || solution == 0) {
-		solution = s;
-		System.out.println("SOLUTION " + solution);
-		// }
-	}
-
-	private static int getRealDuration(ArrayList<Tour> tours) {
-		int duration = 0;
-		for (int i = 0; i < tours.size(); i++) {
-			ArrayList<Location> tourLocations = tours.get(i).getTourStops();
-			for (int j = 0; j < tourLocations.size() - 1; j++) {
-				Location one = tourLocations.get(j);
-				Location two = tourLocations.get(j + 1);
-				Edge edge = getEdge(one.getNumber(), two.getNumber());
-				duration += edge.getDuration() + one.getDuration();
-			}
-		}
-		return duration;
-	}
-
-	private static Tour findWorkDayVariableSlicesFar(ArrayList<Location> locations, int slices) {
-		Tour tour = new Tour();
-		while (tour.addNextStopVariableSlicesFar(locations, slices)) {
+    public static ArrayList<Location> nodes;
+    public static Location depot;
+    public static int speed = 0;
+    public static int solution = 0;
+
+    public static void main(String[] args) throws IOException {
+
+	String file = null;
+
+	System.out.println("INSTANCE txt");
+
+	file = readFromSystemIn();
+
+	nodes = (ArrayList<Location>) Location.readInstance(file);
+
+	setDepot();
+
+	calculateSpeed();
+
+	generateAngleToLocation();
+
+	variableSliceFarStrategy(12);
+    }
+
+    private static String readFromSystemIn() throws IOException {
+	String response = "";
+	int nextByte = System.in.read();
+	while (nextByte != -1 && nextByte != '\n') {
+	    response += (char) nextByte;
+	    nextByte = System.in.read();
+	}
+	return response;
+    }
 
-		}
-		if (locations.isEmpty()) {
-			tour.addDepot();
-		}
-
-		// TODO interlace on/off
-
-		if (interlace && tour.interlace()) {
-			tour.solveInterlace();
-			tour.addDurationEntireTour();
-		}
-
-		return tour;
-	}
-
-	private static Tour findWorkDaySlices(ArrayList<Location> locations) {
-		Tour tour = new Tour();
-		while (tour.addNextStopSlices(locations)) {
-
-		}
-		if (locations.isEmpty()) {
-			tour.addDepot();
-		}
-		return tour;
-	}
-
-	private static Tour findWorkDayFarToClose(ArrayList<Location> locations) {
-		Tour tour = new Tour();
-		while (tour.addNextStopFarToClose(locations)) {
-
-		}
-		return tour;
-	}
-
-	private static Tour findWorkDaySlicePlusFar(ArrayList<Location> locations) {
-		Tour tour = new Tour();
-		while (tour.addNextStopSlicePlusFar(locations)) {
-
-		}
-		return tour;
-	}
-
-	private static Tour findWorkDayRandom(ArrayList<Location> locations) {
-		Tour tour = new Tour();
-		while (tour.addNextStopRandom(locations)) {
-
-		}
-		return tour;
-	}
-
-	private static Tour findWorkDay(ArrayList<Location> locations) {
-		Tour tour = new Tour();
-		while (tour.addNextStop(locations)) {
-
-		}
-		if (locations.isEmpty()) {
-			tour.addDepot();
-		}
-		return tour;
-	}
-
-	private static Tour findWorkDayVariableSlices(ArrayList<Location> locations, int slices) {
-		Tour tour = new Tour();
-		while (tour.addNextStopVariableSlices(locations, slices)) {
-
-		}
-		if (locations.isEmpty()) {
-			tour.addDepot();
-		}
-
-		return tour;
-	}
-
-	private static Tour findWorkDayPizza(ArrayList<Location> locations) {
-		Tour tour = new Tour();
-		generateAngleToLocation();
-		while (tour.addNextStopPizza(locations)) {
-
-		}
-		return tour;
-	}
-
-	private static Tour findWorkDayCircle(ArrayList<Location> locations) {
-		Tour tour = new Tour();
-		while (tour.addNextStopCircle(locations)) {
-
-		}
-		return tour;
-	}
-
-	public static Location findClosestLocation(Location location, ArrayList<Location> locations) {
-		Location returnLocation = locations.get(0);
-		for (int i = 1; i < locations.size(); i++) {
-			if ((getDistance(location, locations.get(i)) < getDistance(returnLocation, location))) {
-				returnLocation = locations.get(i);
-			}
-		}
-		return returnLocation;
-	}
-
-	@SuppressWarnings("unchecked")
-	public static Location findSecondClosestLocation(Location location, ArrayList<Location> locations) {
-		Location closestLocation = findClosestLocation(location, locations);
-		ArrayList<Location> localCopy = (ArrayList<Location>) locations.clone();
-		localCopy.remove(closestLocation);
-		Location secondClosestLocation = findClosestLocation(location, localCopy);
-		return secondClosestLocation;
-	}
-
-	public static Location findClosestLocation(Location location, Location withoutLocation,
-			ArrayList<Location> locations) {
-		Location returnLocation = locations.get(0);
-		for (int i = 1; i < locations.size(); i++) {
-			if (locations.get(i) != withoutLocation
-					&& getDistance(location, locations.get(i)) < getDistance(returnLocation, location)) {
-				returnLocation = locations.get(i);
-			}
-
-		}
-		return returnLocation;
+    private static void setDepot() {
+	Location remove = null;
+	for (Location location : nodes) {
+	    if (location.isDepto()) {
+		depot = location;
+		remove = location;
+	    }
 	}
+	nodes.remove(remove);
+    }
 
-	public static Location findFarthestLocation(Location location, ArrayList<Location> locations) {
-		Location returnLocation = locations.get(0);
-		for (int i = 1; i < locations.size(); i++) {
-			if ((getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
-				returnLocation = locations.get(i);
-			}
-		}
-		return returnLocation;
-	}
-
-	public static Location findFarthestLocation(Location location, Location withoutLoc, ArrayList<Location> locations) {
-		Location returnLocation = locations.get(0);
-		for (int i = 1; i < locations.size(); i++) {
-			if (locations.get(i) != withoutLoc
-					&& (getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
-				returnLocation = locations.get(i);
-			}
-		}
-		return returnLocation;
-	}
-
-	public static Location findFarthestLocationToDepot(ArrayList<Location> locations) {
-		Location returnLocation = Main.getDepot();
-		Location origin = Main.getDepot();
-		for (int i = 1; i < locations.size(); i++) {
-			if ((getDistance(origin, locations.get(i)) > getDistance(returnLocation, origin))) {
-				returnLocation = locations.get(i);
-			}
-		}
-		return returnLocation;
-	}
+    public static int getIndex(ArrayList<Location> locations, Location location) {
+	for (int i = 0; i < locations.size(); i++) {
+	    if (locations.get(i) == location) {
+		return i;
+	    } else {
 
-	public static Location findFarthestLocationToDepot(Location location, Location withoutLoc,
-			ArrayList<Location> locations) {
-		Location returnLocation = Main.getDepot();
-		for (int i = 1; i < locations.size(); i++) {
-			if (locations.get(i) != withoutLoc
-					&& (getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
-				returnLocation = locations.get(i);
-			}
-		}
-		return returnLocation;
+	    }
 	}
+	return 0;
+    }
 
-	@SuppressWarnings("unchecked")
-	public static Location findClosestLocationGoingToTheMiddle(Location location, ArrayList<Location> locations) {
-		ArrayList<Location> copy = (ArrayList<Location>) locations.clone();
-		Location returnLocation = locations.get(0);
-		Location closestLocation = locations.get(0);
-		for (int i = 1; i < copy.size(); i++) {
-			if ((getDistance(location, copy.get(i)) < getDistance(returnLocation, location))) {
-				closestLocation = copy.get(i);
-			}
-		}
-		if (getDistance(closestLocation, depot) < getDistance(location, depot)) {
-			returnLocation = closestLocation;
-		} else {
-			copy.remove(getIndex(copy, closestLocation));
-			returnLocation = findClosestLocation(location, copy);
-		}
-		return returnLocation;
-	}
+    public static double getDistance(Location location1, Location location2) {
+	double lat1 = location1.latitude;
+	double long1 = location1.longitude;
+	double lat2 = location2.latitude;
+	double long2 = location2.longitude;
+	double lat = (lat1 + lat2) / 2 * 0.01745;
+	float latDifference = (float) (111.3 * (lat1 - lat2));
+	float longDifference = (float) (111.3 * Math.cos(lat) * (long1 - long2));
+	return Math.sqrt(latDifference * latDifference + longDifference * longDifference);
+    }
 
-	public static float getDistance(Location location1, Location location2) {
-		float lat1 = location1.getLat();
-		float long1 = location1.getLong();
-		float lat2 = location2.getLat();
-		float long2 = location2.getLong();
-		double lat = (lat1 + lat2) / 2 * 0.01745;
-		float latDifference = (float) (111.3 * (lat1 - lat2));
-		float longDifference = (float) (111.3 * Math.cos(lat) * (long1 - long2));
-		return (float) Math.sqrt(latDifference * latDifference + longDifference * longDifference);
-	}
+    public static int getDuration(Location location1, Location location2) {
+	double distance = getDistance(location1, location2);
+	int duration = (int) ((distance / speed) * 60);
+	return duration;
+    }
 
-	private static Edge getEdge(int one, int two) {
-		for (Edge edge : edges) {
-			if ((edge.from == one && edge.to == two) || (edge.from == two && edge.to == one)) {
-				return edge;
-			}
-		}
-		return null;
+    public static void generateAngleToLocation() {
+	double x0 = depot.longitude;
+	double y0 = depot.latitude;
+	for (Location location : nodes) {
+	    double dx = x0 - location.longitude;
+	    double dy = y0 - location.latitude;
+	    if (dx >= 0 && dy >= 0) {
+		location.angle = (Math.toDegrees(Math.atan(dy / dx)));
+	    } else if (dx < 0 && dy >= 0) {
+		location.angle = (Math.toDegrees(Math.atan(dy / dx)) + 180);
+	    } else if (dx < 0 && dy < 0) {
+		location.angle = (Math.toDegrees(Math.atan(dy / dx)) + 180);
+	    } else if (dx >= 0 && dy < 0) {
+		location.angle = (Math.toDegrees(Math.atan(dy / dx)) + 360);
+	    }
 	}
-
-	public static int getIndex(ArrayList<Location> locations, Location location) {
-		for (int i = 0; i < locations.size(); i++) {
-			if (locations.get(i).equals(location)) {
+    }
 
-				return i;
-			}
-		}
-
-		return -1;
+    private static void calculateSpeed() {
+	int distance = 0;
+	int duration = 0;
+	for (int i = 0; i < nodes.size(); i++) {
+	    distance += getDistance(depot, nodes.get(i));
+	    duration += ((nodes.get(i).timeToDepot + nodes.get(i).timeFromDepot) / 2);
 	}
+	speed = distance / (duration / 60);
+    }
 
-	public static Location findLocationWithSmalestAngle() {
-		double smalestAngle = 720;
-		Location locWithSmalestAngle = locations.get(0);
-		for (Location loc : locations) {
-			if (loc.getAngle() < smalestAngle) {
-				smalestAngle = loc.getAngle();
-				locWithSmalestAngle = loc;
-			}
-		}
-		return locWithSmalestAngle;
-	}
+    @SuppressWarnings({ "unchecked", "unused" })
+    private static void closestStrategy() {
+	ArrayList<Tour> allToursClosest = new ArrayList<Tour>();
 
-	public static Location getLocationWithSmalestAngle(Location currentLocation, ArrayList<Location> locations) {
-
-		Location smalestAngleLocation = currentLocation;
-		double smalestAngle = 720;
-
-		for (Location location : locations) {
-			double angle = location.getAngle();
-			if (angle < smalestAngle) {
-				smalestAngle = angle;
-				smalestAngleLocation = location;
-			}
-		}
-		return smalestAngleLocation;
+	ArrayList<Location> workCopy = (ArrayList<Location>) nodes.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursClosest.add(findWorkDay(workCopy));
 	}
 
-	public static void generateAngleToLocation(Location loc) {
-		for (Location location : locations) {
-			double angle = location.getAngle();
-			if (angle < Main.getAngleTourStop2()) {
-				location.setAngle(angle + 360);
-			}
-		}
-		if (Main.getAngleTourStop1() > Main.getAngleTourStop2()) {
-			for (Location location : locations) {
-				location.setAngle(720 - location.getAngle());
-			}
-		}
-
+	int durationOverallClosest = 0;
+	for (Tour tour : allToursClosest) {
+	    durationOverallClosest += tour.getDuration();
 	}
 
-	public static void generateAngleToLocation() {
-		double x0 = depot.getLong();
-		double y0 = depot.getLat();
-		for (Location location : locations) {
-			double dx = x0 - location.getLong();
-			double dy = y0 - location.getLat();
-			if (dx >= 0 && dy >= 0) {
-				location.setAngle(Math.toDegrees(Math.atan(dy / dx)));
-			} else if (dx < 0 && dy >= 0) {
-				location.setAngle(Math.toDegrees(Math.atan(dy / dx)) + 180);
-			} else if (dx < 0 && dy < 0) {
-				location.setAngle(Math.toDegrees(Math.atan(dy / dx)) + 180);
-			} else if (dx >= 0 && dy < 0) {
-				location.setAngle(Math.toDegrees(Math.atan(dy / dx)) + 360);
-			}
-		}
-	}
+	postSolution(durationOverallClosest);
+    }
 
-	public static void generateDistance0ToLocation() {
-		double x0 = depot.getLong();
-		double y0 = depot.getLat();
-		for (Location location : locations) {
-			double dx = x0 - location.getLong();
-			double dy = y0 - location.getLat();
-			location.setDistance0(Math.sqrt((dx * dx) + (dy * dy)));
-		}
-	}
-	
-	public static double kilometerProStundeImSchnitt() {
-		double erg = 0;
-		for(Edge edge : edges) {
-			if (edge.getDuration() != 0) {
-				erg += edge.getDistance()/edge.getDuration();
-			}
-		}
-		erg = erg / edges.size();
-		erg /= 1000;
-		erg *= 60;
-		return erg;
-	}
+    @SuppressWarnings({ "unchecked", "unused" })
+    private static void farToCloseStrategy() {
+	ArrayList<Tour> allToursFarToClose = new ArrayList<Tour>();
 
-	public static int getTimePerWorkday() {
-		return timePerWorkday;
+	ArrayList<Location> workCopy = (ArrayList<Location>) nodes.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursFarToClose.add(findWorkDayFarToClose(workCopy));
 	}
 
-	public static void setTimePerWorkday(int timePerWorkday) {
-		Main.timePerWorkday = timePerWorkday;
+	int durationOverallFarToClose = 0;
+	for (Tour tour : allToursFarToClose) {
+	    durationOverallFarToClose += tour.getDuration();
 	}
 
-	public static ArrayList<Location> getLocations() {
-		return locations;
-	}
+	postSolution(durationOverallFarToClose);
+    }
 
-	public static void setLocations(ArrayList<Location> locations) {
-		Main.locations = locations;
-	}
+    @SuppressWarnings({ "unchecked", "unused" })
+    private static void variableSliceStrategy(int slices) {
+	ArrayList<Tour> allToursSliceVariable = new ArrayList<>();
 
-	public static ArrayList<Location> getLocCopy() {
-		return locCopy;
-	}
+	ArrayList<Location> workCopy = (ArrayList<Location>) nodes.clone();
 
-	public static void setLocCopy(ArrayList<Location> locCopy) {
-		Main.locCopy = locCopy;
+	workCopy = (ArrayList<Location>) nodes.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursSliceVariable.add(findWorkDayVariableSlices(workCopy, slices));
 	}
 
-	public static ArrayList<Edge> getEdges() {
-		return edges;
+	int durationOverallSliceVariable = 0;
+	for (Tour tour : allToursSliceVariable) {
+	    durationOverallSliceVariable += tour.getDuration();
 	}
+    }
 
-	public static void setEdges(ArrayList<Edge> edges) {
-		Main.edges = edges;
-	}
+    @SuppressWarnings("unchecked")
+    private static void variableSliceFarStrategy(int slices) {
 
-	public static double getGroundAirQuotient() {
-		return groundAirQuotient;
-	}
+	ArrayList<Tour> allToursSliceVariableFar = new ArrayList<>();
 
-	public static void setGroundAirQuotient(double groundAirQuotient) {
-		Main.groundAirQuotient = groundAirQuotient;
-	}
+	ArrayList<Location> workCopy = (ArrayList<Location>) nodes.clone();
 
-	public static double getKilometerPerHour() {
-		return kilometerPerHour;
+	workCopy = (ArrayList<Location>) nodes.clone();
+	while (!workCopy.isEmpty()) {
+	    allToursSliceVariableFar.add(findWorkDayVariableSlicesFar(workCopy, slices));
 	}
 
-	public static void setKilometerPerHour(double kilometerPerHour) {
-		Main.kilometerPerHour = kilometerPerHour;
+	int durationOverallSliceVariableFar = 0;
+	for (Tour tour : allToursSliceVariableFar) {
+	    durationOverallSliceVariableFar += tour.getDuration();
 	}
 
-	public static double getMeterPerSecond() {
-		return meterPerSecond;
-	}
+	postSolution(durationOverallSliceVariableFar);
+    }
 
-	public static void setMeterPerSecond(double meterPerSecond) {
-		Main.meterPerSecond = meterPerSecond;
-	}
+    private static void postSolution(int s) {
+	solution = s;
+	System.out.println("SOLUTION " + solution);
+    }
 
-	public static float getMinLat() {
-		return minLat;
-	}
+    private static Tour findWorkDayVariableSlicesFar(ArrayList<Location> locations, int slices) {
+	Tour tour = new Tour();
+	while (tour.addNextStopVariableSlicesFar(locations, slices)) {
 
-	public static void setMinLat(float minLat) {
-		Main.minLat = minLat;
 	}
-
-	public static float getMaxLat() {
-		return maxLat;
+	if (locations.isEmpty()) {
+	    tour.addDepot();
 	}
 
-	public static void setMaxLat(float maxLat) {
-		Main.maxLat = maxLat;
-	}
+	return tour;
+    }
 
-	public static float getMinLong() {
-		return minLong;
-	}
+    private static Tour findWorkDayFarToClose(ArrayList<Location> locations) {
+	Tour tour = new Tour();
+	while (tour.addNextStopFarToClose(locations)) {
 
-	public static void setMinLong(float minLong) {
-		Main.minLong = minLong;
 	}
+	return tour;
+    }
 
-	public static float getMaxLong() {
-		return maxLong;
-	}
+    private static Tour findWorkDay(ArrayList<Location> locations) {
+	Tour tour = new Tour();
+	while (tour.addNextStop(locations)) {
 
-	public static void setMaxLong(float maxLong) {
-		Main.maxLong = maxLong;
 	}
-
-	public static Location getDepot() {
-		return depot;
+	if (locations.isEmpty()) {
+	    tour.addDepot();
 	}
+	return tour;
+    }
 
-	public static void setDepot(Location depot) {
-		Main.depot = depot;
-	}
+    private static Tour findWorkDayVariableSlices(ArrayList<Location> locations, int slices) {
+	Tour tour = new Tour();
+	while (tour.addNextStopVariableSlices(locations, slices)) {
 
-	public static Location getLastLocation() {
-		return lastLocation;
 	}
-
-	public static void setLastLocation(Location lastLocation) {
-		Main.lastLocation = lastLocation;
+	if (locations.isEmpty()) {
+	    tour.addDepot();
 	}
 
-	public static double getAngleTourStop1() {
-		return AngleTourStop1;
-	}
+	return tour;
+    }
 
-	public static void setAngleTourStop1(double angleTourStop1) {
-		AngleTourStop1 = angleTourStop1;
+    public static Location findClosestLocation(Location location, ArrayList<Location> locations) {
+	Location returnLocation = locations.get(0);
+	for (int i = 1; i < locations.size(); i++) {
+	    if ((getDistance(location, locations.get(i)) < getDistance(returnLocation, location))) {
+		returnLocation = locations.get(i);
+	    }
 	}
+	return returnLocation;
+    }
 
-	public static double getAngleTourStop2() {
-		return AngleTourStop2;
+    public static Location findClosestLocation(Location location, Location withoutLocation, ArrayList<Location> locations) {
+	Location returnLocation = locations.get(0);
+	for (int i = 1; i < locations.size(); i++) {
+	    if (locations.get(i) != withoutLocation && getDistance(location, locations.get(i)) < getDistance(returnLocation, location)) {
+		returnLocation = locations.get(i);
+	    }
 	}
+	return returnLocation;
+    }
 
-	public static void setAngleTourStop2(double angleTourStop2) {
-		AngleTourStop2 = angleTourStop2;
+    public static Location findFarthestLocation(Location location, ArrayList<Location> locations) {
+	Location returnLocation = locations.get(0);
+	for (int i = 1; i < locations.size(); i++) {
+	    if ((getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
+		returnLocation = locations.get(i);
+	    }
 	}
+	return returnLocation;
+    }
 
-	public static Location getTourStop2() {
-		return TourStop2;
+    public static Location findFarthestLocation(Location location, Location withoutLoc, ArrayList<Location> locations) {
+	Location returnLocation = locations.get(0);
+	for (int i = 1; i < locations.size(); i++) {
+	    if (locations.get(i) != withoutLoc && (getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
+		returnLocation = locations.get(i);
+	    }
 	}
+	return returnLocation;
+    }
 
-	public static void setTourStop2(Location tourStop2) {
-		TourStop2 = tourStop2;
+    public static Location findFarthestLocationToDepot(ArrayList<Location> locations) {
+	Location returnLocation = Main.depot;
+	Location origin = Main.depot;
+	for (int i = 1; i < locations.size(); i++) {
+	    if ((getDistance(origin, locations.get(i)) > getDistance(returnLocation, origin))) {
+		returnLocation = locations.get(i);
+	    }
 	}
+	return returnLocation;
+    }
 
-	public static boolean isUsed() {
-		return isUsed;
+    public static Location findFarthestLocationToDepot(Location location, Location withoutLoc, ArrayList<Location> locations) {
+	Location returnLocation = Main.depot;
+	for (int i = 1; i < locations.size(); i++) {
+	    if (locations.get(i) != withoutLoc && (getDistance(location, locations.get(i)) > getDistance(returnLocation, location))) {
+		returnLocation = locations.get(i);
+	    }
 	}
+	return returnLocation;
+    }
 
-	public static void setUsed(boolean isUsed) {
-		Main.isUsed = isUsed;
+    public static Location findLocationWithSmalestAngle() {
+	double smalestAngle = 720;
+	Location locWithSmalestAngle = nodes.get(0);
+	for (Location loc : nodes) {
+	    if (loc.angle < smalestAngle) {
+		smalestAngle = loc.angle;
+		locWithSmalestAngle = loc;
+	    }
 	}
-
+	return locWithSmalestAngle;
+    }
 }
