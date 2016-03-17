@@ -42,7 +42,8 @@ public class Tour {
 		for (int i = 0; i < slices; i++) {
 			locationsInSlice = new ArrayList<>();
 			for (Location location : locations) {
-				if (location.angle % 360 >= i * slices && location.angle % 360 < (i + 1) * (360 / slices)) {
+				double locAngle = location.angle % 360;
+				if (locAngle >= i * slices && locAngle < (i + 1) * (360 / slices)) {
 					locationsInSlice.add(location);
 				}
 			}

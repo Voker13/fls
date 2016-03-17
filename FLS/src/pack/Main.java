@@ -40,14 +40,14 @@ public class Main {
 	}
 
 	private static void setDepot() {
-		Location remove = null;
+		Location removeLocation = null;
 		for (Location location : nodes) {
 			if (location.isDepto()) {
 				depot = location;
-				remove = location;
+				removeLocation = location;
 			}
 		}
-		nodes.remove(remove);
+		nodes.remove(removeLocation);
 	}
 
 	public static double getDistance(Location location1, Location location2) {
@@ -84,7 +84,7 @@ public class Main {
 			}
 		}
 	}
-
+	
 	private static void calculateSpeed() {
 		int distance = 0;
 		int duration = 0;
@@ -94,7 +94,7 @@ public class Main {
 		}
 		speed = distance / (duration / 60);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	private static void variableSliceFarStrategy(int slices) {
 
