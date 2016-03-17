@@ -50,17 +50,6 @@ public class Main {
 		nodes.remove(remove);
 	}
 
-	public static int getIndex(ArrayList<Location> locations, Location location) {
-		for (int i = 0; i < locations.size(); i++) {
-			if (locations.get(i) == location) {
-				return i;
-			} else {
-
-			}
-		}
-		return 0;
-	}
-
 	public static double getDistance(Location location1, Location location2) {
 		double lat1 = location1.latitude;
 		double long1 = location1.longitude;

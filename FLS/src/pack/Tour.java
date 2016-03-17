@@ -24,17 +24,13 @@ public class Tour {
 				+ location.visitDuration < maxDuration) {
 			if (tourStops.size() == 1) {
 				this.addDurationFromDepot(location);
-				tourStops.add(location);
-				locationsSlice.remove(Main.getIndex(locationsSlice, location));
-				locationsAll.remove(Main.getIndex(locationsAll, location));
-				return true;
 			} else {
 				this.addDuration(location);
-				tourStops.add(location);
-				locationsSlice.remove(Main.getIndex(locationsSlice, location));
-				locationsAll.remove(Main.getIndex(locationsAll, location));
-				return true;
 			}
+			tourStops.add(location);
+			locationsSlice.remove(location);
+			locationsAll.remove(location);
+			return true;
 		}
 		tourStops.add(Main.depot);
 		duration += location.timeToDepot;
