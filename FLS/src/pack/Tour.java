@@ -74,6 +74,19 @@ public class Tour {
 
 		return returnString;
 	}
+	
+	public void addDuration(Location location) {
+		this.duration += Main.getDuration(tourStops.get(tourStops.size() - 1), location) + location.visitDuration;
+	}
+
+	public void addDurationFromDepot(Location location) {
+		this.duration += location.timeFromDepot + location.visitDuration;
+	}
+	
+	public void addDepot() {
+		duration += tourStops.get(tourStops.size() - 1).timeToDepot;
+		tourStops.add(Main.depot);
+	}
 
 	// Getter and Setter --->>>
 	
@@ -83,14 +96,6 @@ public class Tour {
 
 	public void setDuration(int duration) {
 		this.duration = duration;
-	}
-
-	public void addDuration(Location location) {
-		this.duration += Main.getDuration(tourStops.get(tourStops.size() - 1), location) + location.visitDuration;
-	}
-
-	public void addDurationFromDepot(Location location) {
-		this.duration += location.timeFromDepot + location.visitDuration;
 	}
 
 	public int getMaxDuration() {
@@ -108,9 +113,5 @@ public class Tour {
 	public void setTourStops(ArrayList<Location> tourStops) {
 		this.tourStops = tourStops;
 	}
-
-	public void addDepot() {
-		duration += tourStops.get(tourStops.size() - 1).timeToDepot;
-		tourStops.add(Main.depot);
-	}
+	
 }
