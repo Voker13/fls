@@ -26,7 +26,7 @@ public class Main {
 
 		generateAngleToLocation();
 
-		variableSliceFarStrategy(12);
+		variableSliceFarStrategy(15);
 	}
 
 	private static String readFromSystemIn() throws IOException {
@@ -58,8 +58,8 @@ public class Main {
 		double lat = (lat1 + lat2) / 2 * 0.01745;
 		float latDifference = (float) (111.3 * (lat1 - lat2));
 		float longDifference = (float) (111.3 * Math.cos(lat) * (long1 - long2));
-		return heron(latDifference * latDifference + longDifference * longDifference);
-//		return Math.sqrt(latDifference * latDifference + longDifference * longDifference);
+		//return heron(latDifference * latDifference + longDifference * longDifference);
+		return Math.sqrt(latDifference * latDifference + longDifference * longDifference);
 	}
 	
 	public static double heron(double in) {
@@ -101,7 +101,7 @@ public class Main {
 			distance += getDistance(depot, nodes.get(i));
 			duration += ((nodes.get(i).timeToDepot + nodes.get(i).timeFromDepot) / 2);
 		}
-		speed = distance / (duration / 60);
+		speed = distance*60 / (duration);
 	}
 	
 	@SuppressWarnings("unchecked")
