@@ -58,7 +58,16 @@ public class Main {
 		double lat = (lat1 + lat2) / 2 * 0.01745;
 		float latDifference = (float) (111.3 * (lat1 - lat2));
 		float longDifference = (float) (111.3 * Math.cos(lat) * (long1 - long2));
-		return Math.sqrt(latDifference * latDifference + longDifference * longDifference);
+		return heron(latDifference * latDifference + longDifference * longDifference);
+//		return Math.sqrt(latDifference * latDifference + longDifference * longDifference);
+	}
+	
+	public static double heron(double in) {
+		double erg0 = (in+1)/2;
+		double erg1 = (erg0*erg0 + in )/(2*erg0);
+		double erg2 = (erg1*erg1 + in )/(2*erg1);
+		double erg3 = (erg2*erg2 + in )/(2*erg2);
+		return erg3;
 	}
 
 	public static int getDuration(Location location1, Location location2) {
