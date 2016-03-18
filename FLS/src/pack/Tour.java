@@ -17,15 +17,15 @@ public class Tour {
 		tourStops.add(Main.depot);
 	}
 	
-	public boolean addStopSliceDepot(Location location, ArrayList<Location> locationsSlice,
-			ArrayList<Location> locationsAll) {
-		if (duration + Main.getDuration(location, tourStops.get(tourStops.size() - 1))
-				+ Main.getDuration(Main.depot, tourStops.get(tourStops.size() - 1))
-				+ location.visitDuration < maxDuration) {
+	public boolean addStopSliceDepot(Location location, ArrayList<Location> locationsSlice, ArrayList<Location> locationsAll) {
+		int durationLocToLastinList = Main.getDuration(location, tourStops.get(tourStops.size() - 1));
+		if (duration + durationLocToLastinList
+		// + Main.getDuration(Main.depot, tourStops.get(tourStops.size() - 1))
+				+ tourStops.get(tourStops.size() - 1).timeToDepot + location.visitDuration < maxDuration) {
 			if (tourStops.size() == 1) {
 				this.addDurationFromDepot(location);
 			} else {
-				this.addDuration(location);
+				this.addDuration(location, durationLocToLastinList);
 			}
 			tourStops.add(location);
 			locationsSlice.remove(location);
@@ -74,9 +74,13 @@ public class Tour {
 		return returnString;
 	}
 	
-	public void addDuration(Location location) {
-		this.duration += Main.getDuration(tourStops.get(tourStops.size() - 1), location) + location.visitDuration;
+	public void addDuration(Location location, int duration) {
+		this.duration += duration + location.visitDuration;
 	}
+	
+//	public void addDuration(Location location) {
+//		this.duration += Main.getDuration(tourStops.get(tourStops.size() - 1), location) + location.visitDuration;
+//	}
 
 	public void addDurationFromDepot(Location location) {
 		this.duration += location.timeFromDepot + location.visitDuration;
