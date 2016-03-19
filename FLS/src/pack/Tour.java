@@ -16,25 +16,8 @@ public class Tour {
 	public Tour() {
 		tourStops.add(Main.depot);
 	}
-	
-	public boolean addStopSliceDepot(Location location, ArrayList<Location> locationsSlice, ArrayList<Location> locationsAll) {
-		if (duration + location.durationToBacker + tourStops.get(tourStops.size() - 1).timeToDepot + location.visitDuration < maxDuration) {
-			if (tourStops.size() == 1) {
-				this.addDurationFromDepot(location);
-			} else {
-				this.addDuration(location);
-			}
-			tourStops.add(location);
-			locationsSlice.remove(location);
-			locationsAll.remove(location);
-			return true;
-		}
-		tourStops.add(Main.depot);
-		duration += location.timeToDepot;
-		return false;
-	}
 
-	public boolean addNextStopVariableSlicesFar(ArrayList<Location> locations, int slices) {
+	public boolean findingNextStop(ArrayList<Location> locations, int slices) {
 		ArrayList<Location> locationsInSlice = new ArrayList<>();
 		for (int i = 0; i < slices; i++) {
 			locationsInSlice = new ArrayList<>();
@@ -51,13 +34,30 @@ public class Tour {
 			} else {
 				return locations.isEmpty() ? false
 						: tourStops.size() == 1
-								? addStopSliceDepot(Main.findFarthestLocation(Main.depot, locationsInSlice),
+								? addStop(Main.findFarthestLocation(Main.depot, locationsInSlice),
 										locationsInSlice, locations)
-								: addStopSliceDepot(
+								: addStop(
 										Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locationsInSlice),
 										locationsInSlice, locations);
 			}
 		}
+		return false;
+	}
+	
+	public boolean addStop(Location location, ArrayList<Location> locationsSlice, ArrayList<Location> locationsAll) {
+		if (duration + location.durationToBacker + tourStops.get(tourStops.size() - 1).timeToDepot + location.visitDuration < maxDuration) {
+			if (tourStops.size() == 1) {
+				this.addDurationFromDepot(location);
+			} else {
+				this.addDuration(location);
+			}
+			tourStops.add(location);
+			locationsSlice.remove(location);
+			locationsAll.remove(location);
+			return true;
+		}
+		tourStops.add(Main.depot);
+		duration += location.timeToDepot;
 		return false;
 	}
 
@@ -70,10 +70,6 @@ public class Tour {
 
 		return returnString;
 	}
-	
-//	public void addDuration(Location location, int duration) {
-//		this.duration += duration + location.visitDuration;
-//	}
 	
 	public void addDuration(Location location) {
 		this.duration += location.durationToBacker + location.visitDuration;

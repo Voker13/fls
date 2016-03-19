@@ -26,7 +26,7 @@ public class Main {
 
 		generateAngleToLocation();
 
-		variableSliceFarStrategy(15);
+		startStrategy(15);
 	}
 
 	private static String readFromSystemIn() throws IOException {
@@ -101,23 +101,23 @@ public class Main {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static void variableSliceFarStrategy(int slices) {
+	private static void startStrategy(int slices) {
 
-		ArrayList<Tour> allToursSliceVariableFar = new ArrayList<>();
+		ArrayList<Tour> allTours = new ArrayList<>();
 
 		ArrayList<Location> workCopy = (ArrayList<Location>) nodes.clone();
 
 		workCopy = (ArrayList<Location>) nodes.clone();
 		while (!workCopy.isEmpty()) {
-			allToursSliceVariableFar.add(findWorkDayVariableSlicesFar(workCopy, slices));
+			allTours.add(findWorkDay(workCopy, slices));
 		}
 
-		int durationOverallSliceVariableFar = 0;
-		for (Tour tour : allToursSliceVariableFar) {
-			durationOverallSliceVariableFar += tour.getDuration();
+		int durationOverall = 0;
+		for (Tour tour : allTours) {
+			durationOverall += tour.getDuration();
 		}
 
-		postSolution(durationOverallSliceVariableFar);
+		postSolution(durationOverall);
 	}
 
 	private static void postSolution(int s) {
@@ -125,9 +125,9 @@ public class Main {
 		System.out.println("SOLUTION " + solution);
 	}
 
-	private static Tour findWorkDayVariableSlicesFar(ArrayList<Location> locations, int slices) {
+	private static Tour findWorkDay(ArrayList<Location> locations, int slices) {
 		Tour tour = new Tour();
-		while (tour.addNextStopVariableSlicesFar(locations, slices)) {
+		while (tour.findingNextStop(locations, slices)) {
 
 		}
 		if (locations.isEmpty()) {
