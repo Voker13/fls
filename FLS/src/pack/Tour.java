@@ -21,7 +21,7 @@ public class Tour {
 		ArrayList<Location> locationsInSlice = new ArrayList<>();
 		for (int i = 0; i < slices; i++) {
 			locationsInSlice = new ArrayList<>();
-			int iSlices = i * slices;
+			int iSlices = i * (360 / slices);
 			int i1360slices = (i + 1) * (360 / slices);
 			for (Location location : locations) {
 				double locAngle = location.angle % 360;
@@ -34,7 +34,7 @@ public class Tour {
 			} else {
 				return locations.isEmpty() ? false
 						: tourStops.size() == 1
-								? addStop(Main.findFarthestLocation(Main.depot, locationsInSlice),
+								? addStopFirstLocation(Main.findFarthestLocation(Main.depot, locationsInSlice),
 										locationsInSlice, locations)
 								: addStop(
 										Main.findClosestLocation(tourStops.get(tourStops.size() - 1), locationsInSlice),
@@ -46,11 +46,20 @@ public class Tour {
 	
 	public boolean addStop(Location location, ArrayList<Location> locationsSlice, ArrayList<Location> locationsAll) {
 		if (duration + location.durationToBacker + tourStops.get(tourStops.size() - 1).timeToDepot + location.visitDuration < maxDuration) {
-			if (tourStops.size() == 1) {
-				this.addDurationFromDepot(location);
-			} else {
-				this.addDuration(location);
-			}
+			this.addDuration(location);
+			tourStops.add(location);
+			locationsSlice.remove(location);
+			locationsAll.remove(location);
+			return true;
+		}
+		tourStops.add(Main.depot);
+		duration += location.timeToDepot;
+		return false;
+	}
+	
+	public boolean addStopFirstLocation(Location location, ArrayList<Location> locationsSlice, ArrayList<Location> locationsAll) {
+		if (duration + location.durationToBacker + tourStops.get(tourStops.size() - 1).timeToDepot + location.visitDuration < maxDuration) {
+			this.addDurationFromDepot(location);
 			tourStops.add(location);
 			locationsSlice.remove(location);
 			locationsAll.remove(location);

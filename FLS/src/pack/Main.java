@@ -24,7 +24,7 @@ public class Main {
 
 		calculateSpeed();
 
-		generateAngleToLocation();
+		generateAngle();
 
 		startStrategy(15);
 	}
@@ -60,19 +60,13 @@ public class Main {
 		float longDifference = (float) (111.3 * Math.cos(lat) * (long1 - long2));
 		return Math.sqrt(latDifference * latDifference + longDifference * longDifference);
 	}
-
-//	public static int getDuration(Location location1, Location location2) {
-//		double distance = getDistance(location1, location2);
-//		int duration = (int) ((distance / speed) * 60);
-//		return duration;
-//	}
 	
 	public static int getDuration(double distance) {
 		int duration = (int) ((distance / speed) * 60);
 		return duration;
 	}
 
-	public static void generateAngleToLocation() {
+	public static void generateAngle() {
 		double x0 = depot.longitude;
 		double y0 = depot.latitude;
 		for (Location location : nodes) {
