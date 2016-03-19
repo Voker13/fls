@@ -61,8 +61,13 @@ public class Main {
 		return Math.sqrt(latDifference * latDifference + longDifference * longDifference);
 	}
 
-	public static int getDuration(Location location1, Location location2) {
-		double distance = getDistance(location1, location2);
+//	public static int getDuration(Location location1, Location location2) {
+//		double distance = getDistance(location1, location2);
+//		int duration = (int) ((distance / speed) * 60);
+//		return duration;
+//	}
+	
+	public static int getDuration(double distance) {
 		int duration = (int) ((distance / speed) * 60);
 		return duration;
 	}
@@ -142,6 +147,7 @@ public class Main {
 				returnDistance = currentDistance;
 			}
 		}
+		returnLocation.durationToBacker = getDuration(returnDistance);
 		return returnLocation;
 	}
 
@@ -155,6 +161,7 @@ public class Main {
 				returnDistance = currentDistance;
 			}
 		}
+		returnLocation.durationToBacker = getDuration(returnDistance);
 		return returnLocation;
 	}
 

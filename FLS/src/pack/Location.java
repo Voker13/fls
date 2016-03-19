@@ -18,6 +18,7 @@ public class Location {
     public int timeToDepot;
     public String address;
     public double angle;
+    public int durationToBacker;
 
     public Location() {}
 
