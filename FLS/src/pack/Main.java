@@ -10,7 +10,7 @@ public class Main {
     public static int speed = 0;
     public static int solution = 0;
 
-    private static String testFile = "./Instance-1000-200.txt";
+    private static String testFile = "./Instance-2000-210.txt";
 
     public static void main(String[] args) throws IOException {
 
@@ -93,6 +93,7 @@ public class Main {
 	    duration += ((nodes.get(i).timeToDepot + nodes.get(i).timeFromDepot) / 2);
 	}
 	speed = distance * 60 / (duration);
+	System.out.println("Speed: " + speed + "km/h");
     }
 
     @SuppressWarnings("unchecked")
