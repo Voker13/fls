@@ -58,6 +58,7 @@ public class Tour {
 	}
 	
 	public boolean addStopFirstLocation(Location location, ArrayList<Location> locationsSlice, ArrayList<Location> locationsAll) {
+	    System.out.println(location.durationToBacker);
 		if (duration + location.durationToBacker + tourStops.get(tourStops.size() - 1).timeToDepot + location.visitDuration < maxDuration) {
 			this.addDurationFromDepot(location);
 			tourStops.add(location);
